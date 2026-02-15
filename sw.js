@@ -1,11 +1,12 @@
 /* Synapse Web Service Worker: cache-first for offline usage */
-const CACHE = 'synapse-cache-v3';
+// Bump this when you redeploy to force fresh caches on phones/iPads.
+const CACHE = 'synapse-cache-v4';
 const ASSETS = [
   './',
-  './index.html',
-  './styles.css',
-  './app.js?v=3',
-  './manifest.json',
+  './index.html?v=4',
+  './styles.css?v=4',
+  './app.js?v=4',
+  './manifest.json?v=4',
   './icon-192.png',
   './icon-512.png'
 ];
