@@ -1,10 +1,10 @@
 /* Synapse Web Service Worker: cache-first for offline usage */
-const CACHE = 'synapse-cache-v1';
+const CACHE = 'synapse-cache-v3';
 const ASSETS = [
   './',
   './index.html',
   './styles.css',
-  './app.js',
+  './app.js?v=3',
   './manifest.json',
   './icon-192.png',
   './icon-512.png'
