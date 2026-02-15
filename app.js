@@ -41,6 +41,8 @@
     score: 0,
     answerRecords: [],
 
+    navCollapsed: false,
+
     keyBuf: []
   };
 
@@ -151,6 +153,14 @@
     state.currentIndex = 0;
     state.score = 0;
     state.answerRecords = [];
+    state.navCollapsed = false;
+  }
+
+  function goHome() {
+    resetQuizState();
+    state.originalQuestionsBackup = [];
+    state.screen = 'input';
+    render();
   }
 
   function startQuizWithQuestions(parsedQuestions) {
@@ -169,6 +179,7 @@
 
     state.score = 0;
     state.currentIndex = 0;
+    state.navCollapsed = false;
     state.answerRecords = state.questions.map(() => ({
       attempts: 0,
       first_try_correct: false,
@@ -343,6 +354,10 @@
     randomToggle.checked = state.isRandomOrder;
     randomToggleLabel.textContent = state.isRandomOrder ? 'Random' : 'Original';
 
+    // Random/Original is only relevant before a quiz starts
+    const randomWrap = randomToggle.closest('.toggle');
+    if (randomWrap) randomWrap.style.display = (state.screen === 'input') ? '' : 'none';
+
     if (state.screen === 'input') return renderInput();
     if (state.screen === 'quiz') return renderQuiz();
     return renderResults();
@@ -449,13 +464,19 @@
     }).join('');
 
     app.innerHTML = `
-      <section class="grid quiz">
-        <aside class="card navigator">${navButtons}</aside>
+      <section class="grid quiz ${state.navCollapsed ? 'nav-collapsed' : ''}">
+        <aside class="card navigator ${state.navCollapsed ? 'collapsed' : ''}">${navButtons}</aside>
 
         <section class="card padded">
           <div class="quizHeader">
-            <div class="badge" id="progress">${escapeHtml(progressText)}</div>
-            <div class="badge" id="score">Score: ${state.score}</div>
+            <div class="row" style="align-items:center">
+              <div class="badge" id="progress">${escapeHtml(progressText)}</div>
+              <div class="badge" id="score">Score: ${state.score}</div>
+            </div>
+            <div class="row" style="align-items:center">
+              <button id="toggleNavBtn" class="btn secondary small">${state.navCollapsed ? 'Show list' : 'Hide list'}</button>
+              <button id="homeBtn" class="btn secondary small" title="Return to the home screen to start a new quiz">Home</button>
+            </div>
           </div>
 
           <div class="question">${escapeHtml(q.question)}</div>
@@ -481,6 +502,18 @@
     // Navigator
     app.querySelectorAll('button.navbtn').forEach(btn => {
       btn.addEventListener('click', () => jumpToQuestion(Number(btn.dataset.idx)));
+    });
+
+    // Header controls
+    const toggleNavBtn = document.getElementById('toggleNavBtn');
+    if (toggleNavBtn) toggleNavBtn.addEventListener('click', () => {
+      state.navCollapsed = !state.navCollapsed;
+      render();
+    });
+
+    const homeBtn = document.getElementById('homeBtn');
+    if (homeBtn) homeBtn.addEventListener('click', () => {
+      goHome();
     });
 
     // Footer
@@ -538,16 +571,14 @@
 
     // Random toggle
     randomToggle.addEventListener('change', () => {
+      // Only applies before a quiz starts
+      if (state.screen !== 'input') {
+        randomToggle.checked = state.isRandomOrder;
+        return;
+      }
       state.isRandomOrder = !!randomToggle.checked;
       savePrefs();
-
-      // Mirror Tkinter behaviour: changing random order affects future sessions.
-      // If a quiz is loaded, you can immediately retake with the new order.
-      if (state.originalQuestionsBackup.length && state.screen !== 'input') {
-        retakeQuiz();
-      } else {
-        render();
-      }
+      render();
     });
 
     // Modal copy

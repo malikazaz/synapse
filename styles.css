@@ -173,6 +173,11 @@ textarea.big{
   background: color-mix(in srgb, var(--neutral) 70%, var(--frame) 30%);
   color: var(--text);
 }
+.btn.small{
+  padding: 8px 10px;
+  border-radius: 12px;
+  font-weight: 800;
+}
 .btn.ghost{
   background: transparent;
   border: 1px solid color-mix(in srgb, var(--text) 16%, transparent 84%);
@@ -184,6 +189,10 @@ textarea.big{
   overflow:auto;
   padding: 10px;
 }
+
+.navigator.collapsed{display:none;}
+.grid.quiz.nav-collapsed{grid-template-columns: 1fr !important;}
+
 .navbtn{
   width: 100%;
   text-align:center;
