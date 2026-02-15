@@ -413,21 +413,21 @@
 
     demoBtn.addEventListener('click', () => {
       paste.value = [
-        'Which structure separates the false pelvis from the true pelvis?',
-        'A) Anterior superior iliac spine',
-        'B) Iliac crest',
-        'C) Iliac fossa',
-        'D) Pelvic brim',
-        'E) Pubic tubercle',
-        'Answer: D',
+        'Which planet is known as the "Red Planet"?',
+        'A) Venus',
+        'B) Mars',
+        'C) Jupiter',
+        'D) Mercury',
+        'E) Saturn',
+        'Answer: B',
         '',
-        'In anatomical position, the anterior superior iliac spine aligns with which bony prominence?',
-        'A) Iliac crest',
-        'B) Ischial spine',
-        'C) Ischial tuberosity',
-        'D) Pubic ramus',
-        'E) Pubic tubercle',
-        'Answer: E',
+        'In the periodic table, which element has the chemical symbol "O"?',
+        'A) Gold',
+        'B) Osmium',
+        'C) Oxygen',
+        'D) Zinc',
+        'E) Iron',
+        'Answer: C',
       ].join('\n');
       paste.focus();
     });
