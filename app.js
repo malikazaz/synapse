@@ -25,9 +25,6 @@
     "Crimson Night": {"BG_COLOR":"#2C001E","TEXT_COLOR":"#F0E6EF","FRAME_COLOR":"#4C0033","CORRECT_COLOR":"#79D70F","WRONG_COLOR":"#FF005C","NEUTRAL_COLOR":"#8E05C2","BUTTON_COLOR":"#AE00FB","BUTTON_TEXT_COLOR":"#ffffff"}
   };
 
-  // Increment when redeploying (helps defeat aggressive mobile caching)
-  const BUILD = 'v4';
-
   const SERIAL = "SN-AZAZ-MALIK-2024-07-04-UNIQUE-001";
   const SECRET = ['s','h','o','w','i','d'];
 
@@ -372,7 +369,6 @@
         <div class="h1">Load your quiz</div>
         <div class="help">
           Paste your MCQs into the box below (or upload a .txt). Each question must have 5 options (A–E) and an <span class="muted">Answer:</span> line.
-          <div class="muted" style="margin-top:6px">Build: ${BUILD}</div>
         </div>
 
         <hr class="sep" />
@@ -626,7 +622,7 @@
   function initServiceWorker() {
     if (!('serviceWorker' in navigator)) return;
     window.addEventListener('load', () => {
-      navigator.serviceWorker.register(`./sw.js?${BUILD}`).catch(() => {});
+      navigator.serviceWorker.register('./sw.js').catch(() => {});
     });
   }
 
