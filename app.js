@@ -33,7 +33,7 @@
     screen: 'input', // 'input' | 'quiz' | 'results'
     isRandomOrder: false,
     themeName: 'Default Dark',
-    fontSize: 16,
+    fontSize: 18,
 
     questions: [],
     originalQuestionsBackup: [],

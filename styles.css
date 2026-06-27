@@ -11,7 +11,7 @@
 
   --radius: 16px;
   --shadow: 0 10px 30px rgba(0,0,0,.25);
-  --fs: 16px;
+  --fs: 18px;
   --topbar-h: 64px; /* kept in sync from JS */
 }
 
@@ -145,8 +145,8 @@ input[type="range"]{width: 140px}
 }
 
 .padded{padding: 16px}
-.h1{font-size: 26px; font-weight: 800; margin: 0 0 10px}
-.help{opacity:.9; font-size: 13px; line-height: 1.5}
+.h1{font-size: 30px; font-weight: 800; margin: 0 0 10px}
+.help{opacity:.9; font-size: 14px; line-height: 1.5}
 .muted{opacity:.85}
 hr.sep{
   border: none;
@@ -197,7 +197,7 @@ hr.sep{
 }
 
 /* ---------- Input screen ---------- */
-.input-card{ max-width: 1000px; margin-inline: auto; }
+.input-card{ max-width: 1060px; margin-inline: auto; }
 .input-grid{ display:grid; gap:16px; }
 @media (min-width: 760px){
   .input-grid{ grid-template-columns: 1.7fr 1fr; align-items:start; }
@@ -263,13 +263,13 @@ textarea.big{
 }
 
 .navbtn{
-  min-height: 42px;
-  padding: 6px 4px;
+  min-height: 46px;
+  padding: 8px 4px;
   border-radius: 10px;
   border: none;
   cursor:pointer;
   font-weight: 800;
-  font-size: 13px;
+  font-size: 14px;
   background: var(--btn);
   color: var(--btnText);
   transition: filter .15s ease;
@@ -281,7 +281,7 @@ textarea.big{
 
 /* ---------- Quiz main pane ---------- */
 .qpane{
-  max-width: 860px;
+  max-width: 920px;
   margin-inline: auto;
 }
 
@@ -315,7 +315,7 @@ textarea.big{
   background: color-mix(in srgb, var(--bg) 45%, var(--frame) 55%);
   border: 1px solid color-mix(in srgb, var(--frame) 65%, #000 35%);
   font-weight: 800;
-  font-size: 13px;
+  font-size: 14px;
 }
 .badge.score{
   background: color-mix(in srgb, var(--correct) 22%, var(--frame) 78%);
@@ -355,8 +355,8 @@ textarea.big{
 .opt:active{ transform: translateY(1px); }
 .opt-key{
   flex: 0 0 auto;
-  width: 28px;
-  height: 28px;
+  width: 30px;
+  height: 30px;
   border-radius: 8px;
   display:inline-flex;
   align-items:center;
@@ -411,7 +411,7 @@ textarea.big{
 }
 
 /* ---------- Results screen ---------- */
-.results-card{ max-width: 680px; margin-inline: auto; text-align: center; }
+.results-card{ max-width: 740px; margin-inline: auto; text-align: center; }
 .results-hero{ padding: 16px 0 6px; }
 .results-kicker{ text-transform: uppercase; letter-spacing: .12em; font-size: 12px; opacity: .7; }
 .score-big{ font-size: clamp(48px, 11vw, 84px); font-weight: 900; line-height: 1; margin: 8px 0; }
@@ -422,6 +422,18 @@ textarea.big{
 .results-actions{ justify-content: center; }
 
 /* ---------- Modal ---------- */
+/* Reset the <dialog> element itself — its UA defaults are a white background,
+   border and padding that would otherwise frame the dark card (very visible
+   on the High Contrast theme). */
+.modal{
+  background: transparent;
+  border: none;
+  padding: 0;
+  max-width: 100vw;
+  max-height: 100dvh;
+  color: var(--text);
+  overflow: visible;
+}
 .modal::backdrop{background: rgba(0,0,0,.45)}
 .modal-card{
   width: min(920px, 96vw);
