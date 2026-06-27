@@ -1,5 +1,5 @@
 /* Synapse Web Service Worker: cache-first for offline usage */
-const CACHE = 'synapse-cache-v1';
+const CACHE = 'synapse-cache-v2';
 const ASSETS = [
   './',
   './index.html',

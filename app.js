@@ -43,7 +43,8 @@
 
     navCollapsed: false,
 
-    keyBuf: []
+    keyBuf: [],
+    pendingFocus: null
   };
 
   // ---- DOM ----
@@ -179,7 +180,8 @@
 
     state.score = 0;
     state.currentIndex = 0;
-    state.navCollapsed = false;
+    // Phones get the question list out of the way by default; the toggle still reveals it.
+    state.navCollapsed = window.matchMedia('(max-width: 720px)').matches;
     state.answerRecords = state.questions.map(() => ({
       attempts: 0,
       first_try_correct: false,
@@ -256,7 +258,7 @@
 
     for (const item of sortedOriginal) {
       const qData = item.q;
-      const sessionIndex = state.questions.findIndex(q => q === qData);
+      const sessionIndex = state.questions.findIndex(q => q.original_q_number === qData.original_q_number);
       if (sessionIndex === -1) continue;
 
       const record = state.answerRecords[sessionIndex];
@@ -308,6 +310,10 @@
       state.score += 1;
     }
     if (isCorrect) record.is_locked = true;
+
+    // After the re-render, put keyboard focus somewhere sensible: on the Next
+    // button once the answer locks, otherwise back on the option just tried.
+    state.pendingFocus = isCorrect ? { type: 'next' } : { type: 'option', key: selectedKey };
 
     render();
   }
@@ -365,26 +371,33 @@
 
   function renderInput() {
     app.innerHTML = `
-      <section class="card padded">
+      <section class="card padded input-card">
         <div class="h1">Load your quiz</div>
-        <div class="help">
-          Paste your MCQs into the box below (or upload a .txt). Each question must have 5 options (A–E) and an <span class="muted">Answer:</span> line.
-        </div>
+        <div class="help">Paste your multiple-choice questions (or upload a <span class="muted">.txt</span>). Each question needs 5 options <b>A–E</b> and an <span class="muted">Answer:</span> line, with a blank line between questions.</div>
 
         <hr class="sep" />
 
-        <textarea id="paste" class="big" placeholder="Paste your questions here..."></textarea>
-
-        <div class="row spread" style="margin-top:12px">
-          <div class="row">
-            <input id="file" type="file" accept=".txt,text/plain" />
-            <button id="loadBtn" class="btn">Start quiz</button>
+        <div class="input-grid">
+          <div class="input-main">
+            <textarea id="paste" class="big" placeholder="Paste your questions here..." aria-label="Quiz questions"></textarea>
+            <div class="row input-actions">
+              <button id="loadBtn" class="btn">Start quiz →</button>
+              <button id="demoBtn" class="btn secondary">Load demo</button>
+              <span class="file-wrap"><input id="file" type="file" accept=".txt,text/plain" aria-label="Upload a .txt file" /></span>
+            </div>
           </div>
-          <button id="demoBtn" class="btn secondary">Load demo</button>
-        </div>
 
-        <div class="help muted" style="margin-top:10px">
-          Tip: Install this as an app on iPhone/iPad: share → <b>Add to Home Screen</b>. It also works offline once loaded.
+          <aside class="input-aside">
+            <div class="aside-title">Expected format</div>
+            <pre class="format-example">Which planet is the "Red Planet"?
+A) Venus
+B) Mars
+C) Jupiter
+D) Mercury
+E) Saturn
+Answer: B</pre>
+            <div class="help muted">Install as an app on iPhone/iPad: Share → <b>Add to Home Screen</b>. Works offline once loaded — your questions never leave the device.</div>
+          </aside>
         </div>
       </section>
     `;
@@ -439,13 +452,17 @@
     const record = state.answerRecords[state.currentIndex];
 
     const qNumDisplay = state.currentIndex + 1;
-    let progressText = `Question: ${qNumDisplay} / ${total}`;
-    if (state.isRandomOrder) progressText += ` (Original Q.${q.original_q_number})`;
+    let progressText = `Question ${qNumDisplay} / ${total}`;
+    if (state.isRandomOrder) progressText += ` · Original Q.${q.original_q_number}`;
+
+    const answeredCount = state.answerRecords.filter(r => r.final_selection !== null).length;
+    const pctDone = total ? Math.round((answeredCount / total) * 100) : 0;
 
     const sortedOptions = Object.entries(q.options).sort(([a],[b]) => a.localeCompare(b));
 
-    const skipped = (state.currentIndex === total - 1) ? getSkippedQuestions() : [];
-    const finishDisabled = (state.currentIndex === total - 1) && skipped.length;
+    const isLast = state.currentIndex === total - 1;
+    const skipped = isLast ? getSkippedQuestions() : [];
+    const finishDisabled = isLast && skipped.length;
 
     const navButtons = state.questions.map((qq, idx) => {
       const r = state.answerRecords[idx];
@@ -453,42 +470,51 @@
       if (r.first_try_correct) cls += ' correct';
       else if (r.final_selection !== null) cls += ' wrong';
       if (idx === state.currentIndex) cls += ' current';
-      return `<button class="${cls}" data-idx="${idx}">Q ${qq.original_q_number}</button>`;
+      return `<button class="${cls}" data-idx="${idx}" title="Question ${qq.original_q_number}" aria-label="Go to question ${qq.original_q_number}">${qq.original_q_number}</button>`;
     }).join('');
 
     const optsHtml = sortedOptions.map(([key, val]) => {
       let cls = 'opt';
       if (record.is_locked) cls += (key === q.answer) ? ' correct' : ' answered';
       else if (key === record.final_selection) cls += ' wrong';
-      return `<button class="${cls}" data-key="${key}"> ${key}. ${escapeHtml(val)}</button>`;
+      return `<button class="${cls}" data-key="${key}"><span class="opt-key">${key}</span><span class="opt-text">${escapeHtml(val)}</span></button>`;
     }).join('');
 
     app.innerHTML = `
       <section class="grid quiz ${state.navCollapsed ? 'nav-collapsed' : ''}">
-        <aside class="card navigator ${state.navCollapsed ? 'collapsed' : ''}">${navButtons}</aside>
+        <aside class="card navigator ${state.navCollapsed ? 'collapsed' : ''}" aria-label="Question navigator">${navButtons}</aside>
 
-        <section class="card padded">
-          <div class="quizHeader">
-            <div class="row" style="align-items:center">
-              <div class="badge" id="progress">${escapeHtml(progressText)}</div>
-              <div class="badge" id="score">Score: ${state.score}</div>
+        <section class="card padded quizmain">
+          <div class="qpane">
+            <div class="progress-wrap" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${pctDone}" aria-label="Quiz progress">
+              <div class="progress-track"><div class="progress-fill" style="width:${pctDone}%"></div></div>
+              <div class="progress-meta">${answeredCount} / ${total} answered</div>
             </div>
-            <div class="row" style="align-items:center">
-              <button id="toggleNavBtn" class="btn secondary small">${state.navCollapsed ? 'Show list' : 'Hide list'}</button>
-              <button id="homeBtn" class="btn secondary small" title="Return to the home screen to start a new quiz">Home</button>
+
+            <div class="quizHeader">
+              <div class="row" style="align-items:center">
+                <div class="badge" id="progress">${escapeHtml(progressText)}</div>
+                <div class="badge score" id="score">Score ${state.score}</div>
+              </div>
+              <div class="row" style="align-items:center">
+                <button id="toggleNavBtn" class="btn secondary small">${state.navCollapsed ? 'Show list' : 'Hide list'}</button>
+                <button id="homeBtn" class="btn secondary small" title="Return to the home screen to start a new quiz">Home</button>
+              </div>
             </div>
-          </div>
 
-          <div class="question">${escapeHtml(q.question)}</div>
+            <div class="question">${escapeHtml(q.question)}</div>
 
-          <div class="options">${optsHtml}</div>
+            <div class="options">${optsHtml}</div>
 
-          <div class="footerBar">
-            <div class="row">
-              <button id="prevBtn" class="btn secondary" ${state.currentIndex === 0 ? 'disabled' : ''}>Back (B)</button>
-              <button id="nextBtn" class="btn" ${finishDisabled ? 'disabled' : ''}>${state.currentIndex === total - 1 ? 'Finish' : 'Next (Space) ➡'}</button>
+            <div class="footerBar">
+              <div class="row">
+                <button id="prevBtn" class="btn secondary" ${state.currentIndex === 0 ? 'disabled' : ''}>← Back</button>
+                <button id="nextBtn" class="btn" ${finishDisabled ? 'disabled' : ''}>${isLast ? 'Finish ✓' : 'Next →'}</button>
+              </div>
+              <div class="warn" id="warn">${finishDisabled ? `Answer skipped question(s) to finish: ${skipped.join(', ')}` : ''}</div>
             </div>
-            <div class="warn" id="warn">${finishDisabled ? `Answer skipped questions to finish: ${skipped.join(', ')}` : ''}</div>
+
+            <div class="kbdhint" aria-hidden="true"><kbd>B</kbd> back · <kbd>Space</kbd> next · tap a number to jump</div>
           </div>
         </section>
       </section>
@@ -519,19 +545,53 @@
     // Footer
     document.getElementById('prevBtn').addEventListener('click', prevQuestion);
     document.getElementById('nextBtn').addEventListener('click', nextQuestion);
+
+    // Keep the current question's chip visible in the navigator. The whole screen
+    // is rebuilt on every render, which resets the rail's scroll — this re-anchors it.
+    app.querySelector('button.navbtn.current')?.scrollIntoView({ block: 'nearest', inline: 'nearest' });
+
+    // Restore keyboard focus lost to the full re-render.
+    if (state.pendingFocus) {
+      const pf = state.pendingFocus;
+      state.pendingFocus = null;
+      if (pf.type === 'next') {
+        const nb = document.getElementById('nextBtn');
+        if (nb && !nb.disabled) nb.focus();
+      } else if (pf.type === 'option') {
+        app.querySelector(`button.opt[data-key="${pf.key}"]`)?.focus();
+      }
+    }
   }
 
   function renderResults() {
-    const summary = buildSummaryText(true);
+    const total = state.questions.length;
+    const correct = state.score;
+    const pct = total ? (correct / total) * 100 : 0;
+
+    const wrongIds = [];
+    for (let i = 0; i < state.answerRecords.length; i++) {
+      const r = state.answerRecords[i];
+      if (!r.first_try_correct && r.final_selection !== null) {
+        wrongIds.push(String(state.questions[i].original_q_number));
+      }
+    }
+    const idLabel = state.isRandomOrder ? 'Original IDs' : 'IDs';
+    const wrongLine = wrongIds.length
+      ? `Wrong on first attempt (${idLabel}): ${escapeHtml(wrongIds.join(', '))}`
+      : 'Flawless — every question right on the first try! 🎉';
 
     app.innerHTML = `
-      <section class="card padded">
-        <div class="h1">Quiz finished!</div>
-        <pre class="help" style="white-space:pre-wrap;margin:0">${escapeHtml(summary)}</pre>
+      <section class="card padded results-card">
+        <div class="results-hero">
+          <div class="results-kicker">Quiz finished</div>
+          <div class="score-big"><span class="score-correct">${correct}</span><span class="score-slash">/</span><span class="score-total">${total}</span></div>
+          <div class="score-pct">${pct.toFixed(0)}%</div>
+          <div class="results-sub">${wrongLine}</div>
+        </div>
 
         <hr class="sep" />
 
-        <div class="row">
+        <div class="row center results-actions">
           <button id="reportBtn" class="btn">View detailed report</button>
           <button id="retakeBtn" class="btn secondary">Retake this quiz</button>
           <button id="homeBtn" class="btn ghost">Load new quiz</button>
@@ -558,16 +618,17 @@
     themeSelect.innerHTML = Object.keys(THEMES).map(name => `<option value="${name}">${name}</option>`).join('');
     themeSelect.addEventListener('change', () => {
       state.themeName = themeSelect.value;
+      setCSSVars(THEMES[state.themeName]); // theme is pure CSS variables — no full re-render needed
       savePrefs();
-      render();
     });
 
-    // Font slider
+    // Font slider — update the CSS variable live; persist once when the drag ends.
     fontSize.addEventListener('input', () => {
       state.fontSize = clamp(Number(fontSize.value), 10, 30);
-      savePrefs();
-      render();
+      document.documentElement.style.setProperty('--fs', `${state.fontSize}px`);
+      syncTopbarHeight();
     });
+    fontSize.addEventListener('change', () => savePrefs());
 
     // Random toggle
     randomToggle.addEventListener('change', () => {
@@ -626,11 +687,21 @@
     });
   }
 
+  // ---- Layout ----
+  // Publish the (variable) sticky-topbar height so the desktop quiz shell can
+  // size the full-height sidebar rail without magic numbers.
+  function syncTopbarHeight() {
+    const tb = document.querySelector('.topbar');
+    if (tb) document.documentElement.style.setProperty('--topbar-h', `${tb.offsetHeight}px`);
+  }
+
   // ---- Boot ----
   loadPrefs();
   initTopControls();
   initKeyboard();
   initServiceWorker();
+  syncTopbarHeight();
+  window.addEventListener('resize', syncTopbarHeight);
   render();
 
 })();
