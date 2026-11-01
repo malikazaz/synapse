@@ -8,6 +8,7 @@
   <link rel="manifest" href="manifest.json" />
   <link rel="icon" href="icon-192.png" />
   <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="connected.css" />
 </head>
 <body>
   <header class="topbar">
@@ -15,7 +16,7 @@
       <div class="logo" aria-hidden="true">🧠</div>
       <div>
         <div class="brand-title">Synapse</div>
-        <div class="brand-sub">Web Version · v2</div>
+        <div class="brand-sub">Your clinical learning companion</div>
       </div>
     </div>
 
@@ -38,7 +39,19 @@
     </div>
   </header>
 
+  <nav class="workspace-nav" aria-label="Synapse workspace">
+    <button class="btn secondary small" data-view="home" aria-pressed="true">Home</button>
+    <button class="btn secondary small" data-view="quiz" aria-pressed="false">Paste/upload</button>
+    <button class="btn secondary small" data-view="packs" aria-pressed="false">My question packs</button>
+    <button class="btn secondary small" data-view="progress" aria-pressed="false">UKMLA progress</button>
+    <button class="btn secondary small" data-view="sources" aria-pressed="false">Sources</button>
+    <button class="btn secondary small" data-view="settings" aria-pressed="false">Connections</button>
+    <button class="btn small" id="accountBtn" disabled>Sign in</button>
+  </nav>
+  <div class="quiz-actions"><button class="btn ghost small" id="resumeBtn">Resume saved quiz</button><button class="btn ghost small" id="savePackBtn">Save to my account</button></div>
+  <div class="connection-strip" role="status" aria-live="polite"><span id="connectionNotice"></span><span id="saveStatus"></span><span id="sheetStatus"></span></div>
   <main id="app" class="app"></main>
+  <section id="workspace" class="workspace" hidden aria-label="Saved work and competency"></section>
 
   <dialog id="modal" class="modal">
     <form method="dialog" class="modal-card">
@@ -56,6 +69,6 @@
     </form>
   </dialog>
 
-  <script src="app.js" defer></script>
+  <script src="app.js" type="module"></script>
 </body>
 </html>

@@ -1,0 +1,6339 @@
+{
+  "importedAt": "2026-11-01",
+  "topics": [
+    {
+      "id": "P4",
+      "label": "Abdominal distension",
+      "type": "Presentation",
+      "systems": [],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "P5",
+      "label": "Abdominal mass",
+      "type": "Presentation",
+      "systems": [],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "P6",
+      "label": "Abdominal pain (acute and chronic)",
+      "type": "Presentation",
+      "systems": [],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "P7",
+      "label": "Abnormal cervical smear result",
+      "type": "Presentation",
+      "systems": [],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "P8",
+      "label": "Abnormal development/ developmental delay",
+      "type": "Presentation",
+      "systems": [],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "P9",
+      "label": "Abnormal eating or exercising behaviour",
+      "type": "Presentation",
+      "systems": [],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "P10",
+      "label": "Abnormal gait",
+      "type": "Presentation",
+      "systems": [],
+      "blocks": [
+        "MSK",
+        "Core MSK"
+      ],
+      "aliases": []
+    },
+    {
+      "id": "P11",
+      "label": "Abnormal urinalysis",
+      "type": "Presentation",
+      "systems": [],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "P12",
+      "label": "Abnormal vaginal bleeding",
+      "type": "Presentation",
+      "systems": [],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "P13",
+      "label": "Acute kidney injury",
+      "type": "Presentation",
+      "systems": [],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "P14",
+      "label": "Addiction",
+      "type": "Presentation",
+      "systems": [],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "P15",
+      "label": "Agitation",
+      "type": "Presentation",
+      "systems": [],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "P16",
+      "label": "Allergy/ allergic reaction",
+      "type": "Presentation",
+      "systems": [],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "P17",
+      "label": "Altered mood",
+      "type": "Presentation",
+      "systems": [],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "P18",
+      "label": "Altered sensation, numbness and tingling",
+      "type": "Presentation",
+      "systems": [],
+      "blocks": [
+        "MSK",
+        "Related MSK"
+      ],
+      "aliases": []
+    },
+    {
+      "id": "P19",
+      "label": "Amenorrhoea",
+      "type": "Presentation",
+      "systems": [],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "P20",
+      "label": "Amnesia",
+      "type": "Presentation",
+      "systems": [],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "P21",
+      "label": "Anaemia",
+      "type": "Presentation",
+      "systems": [],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "P22",
+      "label": "Anaphylaxis",
+      "type": "Presentation",
+      "systems": [],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "P23",
+      "label": "Anosmia",
+      "type": "Presentation",
+      "systems": [],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "P24",
+      "label": "Appetite change",
+      "type": "Presentation",
+      "systems": [],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "P26",
+      "label": "Back pain",
+      "type": "Presentation",
+      "systems": [],
+      "blocks": [
+        "MSK",
+        "Core MSK"
+      ],
+      "aliases": []
+    },
+    {
+      "id": "P27",
+      "label": "Behaviour/ personality change",
+      "type": "Presentation",
+      "systems": [],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "P28",
+      "label": "Behavioural difficulties in childhood",
+      "type": "Presentation",
+      "systems": [],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "P29",
+      "label": "Bites and stings",
+      "type": "Presentation",
+      "systems": [],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "P30",
+      "label": "Blackouts and faints",
+      "type": "Presentation",
+      "systems": [],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "P31",
+      "label": "Bleeding antepartum",
+      "type": "Presentation",
+      "systems": [],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "P32",
+      "label": "Bleeding per rectum",
+      "type": "Presentation",
+      "systems": [],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "P33",
+      "label": "Bleeding postpartum",
+      "type": "Presentation",
+      "systems": [],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "P34",
+      "label": "Bone pain",
+      "type": "Presentation",
+      "systems": [],
+      "blocks": [
+        "MSK",
+        "Core MSK"
+      ],
+      "aliases": []
+    },
+    {
+      "id": "P35",
+      "label": "Bowel habit change",
+      "type": "Presentation",
+      "systems": [],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "P36",
+      "label": "Breast lump",
+      "type": "Presentation",
+      "systems": [],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "P37",
+      "label": "Breast tenderness/ pain",
+      "type": "Presentation",
+      "systems": [],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "P38",
+      "label": "Breathlessness",
+      "type": "Presentation",
+      "systems": [],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "P39",
+      "label": "Bruising",
+      "type": "Presentation",
+      "systems": [],
+      "blocks": [
+        "MSK",
+        "Related MSK"
+      ],
+      "aliases": []
+    },
+    {
+      "id": "P40",
+      "label": "Burns",
+      "type": "Presentation",
+      "systems": [],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "P42",
+      "label": "Cardiorespiratory arrest",
+      "type": "Presentation",
+      "systems": [],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "P43",
+      "label": "Chest pain",
+      "type": "Presentation",
+      "systems": [],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "P44",
+      "label": "Child abuse and neglect",
+      "type": "Presentation",
+      "systems": [],
+      "blocks": [
+        "MSK",
+        "Related MSK"
+      ],
+      "aliases": []
+    },
+    {
+      "id": "P45",
+      "label": "Choking",
+      "type": "Presentation",
+      "systems": [],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "P46",
+      "label": "Chronic kidney disease",
+      "type": "Presentation",
+      "systems": [],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "P47",
+      "label": "Cold/ red/ painful digits",
+      "type": "Presentation",
+      "systems": [],
+      "blocks": [
+        "MSK",
+        "Related MSK"
+      ],
+      "aliases": []
+    },
+    {
+      "id": "P48",
+      "label": "Complicated labour (including complications of labour)",
+      "type": "Presentation",
+      "systems": [],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "P49",
+      "label": "Confusion (acute and chronic)",
+      "type": "Presentation",
+      "systems": [],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "P50",
+      "label": "Congenital abnormalities",
+      "type": "Presentation",
+      "systems": [],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "P51",
+      "label": "Constipation",
+      "type": "Presentation",
+      "systems": [],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "P52",
+      "label": "Contraception request/ advice",
+      "type": "Presentation",
+      "systems": [],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "P53",
+      "label": "Cough",
+      "type": "Presentation",
+      "systems": [],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "P54",
+      "label": "Crying baby",
+      "type": "Presentation",
+      "systems": [],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "P55",
+      "label": "Cyanosis",
+      "type": "Presentation",
+      "systems": [],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "P57",
+      "label": "Death and dying",
+      "type": "Presentation",
+      "systems": [],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "P58",
+      "label": "Decreased/ loss of consciousness",
+      "type": "Presentation",
+      "systems": [],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "P59",
+      "label": "Dehydration",
+      "type": "Presentation",
+      "systems": [],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "P60",
+      "label": "Delayed/ precocious puberty",
+      "type": "Presentation",
+      "systems": [],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "P61",
+      "label": "Delusions",
+      "type": "Presentation",
+      "systems": [],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "P62",
+      "label": "Deteriorating patient",
+      "type": "Presentation",
+      "systems": [],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "P63",
+      "label": "Diarrhoea",
+      "type": "Presentation",
+      "systems": [],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "P64",
+      "label": "Diplopia",
+      "type": "Presentation",
+      "systems": [],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "P65",
+      "label": "Dizziness",
+      "type": "Presentation",
+      "systems": [],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "P66",
+      "label": "Domestic abuse",
+      "type": "Presentation",
+      "systems": [],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "P67",
+      "label": "Dysmenorrhea",
+      "type": "Presentation",
+      "systems": [],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "P68",
+      "label": "Dysmorphic child",
+      "type": "Presentation",
+      "systems": [],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "P70",
+      "label": "Ear and nasal discharge",
+      "type": "Presentation",
+      "systems": [],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "P71",
+      "label": "Elder abuse",
+      "type": "Presentation",
+      "systems": [],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "P72",
+      "label": "Electrolyte abnormalities",
+      "type": "Presentation",
+      "systems": [],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "P73",
+      "label": "End of life care/ symptoms of terminal illness",
+      "type": "Presentation",
+      "systems": [],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "P74",
+      "label": "Epistaxis",
+      "type": "Presentation",
+      "systems": [],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "P75",
+      "label": "Excess hair",
+      "type": "Presentation",
+      "systems": [],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "P76",
+      "label": "Eye pain/ discomfort",
+      "type": "Presentation",
+      "systems": [],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "P77",
+      "label": "Eye trauma",
+      "type": "Presentation",
+      "systems": [],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "P79",
+      "label": "Facial pain",
+      "type": "Presentation",
+      "systems": [],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "P80",
+      "label": "Facial weakness",
+      "type": "Presentation",
+      "systems": [],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "P81",
+      "label": "Facial/ periorbital swelling",
+      "type": "Presentation",
+      "systems": [],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "P82",
+      "label": "Faecal incontinence",
+      "type": "Presentation",
+      "systems": [],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "P83",
+      "label": "Falls",
+      "type": "Presentation",
+      "systems": [],
+      "blocks": [
+        "MSK",
+        "Related MSK"
+      ],
+      "aliases": []
+    },
+    {
+      "id": "P84",
+      "label": "Faltering growth (failure to thrive)",
+      "type": "Presentation",
+      "systems": [],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "P85",
+      "label": "Family history of possible genetic disorder",
+      "type": "Presentation",
+      "systems": [],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "P86",
+      "label": "Fasciculation",
+      "type": "Presentation",
+      "systems": [],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "P87",
+      "label": "Fatigue",
+      "type": "Presentation",
+      "systems": [],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "P88",
+      "label": "Feeling anxious",
+      "type": "Presentation",
+      "systems": [],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "P89",
+      "label": "Fever",
+      "type": "Presentation",
+      "systems": [],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "P90",
+      "label": "Fit notes",
+      "type": "Presentation",
+      "systems": [],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "P91",
+      "label": "Fitness to drive",
+      "type": "Presentation",
+      "systems": [],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "P92",
+      "label": "Fits/seizures",
+      "type": "Presentation",
+      "systems": [],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "P93",
+      "label": "Flashes and floaters in visual fields",
+      "type": "Presentation",
+      "systems": [],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "P94",
+      "label": "Food allergy and/ or intolerance",
+      "type": "Presentation",
+      "systems": [],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "P95",
+      "label": "Foreign body",
+      "type": "Presentation",
+      "systems": [],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "P96",
+      "label": "Frailty",
+      "type": "Presentation",
+      "systems": [],
+      "blocks": [
+        "MSK",
+        "Related MSK"
+      ],
+      "aliases": []
+    },
+    {
+      "id": "P98",
+      "label": "Gynaecomastia",
+      "type": "Presentation",
+      "systems": [],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "P100",
+      "label": "Haematemesis",
+      "type": "Presentation",
+      "systems": [],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "P101",
+      "label": "Haematuria",
+      "type": "Presentation",
+      "systems": [],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "P102",
+      "label": "Haemoptysis",
+      "type": "Presentation",
+      "systems": [],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "P103",
+      "label": "Hair loss",
+      "type": "Presentation",
+      "systems": [],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "P104",
+      "label": "Hallucinations",
+      "type": "Presentation",
+      "systems": [],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "P105",
+      "label": "Head injury",
+      "type": "Presentation",
+      "systems": [],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "P106",
+      "label": "Headache",
+      "type": "Presentation",
+      "systems": [],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "P107",
+      "label": "Hearing loss",
+      "type": "Presentation",
+      "systems": [],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "P108",
+      "label": "Heart murmurs",
+      "type": "Presentation",
+      "systems": [],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "P109",
+      "label": "High blood pressure",
+      "type": "Presentation",
+      "systems": [],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "P110",
+      "label": "Hoarseness and voice change",
+      "type": "Presentation",
+      "systems": [],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "P111",
+      "label": "Hyperactivity and/ or inability to focus/concentrate",
+      "type": "Presentation",
+      "systems": [],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "P112",
+      "label": "Hyperemesis",
+      "type": "Presentation",
+      "systems": [],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "P114",
+      "label": "Immobility",
+      "type": "Presentation",
+      "systems": [],
+      "blocks": [
+        "MSK",
+        "Related MSK"
+      ],
+      "aliases": []
+    },
+    {
+      "id": "P115",
+      "label": "Incidental findings",
+      "type": "Presentation",
+      "systems": [],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "P116",
+      "label": "Infant feeding problems",
+      "type": "Presentation",
+      "systems": [],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "P117",
+      "label": "Infertility/ subfertility",
+      "type": "Presentation",
+      "systems": [],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "P118",
+      "label": "Intellectual disability",
+      "type": "Presentation",
+      "systems": [],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "P119",
+      "label": "Intrauterine death",
+      "type": "Presentation",
+      "systems": [],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "P120",
+      "label": "Involuntary movements",
+      "type": "Presentation",
+      "systems": [],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "P122",
+      "label": "Jaundice",
+      "type": "Presentation",
+      "systems": [],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "P123",
+      "label": "Joint pain/ swelling/ stiffness (acute and chronic)",
+      "type": "Presentation",
+      "systems": [],
+      "blocks": [
+        "MSK",
+        "Core MSK"
+      ],
+      "aliases": []
+    },
+    {
+      "id": "P125",
+      "label": "Labour",
+      "type": "Presentation",
+      "systems": [],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "P126",
+      "label": "Limb claudication",
+      "type": "Presentation",
+      "systems": [],
+      "blocks": [
+        "MSK",
+        "Related MSK"
+      ],
+      "aliases": []
+    },
+    {
+      "id": "P127",
+      "label": "Limb weakness",
+      "type": "Presentation",
+      "systems": [],
+      "blocks": [
+        "MSK",
+        "Related MSK"
+      ],
+      "aliases": []
+    },
+    {
+      "id": "P128",
+      "label": "Limping child",
+      "type": "Presentation",
+      "systems": [],
+      "blocks": [
+        "MSK",
+        "Core MSK"
+      ],
+      "aliases": []
+    },
+    {
+      "id": "P129",
+      "label": "Loin pain",
+      "type": "Presentation",
+      "systems": [],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "P130",
+      "label": "Loss of red reflex",
+      "type": "Presentation",
+      "systems": [],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "P131",
+      "label": "Low blood pressure",
+      "type": "Presentation",
+      "systems": [],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "P132",
+      "label": "Lump in groin",
+      "type": "Presentation",
+      "systems": [],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "P133",
+      "label": "Lymphadenopathy",
+      "type": "Presentation",
+      "systems": [],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "P135",
+      "label": "Major trauma",
+      "type": "Presentation",
+      "systems": [],
+      "blocks": [
+        "MSK",
+        "Related MSK"
+      ],
+      "aliases": []
+    },
+    {
+      "id": "P136",
+      "label": "Massive haemorrhage",
+      "type": "Presentation",
+      "systems": [],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "P137",
+      "label": "Medically unexplained symptoms",
+      "type": "Presentation",
+      "systems": [],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "P138",
+      "label": "Melaena",
+      "type": "Presentation",
+      "systems": [],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "P139",
+      "label": "Memory loss",
+      "type": "Presentation",
+      "systems": [],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "P140",
+      "label": "Menopause/ perimenopause",
+      "type": "Presentation",
+      "systems": [],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "P141",
+      "label": "Mental capacity concerns",
+      "type": "Presentation",
+      "systems": [],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "P142",
+      "label": "Mental health problems in pregnancy or postpartum",
+      "type": "Presentation",
+      "systems": [],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "P143",
+      "label": "Minor trauma",
+      "type": "Presentation",
+      "systems": [],
+      "blocks": [
+        "MSK",
+        "Related MSK"
+      ],
+      "aliases": []
+    },
+    {
+      "id": "P144",
+      "label": "Muscle pain/ myalgia",
+      "type": "Presentation",
+      "systems": [],
+      "blocks": [
+        "MSK",
+        "Core MSK"
+      ],
+      "aliases": []
+    },
+    {
+      "id": "P145",
+      "label": "Musculoskeletal deformities",
+      "type": "Presentation",
+      "systems": [],
+      "blocks": [
+        "MSK",
+        "Core MSK"
+      ],
+      "aliases": []
+    },
+    {
+      "id": "P147",
+      "label": "Nail abnormalities",
+      "type": "Presentation",
+      "systems": [],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "P148",
+      "label": "Nasal obstruction",
+      "type": "Presentation",
+      "systems": [],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "P149",
+      "label": "Nausea",
+      "type": "Presentation",
+      "systems": [],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "P150",
+      "label": "Neck lump",
+      "type": "Presentation",
+      "systems": [],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "P151",
+      "label": "Neck pain/ stiffness",
+      "type": "Presentation",
+      "systems": [],
+      "blocks": [
+        "MSK",
+        "Core MSK"
+      ],
+      "aliases": []
+    },
+    {
+      "id": "P152",
+      "label": "Neuromuscular weakness",
+      "type": "Presentation",
+      "systems": [],
+      "blocks": [
+        "MSK",
+        "Related MSK"
+      ],
+      "aliases": []
+    },
+    {
+      "id": "P153",
+      "label": "Night sweats",
+      "type": "Presentation",
+      "systems": [],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "P154",
+      "label": "Nipple discharge",
+      "type": "Presentation",
+      "systems": [],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "P155",
+      "label": "Nocturnal enuresis",
+      "type": "Presentation",
+      "systems": [],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "P156",
+      "label": "Normal pregnancy and antenatal care",
+      "type": "Presentation",
+      "systems": [],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "P158",
+      "label": "Oliguria/ anuria",
+      "type": "Presentation",
+      "systems": [],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "P159",
+      "label": "Organomegaly",
+      "type": "Presentation",
+      "systems": [],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "P160",
+      "label": "Overdose",
+      "type": "Presentation",
+      "systems": [],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "P162",
+      "label": "Pain management (acute and chronic)",
+      "type": "Presentation",
+      "systems": [],
+      "blocks": [
+        "MSK",
+        "Related MSK"
+      ],
+      "aliases": []
+    },
+    {
+      "id": "P163",
+      "label": "Pain on inspiration",
+      "type": "Presentation",
+      "systems": [],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "P164",
+      "label": "Painful ear",
+      "type": "Presentation",
+      "systems": [],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "P165",
+      "label": "Painful sexual intercourse",
+      "type": "Presentation",
+      "systems": [],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "P166",
+      "label": "Pallor of the skin and conjunctiva",
+      "type": "Presentation",
+      "systems": [],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "P167",
+      "label": "Palpitations",
+      "type": "Presentation",
+      "systems": [],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "P168",
+      "label": "Patient on anti-coagulant therapy",
+      "type": "Presentation",
+      "systems": [],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "P169",
+      "label": "Patient on anti-platelet therapy",
+      "type": "Presentation",
+      "systems": [],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "P170",
+      "label": "Pelvic mass",
+      "type": "Presentation",
+      "systems": [],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "P171",
+      "label": "Pelvic pain",
+      "type": "Presentation",
+      "systems": [],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "P172",
+      "label": "Perianal symptoms",
+      "type": "Presentation",
+      "systems": [],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "P173",
+      "label": "Peri-operative patient",
+      "type": "Presentation",
+      "systems": [],
+      "blocks": [
+        "MSK",
+        "Related MSK"
+      ],
+      "aliases": []
+    },
+    {
+      "id": "P174",
+      "label": "Peripheral oedema and ankle swelling",
+      "type": "Presentation",
+      "systems": [],
+      "blocks": [
+        "MSK",
+        "Related MSK"
+      ],
+      "aliases": []
+    },
+    {
+      "id": "P175",
+      "label": "Phimosis/ paraphimosis",
+      "type": "Presentation",
+      "systems": [],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "P176",
+      "label": "Pleural effusion",
+      "type": "Presentation",
+      "systems": [],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "P177",
+      "label": "Poisoning",
+      "type": "Presentation",
+      "systems": [],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "P178",
+      "label": "Polydipsia (thirst)",
+      "type": "Presentation",
+      "systems": [],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "P179",
+      "label": "Post-operative care and complications",
+      "type": "Presentation",
+      "systems": [],
+      "blocks": [
+        "MSK",
+        "Related MSK"
+      ],
+      "aliases": []
+    },
+    {
+      "id": "P180",
+      "label": "Prematurity",
+      "type": "Presentation",
+      "systems": [],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "P181",
+      "label": "Pressure of speech",
+      "type": "Presentation",
+      "systems": [],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "P182",
+      "label": "Pruritus",
+      "type": "Presentation",
+      "systems": [],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "P183",
+      "label": "Ptosis",
+      "type": "Presentation",
+      "systems": [],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "P184",
+      "label": "Puerperium",
+      "type": "Presentation",
+      "systems": [],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "P185",
+      "label": "Pulseless limb",
+      "type": "Presentation",
+      "systems": [],
+      "blocks": [
+        "MSK",
+        "Related MSK"
+      ],
+      "aliases": []
+    },
+    {
+      "id": "P186",
+      "label": "Purpuric/ petechial rash",
+      "type": "Presentation",
+      "systems": [],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "P188",
+      "label": "Rectal prolapse",
+      "type": "Presentation",
+      "systems": [],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "P189",
+      "label": "Red eye",
+      "type": "Presentation",
+      "systems": [],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "P190",
+      "label": "Reduced/ change in foetal movements",
+      "type": "Presentation",
+      "systems": [],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "P192",
+      "label": "Scrotal/ testicular pain and/ or lump/swelling",
+      "type": "Presentation",
+      "systems": [],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "P193",
+      "label": "Self-harm",
+      "type": "Presentation",
+      "systems": [],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "P194",
+      "label": "Self-neglect",
+      "type": "Presentation",
+      "systems": [],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "P195",
+      "label": "Sexual abuse",
+      "type": "Presentation",
+      "systems": [],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "P196",
+      "label": "Sexual dysfunction",
+      "type": "Presentation",
+      "systems": [],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "P197",
+      "label": "Shock",
+      "type": "Presentation",
+      "systems": [],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "P198",
+      "label": "Skin laceration/ injury",
+      "type": "Presentation",
+      "systems": [],
+      "blocks": [
+        "MSK",
+        "Related MSK"
+      ],
+      "aliases": []
+    },
+    {
+      "id": "P199",
+      "label": "Skin lesion",
+      "type": "Presentation",
+      "systems": [],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "P200",
+      "label": "Skin rash (acute and chronic)",
+      "type": "Presentation",
+      "systems": [],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "P201",
+      "label": "Skin ulcer(s)",
+      "type": "Presentation",
+      "systems": [],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "P202",
+      "label": "Sleep problems",
+      "type": "Presentation",
+      "systems": [],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "P203",
+      "label": "Small for gestational age/ large for",
+      "type": "Presentation",
+      "systems": [],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "P204",
+      "label": "gestational age",
+      "type": "Presentation",
+      "systems": [],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "P205",
+      "label": "Snoring",
+      "type": "Presentation",
+      "systems": [],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "P206",
+      "label": "Soft tissue injury",
+      "type": "Presentation",
+      "systems": [],
+      "blocks": [
+        "MSK",
+        "Core MSK"
+      ],
+      "aliases": []
+    },
+    {
+      "id": "P207",
+      "label": "Sore throat",
+      "type": "Presentation",
+      "systems": [],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "P208",
+      "label": "Speech and language problems",
+      "type": "Presentation",
+      "systems": [],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "P209",
+      "label": "Squint",
+      "type": "Presentation",
+      "systems": [],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "P210",
+      "label": "Stool colour change",
+      "type": "Presentation",
+      "systems": [],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "P211",
+      "label": "Stridor",
+      "type": "Presentation",
+      "systems": [],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "P212",
+      "label": "Struggling to cope with activities of daily living",
+      "type": "Presentation",
+      "systems": [],
+      "blocks": [
+        "MSK",
+        "Related MSK"
+      ],
+      "aliases": []
+    },
+    {
+      "id": "P213",
+      "label": "Subcutaneous lump",
+      "type": "Presentation",
+      "systems": [],
+      "blocks": [
+        "MSK",
+        "Related MSK"
+      ],
+      "aliases": []
+    },
+    {
+      "id": "P214",
+      "label": "Substance misuse",
+      "type": "Presentation",
+      "systems": [],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "P215",
+      "label": "Sudden unexplained death in infancy",
+      "type": "Presentation",
+      "systems": [],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "P216",
+      "label": "Suicidal thoughts",
+      "type": "Presentation",
+      "systems": [],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "P217",
+      "label": "Swallowing problems",
+      "type": "Presentation",
+      "systems": [],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "P218",
+      "label": "Swollen limb(s)",
+      "type": "Presentation",
+      "systems": [],
+      "blocks": [
+        "MSK",
+        "Core MSK"
+      ],
+      "aliases": []
+    },
+    {
+      "id": "P220",
+      "label": "The sick child",
+      "type": "Presentation",
+      "systems": [],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "P221",
+      "label": "Thought disorder",
+      "type": "Presentation",
+      "systems": [],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "P222",
+      "label": "Thoughts or threats to harm others",
+      "type": "Presentation",
+      "systems": [],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "P223",
+      "label": "Tinnitus",
+      "type": "Presentation",
+      "systems": [],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "P224",
+      "label": "Tremor",
+      "type": "Presentation",
+      "systems": [],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "P226",
+      "label": "Unintended pregnancy and termination",
+      "type": "Presentation",
+      "systems": [],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "P227",
+      "label": "Unsteadiness",
+      "type": "Presentation",
+      "systems": [],
+      "blocks": [
+        "MSK",
+        "Related MSK"
+      ],
+      "aliases": []
+    },
+    {
+      "id": "P228",
+      "label": "Urethral discharge and genital ulcers/warts",
+      "type": "Presentation",
+      "systems": [],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "P229",
+      "label": "Urinary symptoms",
+      "type": "Presentation",
+      "systems": [],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "P231",
+      "label": "Vaccination",
+      "type": "Presentation",
+      "systems": [],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "P232",
+      "label": "Vaginal discharge",
+      "type": "Presentation",
+      "systems": [],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "P233",
+      "label": "Vaginal prolapse",
+      "type": "Presentation",
+      "systems": [],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "P234",
+      "label": "Vertigo",
+      "type": "Presentation",
+      "systems": [],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "P235",
+      "label": "Vision change/ loss (acute and gradual)",
+      "type": "Presentation",
+      "systems": [],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "P236",
+      "label": "Vomiting",
+      "type": "Presentation",
+      "systems": [],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "P237",
+      "label": "Vulval itching/ lesion",
+      "type": "Presentation",
+      "systems": [],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "P238",
+      "label": "Vulval/ vaginal lump",
+      "type": "Presentation",
+      "systems": [],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "P240",
+      "label": "Weight gain",
+      "type": "Presentation",
+      "systems": [],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "P241",
+      "label": "Weight loss",
+      "type": "Presentation",
+      "systems": [],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "P242",
+      "label": "Wellbeing checks",
+      "type": "Presentation",
+      "systems": [],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "P243",
+      "label": "Wheeze",
+      "type": "Presentation",
+      "systems": [],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "P244",
+      "label": "Worried parent",
+      "type": "Presentation",
+      "systems": [],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C4",
+      "label": "Abnormal blood film",
+      "type": "Condition",
+      "systems": [
+        "Blood and lymph"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C5",
+      "label": "Abscess",
+      "type": "Condition",
+      "systems": [
+        "Infections"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C6",
+      "label": "Acid-base abnormality",
+      "type": "Condition",
+      "systems": [
+        "Kidneys and urinary tract"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C7",
+      "label": "Acne vulgaris",
+      "type": "Condition",
+      "systems": [
+        "Skin and soft tissue"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C8",
+      "label": "Acromegaly",
+      "type": "Condition",
+      "systems": [
+        "Endocrine and metabolic"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C9",
+      "label": "Acute bronchitis",
+      "type": "Condition",
+      "systems": [
+        "Lungs, pleura and airways"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C10",
+      "label": "Acute cholangitis",
+      "type": "Condition",
+      "systems": [
+        "Liver, pancreas, biliary system"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C11",
+      "label": "Acute coronary syndromes",
+      "type": "Condition",
+      "systems": [
+        "Heart and vasculature"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C12",
+      "label": "Acute glaucoma",
+      "type": "Condition",
+      "systems": [
+        "Eye"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C13",
+      "label": "Acute kidney injury",
+      "type": "Condition",
+      "systems": [
+        "Kidneys and urinary tract"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C14",
+      "label": "Acute pancreatitis",
+      "type": "Condition",
+      "systems": [
+        "Liver, pancreas, biliary system"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C15",
+      "label": "Acute respiratory distress syndrome (ARDS)",
+      "type": "Condition",
+      "systems": [
+        "Lungs, pleura and airways"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C16",
+      "label": "Acute stress reaction",
+      "type": "Condition",
+      "systems": [
+        "Mental health"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C17",
+      "label": "Adrenal insufficiency (including primary and secondary)",
+      "type": "Condition",
+      "systems": [
+        "Endocrine and metabolic"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C18",
+      "label": "Adverse drug effects",
+      "type": "Condition",
+      "systems": [
+        "Drugs and drug effects"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C19",
+      "label": "Airway compromise/ management",
+      "type": "Condition",
+      "systems": [
+        "Ear, nose and throat"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C20",
+      "label": "Alcohol related liver disease",
+      "type": "Condition",
+      "systems": [
+        "Liver, pancreas, biliary system"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C21",
+      "label": "Alcohol withdrawal and opioid withdrawal",
+      "type": "Condition",
+      "systems": [
+        "Mental health"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C22",
+      "label": "Allergic disorder (including food allergy)",
+      "type": "Condition",
+      "systems": [
+        "Multi-system diseases"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C23",
+      "label": "Anaemia",
+      "type": "Condition",
+      "systems": [
+        "Blood and lymph"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C24",
+      "label": "Anal fissure",
+      "type": "Condition",
+      "systems": [
+        "Gastrointestinal tract"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C25",
+      "label": "Anaphylaxis",
+      "type": "Condition",
+      "systems": [
+        "Multi-system diseases"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C26",
+      "label": "Aneurysms, ischaemic limb and occlusions",
+      "type": "Condition",
+      "systems": [
+        "Heart and vasculature"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C27",
+      "label": "Antepartum haemorrhage",
+      "type": "Condition",
+      "systems": [
+        "Pregnancy and the puerperium"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C28",
+      "label": "Aortic aneurysm",
+      "type": "Condition",
+      "systems": [
+        "Heart and vasculature"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C29",
+      "label": "Aortic dissection",
+      "type": "Condition",
+      "systems": [
+        "Heart and vasculature"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C30",
+      "label": "Aortic valve disease",
+      "type": "Condition",
+      "systems": [
+        "Heart and vasculature"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C31",
+      "label": "Appendicitis",
+      "type": "Condition",
+      "systems": [
+        "Gastrointestinal tract"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C32",
+      "label": "Arginine vasopressin deficiency/ resistance (diabetes insipidus)",
+      "type": "Condition",
+      "systems": [
+        "Endocrine and metabolic"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C33",
+      "label": "Arterial thrombosis/ embolism",
+      "type": "Condition",
+      "systems": [
+        "Heart and vasculature"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C34",
+      "label": "Ascites (including spontaneous bacterial peritonitis)",
+      "type": "Condition",
+      "systems": [
+        "Liver, pancreas, biliary system"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C35",
+      "label": "Asthma",
+      "type": "Condition",
+      "systems": [
+        "Lungs, pleura and airways"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C36",
+      "label": "Asthma- chronic obstructive pulmonary disease (COPD) overlap",
+      "type": "Condition",
+      "systems": [],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C37",
+      "label": "Atopic dermatitis/ eczema",
+      "type": "Condition",
+      "systems": [
+        "Skin and soft tissue"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C38",
+      "label": "Attention deficit hyperactivity disorder (ADHD)",
+      "type": "Condition",
+      "systems": [
+        "Mental health"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C39",
+      "label": "Autism spectrum disorder (ASD)",
+      "type": "Condition",
+      "systems": [
+        "Mental health"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C40",
+      "label": "Autonomic neuropathy",
+      "type": "Condition",
+      "systems": [
+        "Peripheral nervous system and neuromuscular junction"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C42",
+      "label": "Bacterial vaginosis",
+      "type": "Condition",
+      "systems": [
+        "Gynaecological tract"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C43",
+      "label": "Bell palsy",
+      "type": "Condition",
+      "systems": [
+        "Peripheral nervous system and neuromuscular junction"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C44",
+      "label": "Benign eyelid disorders (including blepharitis, ectropion/ entropion, chalazion, hordeolum)",
+      "type": "Condition",
+      "systems": [
+        "Eye"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C45",
+      "label": "Benign paroxysmal positional vertigo (BPPV)",
+      "type": "Condition",
+      "systems": [
+        "Ear, nose and throat"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C46",
+      "label": "Benign prostatic hyperplasia",
+      "type": "Condition",
+      "systems": [
+        "Male genitourinary tract"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C47",
+      "label": "Benign skin lesion (including melanocytic naevi, epidermal cyst, dermatofibroma, seborrheic keratosis, actinic keratosis)",
+      "type": "Condition",
+      "systems": [
+        "Skin and soft tissue"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C48",
+      "label": "Biliary atresia",
+      "type": "Condition",
+      "systems": [
+        "Child health"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C49",
+      "label": "Bipolar affective disorder (including mania/ hypomania)",
+      "type": "Condition",
+      "systems": [
+        "Mental health"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C50",
+      "label": "Bladder cancer",
+      "type": "Condition",
+      "systems": [
+        "Kidneys and urinary tract"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C51",
+      "label": "Blood group incompatibility in pregnancy",
+      "type": "Condition",
+      "systems": [
+        "Pregnancy and the puerperium"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C52",
+      "label": "Bone tumours (primary and secondary including osteosarcoma, Ewing sarcoma)",
+      "type": "Condition",
+      "systems": [
+        "Musculoskeletal"
+      ],
+      "blocks": [
+        "MSK",
+        "Core MSK"
+      ],
+      "aliases": []
+    },
+    {
+      "id": "C53",
+      "label": "Bradyarrhythmias (including AV block)",
+      "type": "Condition",
+      "systems": [
+        "Heart and vasculature"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C54",
+      "label": "Brain abscess",
+      "type": "Condition",
+      "systems": [
+        "Brain and spinal cord"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C55",
+      "label": "Brain tumours (primary and secondary)",
+      "type": "Condition",
+      "systems": [
+        "Brain and spinal cord"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C56",
+      "label": "Breast abscess/ mastitis",
+      "type": "Condition",
+      "systems": [
+        "Breast"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C57",
+      "label": "Breast cancer",
+      "type": "Condition",
+      "systems": [
+        "Breast"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C58",
+      "label": "Breast cysts",
+      "type": "Condition",
+      "systems": [
+        "Breast"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C59",
+      "label": "Bronchiectasis",
+      "type": "Condition",
+      "systems": [
+        "Lungs, pleura and airways"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C60",
+      "label": "Bronchiolitis",
+      "type": "Condition",
+      "systems": [
+        "Child health"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C61",
+      "label": "Bronchopulmonary dysplasia (chronic lung disease of prematurity)",
+      "type": "Condition",
+      "systems": [
+        "Child health"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C62",
+      "label": "Burns",
+      "type": "Condition",
+      "systems": [
+        "Skin and soft tissue"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C63",
+      "label": "Bursitis",
+      "type": "Condition",
+      "systems": [
+        "Musculoskeletal"
+      ],
+      "blocks": [
+        "MSK",
+        "Core MSK"
+      ],
+      "aliases": []
+    },
+    {
+      "id": "C65",
+      "label": "Candidiasis",
+      "type": "Condition",
+      "systems": [
+        "Infections"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C66",
+      "label": "Carbon monoxide poisoning",
+      "type": "Condition",
+      "systems": [
+        "Multi-system diseases"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C67",
+      "label": "Cardiac arrest",
+      "type": "Condition",
+      "systems": [
+        "Heart and vasculature"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C68",
+      "label": "Cardiomyopathy",
+      "type": "Condition",
+      "systems": [
+        "Heart and vasculature"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C69",
+      "label": "Carotid dissection",
+      "type": "Condition",
+      "systems": [
+        "Heart and vasculature"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C70",
+      "label": "Cataracts",
+      "type": "Condition",
+      "systems": [
+        "Eye"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C71",
+      "label": "Cauda equina syndrome",
+      "type": "Condition",
+      "systems": [
+        "Musculoskeletal"
+      ],
+      "blocks": [
+        "MSK",
+        "Core MSK"
+      ],
+      "aliases": []
+    },
+    {
+      "id": "C72",
+      "label": "Cellulitis",
+      "type": "Condition",
+      "systems": [
+        "Skin and soft tissue"
+      ],
+      "blocks": [
+        "MSK",
+        "Related MSK"
+      ],
+      "aliases": []
+    },
+    {
+      "id": "C73",
+      "label": "Central retinal arterial occlusion",
+      "type": "Condition",
+      "systems": [
+        "Eye"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C74",
+      "label": "Central retinal vein occlusion",
+      "type": "Condition",
+      "systems": [
+        "Eye"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C75",
+      "label": "Cerebral palsy and hypoxic-ischaemic encephalopathy",
+      "type": "Condition",
+      "systems": [
+        "Brain and spinal cord"
+      ],
+      "blocks": [
+        "MSK",
+        "Related MSK"
+      ],
+      "aliases": []
+    },
+    {
+      "id": "C76",
+      "label": "Cerebral venous sinus thrombosis (CVST)",
+      "type": "Condition",
+      "systems": [
+        "Brain and spinal cord"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C77",
+      "label": "Cervical cancer",
+      "type": "Condition",
+      "systems": [
+        "Gynaecological tract"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C78",
+      "label": "Cervical ectropion",
+      "type": "Condition",
+      "systems": [
+        "Gynaecological tract"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C79",
+      "label": "Cervical screening (human papilloma virus)",
+      "type": "Condition",
+      "systems": [
+        "Gynaecological tract"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C80",
+      "label": "Childhood cancer (including retinoblastoma)",
+      "type": "Condition",
+      "systems": [
+        "Child health"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C81",
+      "label": "Childhood hip/ leg disorders (including Perthes’ disease, slipped upper femoral epiphyses, developmental dysplasia of the hip)",
+      "type": "Condition",
+      "systems": [
+        "Child health"
+      ],
+      "blocks": [
+        "MSK",
+        "Related MSK"
+      ],
+      "aliases": []
+    },
+    {
+      "id": "C82",
+      "label": "Chlamydia",
+      "type": "Condition",
+      "systems": [
+        "Infections"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C83",
+      "label": "Cholecystitis",
+      "type": "Condition",
+      "systems": [
+        "Liver, pancreas, biliary system"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C84",
+      "label": "Cholesteatoma",
+      "type": "Condition",
+      "systems": [
+        "Ear, nose and throat"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C85",
+      "label": "Chorioamnionitis",
+      "type": "Condition",
+      "systems": [
+        "Pregnancy and the puerperium"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C86",
+      "label": "Chronic glaucoma",
+      "type": "Condition",
+      "systems": [
+        "Eye"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C87",
+      "label": "Chronic kidney disease",
+      "type": "Condition",
+      "systems": [
+        "Kidneys and urinary tract"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C88",
+      "label": "Chronic liver disease (including decompensation and cirrhosis of the liver)",
+      "type": "Condition",
+      "systems": [
+        "Liver, pancreas, biliary system"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C89",
+      "label": "Chronic obstructive pulmonary disease (COPD)",
+      "type": "Condition",
+      "systems": [],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C90",
+      "label": "Chronic pancreatitis",
+      "type": "Condition",
+      "systems": [
+        "Liver, pancreas, biliary system"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C91",
+      "label": "Coagulation disorders (including haemophilia, Von Willebrand disease, and thrombophilia, and secondary to illness or medication)",
+      "type": "Condition",
+      "systems": [
+        "Blood and lymph"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C92",
+      "label": "Coeliac disease",
+      "type": "Condition",
+      "systems": [
+        "Gastrointestinal tract"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C93",
+      "label": "Colorectal cancer",
+      "type": "Condition",
+      "systems": [
+        "Gastrointestinal tract"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C94",
+      "label": "Complications of fractures (including compartment syndrome, non-union, malunion, avascular necrosis)",
+      "type": "Condition",
+      "systems": [
+        "Musculoskeletal"
+      ],
+      "blocks": [
+        "MSK",
+        "Core MSK"
+      ],
+      "aliases": []
+    },
+    {
+      "id": "C95",
+      "label": "Complications of labour (including malpresentation, shoulder-dystocia, preterm labour, cord prolapse)",
+      "type": "Condition",
+      "systems": [
+        "Pregnancy and the puerperium"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C96",
+      "label": "Congenital heart disease",
+      "type": "Condition",
+      "systems": [
+        "Heart and vasculature"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C97",
+      "label": "Conjunctivitis",
+      "type": "Condition",
+      "systems": [
+        "Eye"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C98",
+      "label": "Constipation",
+      "type": "Condition",
+      "systems": [
+        "Gastrointestinal tract"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C99",
+      "label": "Contact dermatitis",
+      "type": "Condition",
+      "systems": [
+        "Skin and soft tissue"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C100",
+      "label": "Corneal ulcer/ abrasion",
+      "type": "Condition",
+      "systems": [
+        "Eye"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C101",
+      "label": "COVID-19",
+      "type": "Condition",
+      "systems": [
+        "Infections"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C102",
+      "label": "Cow milk protein allergy",
+      "type": "Condition",
+      "systems": [
+        "Child health"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C103",
+      "label": "Croup",
+      "type": "Condition",
+      "systems": [
+        "Child health"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C104",
+      "label": "Cryptorchidism",
+      "type": "Condition",
+      "systems": [
+        "Child health"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C105",
+      "label": "Crystal arthropathy",
+      "type": "Condition",
+      "systems": [
+        "Musculoskeletal"
+      ],
+      "blocks": [
+        "MSK",
+        "Core MSK"
+      ],
+      "aliases": []
+    },
+    {
+      "id": "C106",
+      "label": "Cushing syndrome",
+      "type": "Condition",
+      "systems": [
+        "Endocrine and metabolic"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C107",
+      "label": "Cutaneous fungal infection",
+      "type": "Condition",
+      "systems": [
+        "Skin and soft tissue"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C108",
+      "label": "Cutaneous warts",
+      "type": "Condition",
+      "systems": [
+        "Skin and soft tissue"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C109",
+      "label": "Cystic fibrosis",
+      "type": "Condition",
+      "systems": [
+        "Genetic and congenital"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C111",
+      "label": "Deep vein thrombosis",
+      "type": "Condition",
+      "systems": [
+        "Heart and vasculature"
+      ],
+      "blocks": [
+        "MSK",
+        "Related MSK"
+      ],
+      "aliases": []
+    },
+    {
+      "id": "C112",
+      "label": "Delirium",
+      "type": "Condition",
+      "systems": [
+        "Brain and spinal cord"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C113",
+      "label": "Delusional disorder",
+      "type": "Condition",
+      "systems": [
+        "Mental health"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C114",
+      "label": "Dementias (including Alzheimer dementia, Lewy-Body dementia, frontotemporal dementia, vascular dementia)",
+      "type": "Condition",
+      "systems": [
+        "Brain and spinal cord"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C115",
+      "label": "Depression",
+      "type": "Condition",
+      "systems": [
+        "Mental health"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C116",
+      "label": "Diabetes in pregnancy (gestational and pre-existing)",
+      "type": "Condition",
+      "systems": [
+        "Pregnancy and the puerperium"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C117",
+      "label": "Diabetes mellitus",
+      "type": "Condition",
+      "systems": [
+        "Endocrine and metabolic"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C118",
+      "label": "Diabetic ketoacidosis (DKA)",
+      "type": "Condition",
+      "systems": [
+        "Endocrine and metabolic"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C119",
+      "label": "Diabetic nephropathy",
+      "type": "Condition",
+      "systems": [
+        "Endocrine and metabolic"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C120",
+      "label": "Diabetic neuropathy",
+      "type": "Condition",
+      "systems": [
+        "Endocrine and metabolic"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C121",
+      "label": "Diabetic retinopathy",
+      "type": "Condition",
+      "systems": [
+        "Endocrine and metabolic"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C122",
+      "label": "Disease prevention/ screening",
+      "type": "Condition",
+      "systems": [
+        "Other knowledge"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C123",
+      "label": "Disseminated intravascular coagulation (DIC)",
+      "type": "Condition",
+      "systems": [
+        "Blood and lymph"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C124",
+      "label": "Diverticular disease and diverticulitis",
+      "type": "Condition",
+      "systems": [
+        "Gastrointestinal tract"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C125",
+      "label": "Down syndrome",
+      "type": "Condition",
+      "systems": [
+        "Genetic and congenital"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C126",
+      "label": "Drug overdose",
+      "type": "Condition",
+      "systems": [
+        "Drugs and drug effects"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C128",
+      "label": "Eating disorders",
+      "type": "Condition",
+      "systems": [
+        "Mental health"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C129",
+      "label": "Ectopic pregnancy",
+      "type": "Condition",
+      "systems": [
+        "Pregnancy and the puerperium"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C130",
+      "label": "Ehlers-Danlos syndrome",
+      "type": "Condition",
+      "systems": [
+        "Genetic and congenital"
+      ],
+      "blocks": [
+        "MSK",
+        "Related MSK"
+      ],
+      "aliases": []
+    },
+    {
+      "id": "C131",
+      "label": "Empyema",
+      "type": "Condition",
+      "systems": [
+        "Lungs, pleura and airways"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C132",
+      "label": "Encephalitis",
+      "type": "Condition",
+      "systems": [
+        "Brain and spinal cord"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C133",
+      "label": "End stage renal disease (including renal replacement therapy and transplantation)",
+      "type": "Condition",
+      "systems": [
+        "Kidneys and urinary tract"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C134",
+      "label": "Endometrial cancer",
+      "type": "Condition",
+      "systems": [
+        "Gynaecological tract"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C135",
+      "label": "Endometriosis",
+      "type": "Condition",
+      "systems": [
+        "Gynaecological tract"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C136",
+      "label": "Epiglottitis",
+      "type": "Condition",
+      "systems": [
+        "Ear, nose and throat"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C137",
+      "label": "Epilepsy",
+      "type": "Condition",
+      "systems": [
+        "Brain and spinal cord"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C138",
+      "label": "Epistaxis",
+      "type": "Condition",
+      "systems": [
+        "Ear, nose and throat"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C139",
+      "label": "Erythema nodosum",
+      "type": "Condition",
+      "systems": [
+        "Skin and soft tissue"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C140",
+      "label": "Essential tremor",
+      "type": "Condition",
+      "systems": [
+        "Brain and spinal cord"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C141",
+      "label": "Extradural haemorrhage",
+      "type": "Condition",
+      "systems": [
+        "Brain and spinal cord"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C143",
+      "label": "Faltering growth (failure to thrive)",
+      "type": "Condition",
+      "systems": [
+        "Child health"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C144",
+      "label": "Febrile convulsions",
+      "type": "Condition",
+      "systems": [
+        "Child health"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C145",
+      "label": "Fibroadenoma",
+      "type": "Condition",
+      "systems": [
+        "Breast"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C146",
+      "label": "Fibroids",
+      "type": "Condition",
+      "systems": [
+        "Gynaecological tract"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C147",
+      "label": "Fibromyalgia",
+      "type": "Condition",
+      "systems": [
+        "Musculoskeletal"
+      ],
+      "blocks": [
+        "MSK",
+        "Core MSK"
+      ],
+      "aliases": []
+    },
+    {
+      "id": "C148",
+      "label": "Folliculitis and Hidradenitis suppurativa",
+      "type": "Condition",
+      "systems": [
+        "Skin and soft tissue"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C149",
+      "label": "Fracture(s) (including pathological fractures)",
+      "type": "Condition",
+      "systems": [
+        "Musculoskeletal"
+      ],
+      "blocks": [
+        "MSK",
+        "Core MSK"
+      ],
+      "aliases": []
+    },
+    {
+      "id": "C151",
+      "label": "Gallstones and biliary colic",
+      "type": "Condition",
+      "systems": [
+        "Liver, pancreas, biliary system"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C152",
+      "label": "Gambling disorder",
+      "type": "Condition",
+      "systems": [
+        "Mental health"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C153",
+      "label": "Gangrene",
+      "type": "Condition",
+      "systems": [
+        "Heart and vasculature"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C154",
+      "label": "Gastric cancer",
+      "type": "Condition",
+      "systems": [
+        "Gastrointestinal tract"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C155",
+      "label": "Gastrointestinal bleeding (upper and lower GI bleeding)",
+      "type": "Condition",
+      "systems": [
+        "Gastrointestinal tract"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C156",
+      "label": "Gastrointestinal perforation",
+      "type": "Condition",
+      "systems": [
+        "Gastrointestinal tract"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C157",
+      "label": "Gastro-oesophageal reflux disease (including Barrett oesophagus)",
+      "type": "Condition",
+      "systems": [
+        "Gastrointestinal tract"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C158",
+      "label": "Gender dysphoria and/ or incongruence",
+      "type": "Condition",
+      "systems": [
+        "Mental health"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C159",
+      "label": "Generalised anxiety disorder",
+      "type": "Condition",
+      "systems": [
+        "Mental health"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C160",
+      "label": "Genitourinary syndrome of menopause",
+      "type": "Condition",
+      "systems": [
+        "Gynaecological tract"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C161",
+      "label": "Giant cell arteritis",
+      "type": "Condition",
+      "systems": [
+        "Musculoskeletal"
+      ],
+      "blocks": [
+        "MSK",
+        "Core MSK"
+      ],
+      "aliases": []
+    },
+    {
+      "id": "C162",
+      "label": "Glomerulonephritis",
+      "type": "Condition",
+      "systems": [
+        "Kidneys and urinary tract"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C163",
+      "label": "Gonorrhoea",
+      "type": "Condition",
+      "systems": [
+        "Infections"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C164",
+      "label": "Graves disease (including thyroid eye disease)",
+      "type": "Condition",
+      "systems": [
+        "Endocrine and metabolic"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C165",
+      "label": "Guillain-Barré/ Inflammatory",
+      "type": "Condition",
+      "systems": [],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C166",
+      "label": "demyelinating polyneuropathy",
+      "type": "Condition",
+      "systems": [],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C168",
+      "label": "Haemangioma",
+      "type": "Condition",
+      "systems": [
+        "Skin and soft tissue"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C169",
+      "label": "Haemochromatosis",
+      "type": "Condition",
+      "systems": [
+        "Endocrine and metabolic"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C170",
+      "label": "Haemoglobinopathies",
+      "type": "Condition",
+      "systems": [
+        "Blood and lymph"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C171",
+      "label": "Haemorrhoids",
+      "type": "Condition",
+      "systems": [
+        "Gastrointestinal tract"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C172",
+      "label": "Head and neck cancer (including oral, laryngeal and salivary gland)",
+      "type": "Condition",
+      "systems": [
+        "Ear, nose and throat"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C173",
+      "label": "Heart failure",
+      "type": "Condition",
+      "systems": [
+        "Heart and vasculature"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C174",
+      "label": "Helicobacter pylori",
+      "type": "Condition",
+      "systems": [
+        "Infections"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C175",
+      "label": "Hepatitis (including viral, autoimmune, alcoholic)",
+      "type": "Condition",
+      "systems": [
+        "Liver, pancreas, biliary system"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C176",
+      "label": "Hepatocellular carcinoma",
+      "type": "Condition",
+      "systems": [
+        "Liver, pancreas, biliary system"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C177",
+      "label": "Hernias",
+      "type": "Condition",
+      "systems": [
+        "Gastrointestinal tract"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C178",
+      "label": "Herpes simplex virus",
+      "type": "Condition",
+      "systems": [
+        "Infections"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C179",
+      "label": "Hiatus hernia",
+      "type": "Condition",
+      "systems": [
+        "Gastrointestinal tract"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C180",
+      "label": "Hospital acquired infections",
+      "type": "Condition",
+      "systems": [
+        "Infections"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C181",
+      "label": "Human immunodeficiency virus (HIV)",
+      "type": "Condition",
+      "systems": [
+        "Infections"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C182",
+      "label": "Human papilloma virus infection",
+      "type": "Condition",
+      "systems": [
+        "Infections"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C183",
+      "label": "Huntington disease",
+      "type": "Condition",
+      "systems": [
+        "Genetic and congenital"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C184",
+      "label": "Hydrocoele/ varicocele/ epididymal cyst",
+      "type": "Condition",
+      "systems": [],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C185",
+      "label": "Hydronephrosis",
+      "type": "Condition",
+      "systems": [
+        "Kidneys and urinary tract"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C186",
+      "label": "Hypercalcaemia/ hypocalcaemia",
+      "type": "Condition",
+      "systems": [
+        "Kidneys and urinary tract"
+      ],
+      "blocks": [
+        "MSK",
+        "Related MSK"
+      ],
+      "aliases": []
+    },
+    {
+      "id": "C187",
+      "label": "Hyperemesis gravidarum",
+      "type": "Condition",
+      "systems": [
+        "Pregnancy and the puerperium"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C188",
+      "label": "Hyperkalaemia/ hypokalaemia",
+      "type": "Condition",
+      "systems": [
+        "Kidneys and urinary tract"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C189",
+      "label": "Hyperlipidaemia",
+      "type": "Condition",
+      "systems": [
+        "Endocrine and metabolic"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C190",
+      "label": "Hyperosmolar hyperglycaemic state (HHS)",
+      "type": "Condition",
+      "systems": [
+        "Endocrine and metabolic"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C191",
+      "label": "Hyperparathyroidism/hypoparathyroidism",
+      "type": "Condition",
+      "systems": [
+        "Endocrine and metabolic"
+      ],
+      "blocks": [
+        "MSK",
+        "Related MSK"
+      ],
+      "aliases": []
+    },
+    {
+      "id": "C192",
+      "label": "Hyperprolactinaemia",
+      "type": "Condition",
+      "systems": [
+        "Endocrine and metabolic"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C193",
+      "label": "Hypertension (essential or secondary)",
+      "type": "Condition",
+      "systems": [
+        "Heart and vasculature"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C194",
+      "label": "Hypertension in pregnancy (including gestational hypertension, pre-eclampsia, eclampsia)",
+      "type": "Condition",
+      "systems": [
+        "Pregnancy and the puerperium"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C195",
+      "label": "Hypertensive retinopathy",
+      "type": "Condition",
+      "systems": [
+        "Eye"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C196",
+      "label": "Hyperthermia and hypothermia",
+      "type": "Condition",
+      "systems": [
+        "Multi-system diseases"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C197",
+      "label": "Hyperthyroidism/ thyrotoxicosis",
+      "type": "Condition",
+      "systems": [
+        "Endocrine and metabolic"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C198",
+      "label": "Hypoglycaemia",
+      "type": "Condition",
+      "systems": [
+        "Endocrine and metabolic"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C199",
+      "label": "Hyponatraemia/ hypernatraemia",
+      "type": "Condition",
+      "systems": [
+        "Kidneys and urinary tract"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C200",
+      "label": "Hypopituitarism",
+      "type": "Condition",
+      "systems": [
+        "Endocrine and metabolic"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C201",
+      "label": "Hyposplenism/ splenectomy",
+      "type": "Condition",
+      "systems": [
+        "Blood and lymph"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C202",
+      "label": "Hypothyroidism",
+      "type": "Condition",
+      "systems": [
+        "Endocrine and metabolic"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C203",
+      "label": "Hypovolaemia/ volume depletion",
+      "type": "Condition",
+      "systems": [
+        "Multi-system diseases"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C205",
+      "label": "Iatrogenic condition",
+      "type": "Condition",
+      "systems": [
+        "Other knowledge"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C206",
+      "label": "Idiopathic intracranial hypertension",
+      "type": "Condition",
+      "systems": [
+        "Brain and spinal cord"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C207",
+      "label": "Idiopathic thrombocytopenic purpura (ITP)",
+      "type": "Condition",
+      "systems": [
+        "Blood and lymph"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C208",
+      "label": "IgA vasculitis",
+      "type": "Condition",
+      "systems": [
+        "Kidneys and urinary tract"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C209",
+      "label": "Impetigo",
+      "type": "Condition",
+      "systems": [
+        "Skin and soft tissue"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C210",
+      "label": "Incidental finding",
+      "type": "Condition",
+      "systems": [
+        "Multi-system diseases"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C211",
+      "label": "Infectious colitis (including Clostridium difficile)",
+      "type": "Condition",
+      "systems": [
+        "Gastrointestinal tract"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C212",
+      "label": "Infectious diarrhoea (including infective gastroenteritis)",
+      "type": "Condition",
+      "systems": [
+        "Gastrointestinal tract"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C213",
+      "label": "Infectious mononucleosis (including Epstein-Barr virus, cytomegalovirus)",
+      "type": "Condition",
+      "systems": [
+        "Infections"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C214",
+      "label": "Infective endocarditis",
+      "type": "Condition",
+      "systems": [
+        "Heart and vasculature"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C215",
+      "label": "Infective keratitis",
+      "type": "Condition",
+      "systems": [
+        "Eye"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C216",
+      "label": "Infertility/ subfertility",
+      "type": "Condition",
+      "systems": [
+        "Multi-system diseases"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C217",
+      "label": "Inflammatory bowel disease (including Crohn disease, ulcerative colitis)",
+      "type": "Condition",
+      "systems": [
+        "Gastrointestinal tract"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C218",
+      "label": "Inflammatory conditions of the eye (including scleritis, episcleritis, uveitis)",
+      "type": "Condition",
+      "systems": [
+        "Eye"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C219",
+      "label": "Influenza",
+      "type": "Condition",
+      "systems": [
+        "Infections"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C220",
+      "label": "Interstitial lung disease (including fibrotic lung disease)",
+      "type": "Condition",
+      "systems": [
+        "Lungs, pleura and airways"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C221",
+      "label": "Intervertebral disc prolapse",
+      "type": "Condition",
+      "systems": [
+        "Musculoskeletal"
+      ],
+      "blocks": [
+        "MSK",
+        "Core MSK"
+      ],
+      "aliases": []
+    },
+    {
+      "id": "C222",
+      "label": "Intestinal ischaemia",
+      "type": "Condition",
+      "systems": [
+        "Gastrointestinal tract"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C223",
+      "label": "Intestinal obstruction and ileus",
+      "type": "Condition",
+      "systems": [
+        "Gastrointestinal tract"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C224",
+      "label": "Irritable bowel syndrome",
+      "type": "Condition",
+      "systems": [
+        "Gastrointestinal tract"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C225",
+      "label": "Ischaemic heart disease (including stable angina)",
+      "type": "Condition",
+      "systems": [
+        "Heart and vasculature"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C227",
+      "label": "Jaundice in pregnancy",
+      "type": "Condition",
+      "systems": [
+        "Pregnancy and the puerperium"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C228",
+      "label": "Joint dislocation or subluxation",
+      "type": "Condition",
+      "systems": [
+        "Musculoskeletal"
+      ],
+      "blocks": [
+        "MSK",
+        "Core MSK"
+      ],
+      "aliases": []
+    },
+    {
+      "id": "C229",
+      "label": "Juvenile idiopathic arthritis",
+      "type": "Condition",
+      "systems": [
+        "Musculoskeletal"
+      ],
+      "blocks": [
+        "MSK",
+        "Core MSK"
+      ],
+      "aliases": []
+    },
+    {
+      "id": "C231",
+      "label": "Kawasaki disease",
+      "type": "Condition",
+      "systems": [
+        "Child health"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C232",
+      "label": "Klinefelter syndrome",
+      "type": "Condition",
+      "systems": [
+        "Genetic and congenital"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C234",
+      "label": "Labyrinthitis/ vestibular neuritis",
+      "type": "Condition",
+      "systems": [],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C235",
+      "label": "Leukaemia",
+      "type": "Condition",
+      "systems": [
+        "Blood and lymph"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C236",
+      "label": "Lichen planus",
+      "type": "Condition",
+      "systems": [
+        "Skin and soft tissue"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C237",
+      "label": "Lichen sclerosus",
+      "type": "Condition",
+      "systems": [
+        "Gynaecological tract"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C238",
+      "label": "Lipoma",
+      "type": "Condition",
+      "systems": [
+        "Skin and soft tissue"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C239",
+      "label": "Liver abscess",
+      "type": "Condition",
+      "systems": [
+        "Liver, pancreas, biliary system"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C240",
+      "label": "Liver failure",
+      "type": "Condition",
+      "systems": [
+        "Liver, pancreas, biliary system"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C241",
+      "label": "Lower back pain and sciatica",
+      "type": "Condition",
+      "systems": [
+        "Musculoskeletal"
+      ],
+      "blocks": [
+        "MSK",
+        "Core MSK"
+      ],
+      "aliases": []
+    },
+    {
+      "id": "C242",
+      "label": "Lower respiratory tract infection",
+      "type": "Condition",
+      "systems": [
+        "Lungs, pleura and airways"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C243",
+      "label": "Lung abscess",
+      "type": "Condition",
+      "systems": [
+        "Lungs, pleura and airways"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C244",
+      "label": "Lung cancer",
+      "type": "Condition",
+      "systems": [
+        "Lungs, pleura and airways"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C245",
+      "label": "Lymphoma",
+      "type": "Condition",
+      "systems": [
+        "Blood and lymph"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C247",
+      "label": "Macular degeneration",
+      "type": "Condition",
+      "systems": [
+        "Eye"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C248",
+      "label": "Malabsorption",
+      "type": "Condition",
+      "systems": [
+        "Gastrointestinal tract"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C249",
+      "label": "Malaria",
+      "type": "Condition",
+      "systems": [
+        "Infections"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C250",
+      "label": "Malignant/ pre-malignant skin lesions (including Bowen disease, malignant melanoma, basal cell carcinoma, squamous cell carcinoma)",
+      "type": "Condition",
+      "systems": [
+        "Skin and soft tissue"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C251",
+      "label": "Mallory-Weiss tear",
+      "type": "Condition",
+      "systems": [
+        "Gastrointestinal tract"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C252",
+      "label": "Malnutrition",
+      "type": "Condition",
+      "systems": [
+        "Multi-system diseases"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C253",
+      "label": "Marfan syndrome",
+      "type": "Condition",
+      "systems": [
+        "Genetic and congenital"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C254",
+      "label": "Mastoiditis",
+      "type": "Condition",
+      "systems": [
+        "Ear, nose and throat"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C255",
+      "label": "Measles",
+      "type": "Condition",
+      "systems": [
+        "Infections"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C256",
+      "label": "Medically unexplained symptoms",
+      "type": "Condition",
+      "systems": [
+        "Multi-system diseases"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C257",
+      "label": "Ménière disease",
+      "type": "Condition",
+      "systems": [
+        "Ear, nose and throat"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C258",
+      "label": "Meningitis",
+      "type": "Condition",
+      "systems": [
+        "Brain and spinal cord"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C259",
+      "label": "Menopause/ perimenopause",
+      "type": "Condition",
+      "systems": [
+        "Gynaecological tract"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C260",
+      "label": "Mesenteric adenitis",
+      "type": "Condition",
+      "systems": [
+        "Child health"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C261",
+      "label": "Metabolic dysfunction-associated steatotic",
+      "type": "Condition",
+      "systems": [],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C262",
+      "label": "liver disease (MASLD)",
+      "type": "Condition",
+      "systems": [],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C263",
+      "label": "Metabolic syndrome",
+      "type": "Condition",
+      "systems": [
+        "Endocrine and metabolic"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C264",
+      "label": "Metastatic cancer",
+      "type": "Condition",
+      "systems": [
+        "Multi-system diseases"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C265",
+      "label": "Miscarriage and intrauterine death",
+      "type": "Condition",
+      "systems": [
+        "Pregnancy and the puerperium"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C266",
+      "label": "Mitral valve disease",
+      "type": "Condition",
+      "systems": [
+        "Heart and vasculature"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C267",
+      "label": "Motor neurone disease",
+      "type": "Condition",
+      "systems": [
+        "Brain and spinal cord"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C268",
+      "label": "Multi-organ dysfunction syndrome",
+      "type": "Condition",
+      "systems": [
+        "Multi-system diseases"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C269",
+      "label": "Multiple myeloma",
+      "type": "Condition",
+      "systems": [
+        "Blood and lymph"
+      ],
+      "blocks": [
+        "MSK",
+        "Related MSK"
+      ],
+      "aliases": []
+    },
+    {
+      "id": "C270",
+      "label": "Multiple pregnancy",
+      "type": "Condition",
+      "systems": [
+        "Pregnancy and the puerperium"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C271",
+      "label": "Multiple sclerosis (MS)",
+      "type": "Condition",
+      "systems": [
+        "Brain and spinal cord"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C272",
+      "label": "Mumps",
+      "type": "Condition",
+      "systems": [
+        "Infections"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C273",
+      "label": "Muscular dystrophies",
+      "type": "Condition",
+      "systems": [
+        "Peripheral nervous system and neuromuscular junction"
+      ],
+      "blocks": [
+        "MSK",
+        "Related MSK"
+      ],
+      "aliases": []
+    },
+    {
+      "id": "C274",
+      "label": "Myalgic encephalomyelitis (ME)/ chronic fatigue syndrome (CFS) (awareness and approach)",
+      "type": "Condition",
+      "systems": [
+        "Multi-system diseases"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C275",
+      "label": "Myasthenia gravis",
+      "type": "Condition",
+      "systems": [
+        "Peripheral nervous system and neuromuscular junction"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C276",
+      "label": "Myeloproliferative disorders",
+      "type": "Condition",
+      "systems": [
+        "Blood and lymph"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C277",
+      "label": "Myocarditis",
+      "type": "Condition",
+      "systems": [
+        "Heart and vasculature"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C279",
+      "label": "Nasal polyps",
+      "type": "Condition",
+      "systems": [
+        "Ear, nose and throat"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C280",
+      "label": "Necrotising enterocolitis",
+      "type": "Condition",
+      "systems": [
+        "Child health"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C281",
+      "label": "Necrotising fasciitis",
+      "type": "Condition",
+      "systems": [
+        "Skin and soft tissue"
+      ],
+      "blocks": [
+        "MSK",
+        "Related MSK"
+      ],
+      "aliases": []
+    },
+    {
+      "id": "C282",
+      "label": "Neonatal jaundice (including pathological and physiological jaundice)",
+      "type": "Condition",
+      "systems": [
+        "Child health"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C283",
+      "label": "Neonatal surgical emergencies (including pyloric stenosis, intussusception)",
+      "type": "Condition",
+      "systems": [
+        "Child health"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C284",
+      "label": "Nephrotic syndrome",
+      "type": "Condition",
+      "systems": [
+        "Kidneys and urinary tract"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C285",
+      "label": "Neuroleptic malignant syndrome",
+      "type": "Condition",
+      "systems": [
+        "Drugs and drug effects"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C286",
+      "label": "Neutropenia (including neutropenic sepsis)",
+      "type": "Condition",
+      "systems": [
+        "Blood and lymph"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C287",
+      "label": "Non-accidental injury",
+      "type": "Condition",
+      "systems": [
+        "Other knowledge"
+      ],
+      "blocks": [
+        "MSK",
+        "Related MSK"
+      ],
+      "aliases": []
+    },
+    {
+      "id": "C288",
+      "label": "Notifiable diseases",
+      "type": "Condition",
+      "systems": [
+        "Other knowledge"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C290",
+      "label": "Obesity",
+      "type": "Condition",
+      "systems": [
+        "Multi-system diseases"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C291",
+      "label": "Obesity in pregnancy",
+      "type": "Condition",
+      "systems": [
+        "Pregnancy and the puerperium"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C292",
+      "label": "Obsessive-compulsive disorder (OCD)",
+      "type": "Condition",
+      "systems": [
+        "Mental health"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C293",
+      "label": "Obstructive sleep apnoea",
+      "type": "Condition",
+      "systems": [
+        "Lungs, pleura and airways"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C294",
+      "label": "Occupational lung disease",
+      "type": "Condition",
+      "systems": [
+        "Lungs, pleura and airways"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C295",
+      "label": "Oesophageal cancer",
+      "type": "Condition",
+      "systems": [
+        "Gastrointestinal tract"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C296",
+      "label": "Optic neuritis",
+      "type": "Condition",
+      "systems": [
+        "Eye"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C297",
+      "label": "Orthostatic/ postural hypotension",
+      "type": "Condition",
+      "systems": [
+        "Heart and vasculature"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C298",
+      "label": "Osteoarthritis",
+      "type": "Condition",
+      "systems": [
+        "Musculoskeletal"
+      ],
+      "blocks": [
+        "MSK",
+        "Core MSK"
+      ],
+      "aliases": []
+    },
+    {
+      "id": "C299",
+      "label": "Osteomalacia",
+      "type": "Condition",
+      "systems": [
+        "Musculoskeletal"
+      ],
+      "blocks": [
+        "MSK",
+        "Core MSK"
+      ],
+      "aliases": []
+    },
+    {
+      "id": "C300",
+      "label": "Osteomyelitis",
+      "type": "Condition",
+      "systems": [
+        "Musculoskeletal"
+      ],
+      "blocks": [
+        "MSK",
+        "Core MSK"
+      ],
+      "aliases": []
+    },
+    {
+      "id": "C301",
+      "label": "Osteoporosis and fragility fractures",
+      "type": "Condition",
+      "systems": [
+        "Musculoskeletal"
+      ],
+      "blocks": [
+        "MSK",
+        "Core MSK"
+      ],
+      "aliases": []
+    },
+    {
+      "id": "C302",
+      "label": "Otitis externa",
+      "type": "Condition",
+      "systems": [
+        "Ear, nose and throat"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C303",
+      "label": "Otitis media",
+      "type": "Condition",
+      "systems": [
+        "Ear, nose and throat"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C304",
+      "label": "Ovarian cancer",
+      "type": "Condition",
+      "systems": [
+        "Gynaecological tract"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C305",
+      "label": "Ovarian cysts",
+      "type": "Condition",
+      "systems": [
+        "Gynaecological tract"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C306",
+      "label": "Ovarian torsion",
+      "type": "Condition",
+      "systems": [
+        "Gynaecological tract"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C308",
+      "label": "Pancreatic cancer",
+      "type": "Condition",
+      "systems": [
+        "Liver, pancreas, biliary system"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C309",
+      "label": "Pancytopenia",
+      "type": "Condition",
+      "systems": [
+        "Blood and lymph"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C310",
+      "label": "Panic disorder",
+      "type": "Condition",
+      "systems": [
+        "Mental health"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C311",
+      "label": "Papilloedema",
+      "type": "Condition",
+      "systems": [
+        "Eye"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C312",
+      "label": "Parkinsonism (including Parkinson disease)",
+      "type": "Condition",
+      "systems": [
+        "Brain and spinal cord"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C313",
+      "label": "Pelvic inflammatory disease",
+      "type": "Condition",
+      "systems": [
+        "Gynaecological tract"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C314",
+      "label": "Penile cancer",
+      "type": "Condition",
+      "systems": [
+        "Male genitourinary tract"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C315",
+      "label": "Peptic ulcer disease and gastritis",
+      "type": "Condition",
+      "systems": [
+        "Gastrointestinal tract"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C316",
+      "label": "Perforated eardrum",
+      "type": "Condition",
+      "systems": [
+        "Ear, nose and throat"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C317",
+      "label": "Perianal abscesses and fistulae",
+      "type": "Condition",
+      "systems": [
+        "Gastrointestinal tract"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C318",
+      "label": "Pericardial disease (including pericarditis, pericardial effusion, cardiac tamponade)",
+      "type": "Condition",
+      "systems": [
+        "Heart and vasculature"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C319",
+      "label": "Periorbital and orbital cellulitis",
+      "type": "Condition",
+      "systems": [
+        "Eye"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C320",
+      "label": "Peripheral nerve injuries/ palsies",
+      "type": "Condition",
+      "systems": [
+        "Peripheral nervous system and neuromuscular junction"
+      ],
+      "blocks": [
+        "MSK",
+        "Related MSK"
+      ],
+      "aliases": []
+    },
+    {
+      "id": "C321",
+      "label": "Peripheral neuropathy",
+      "type": "Condition",
+      "systems": [
+        "Peripheral nervous system and neuromuscular junction"
+      ],
+      "blocks": [
+        "MSK",
+        "Related MSK"
+      ],
+      "aliases": []
+    },
+    {
+      "id": "C322",
+      "label": "Peripheral vascular disease",
+      "type": "Condition",
+      "systems": [
+        "Heart and vasculature"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C323",
+      "label": "Peritonitis",
+      "type": "Condition",
+      "systems": [
+        "Gastrointestinal tract"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C324",
+      "label": "Personality disorder",
+      "type": "Condition",
+      "systems": [
+        "Mental health"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C325",
+      "label": "Phaeochromocytoma",
+      "type": "Condition",
+      "systems": [
+        "Endocrine and metabolic"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C326",
+      "label": "Pharyngitis/ tonsillitis",
+      "type": "Condition",
+      "systems": [
+        "Ear, nose and throat"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C327",
+      "label": "Phimosis/ paraphimosis",
+      "type": "Condition",
+      "systems": [
+        "Male genitourinary tract"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C328",
+      "label": "Phobias (including agoraphobia)",
+      "type": "Condition",
+      "systems": [
+        "Mental health"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C329",
+      "label": "Pituitary tumours",
+      "type": "Condition",
+      "systems": [
+        "Endocrine and metabolic"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C330",
+      "label": "Placenta praevia",
+      "type": "Condition",
+      "systems": [
+        "Pregnancy and the puerperium"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C331",
+      "label": "Placental abruption",
+      "type": "Condition",
+      "systems": [
+        "Pregnancy and the puerperium"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C332",
+      "label": "Platelet disorders (including thrombocytosis, thrombocytopenia)",
+      "type": "Condition",
+      "systems": [],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C333",
+      "label": "Pleural effusion",
+      "type": "Condition",
+      "systems": [
+        "Lungs, pleura and airways"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C334",
+      "label": "Pneumonia",
+      "type": "Condition",
+      "systems": [
+        "Lungs, pleura and airways"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C335",
+      "label": "Pneumothorax",
+      "type": "Condition",
+      "systems": [
+        "Lungs, pleura and airways"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C336",
+      "label": "Polycystic kidney disease",
+      "type": "Condition",
+      "systems": [
+        "Kidneys and urinary tract"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C337",
+      "label": "Polycystic ovary syndrome (PCOS)",
+      "type": "Condition",
+      "systems": [
+        "Gynaecological tract"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C338",
+      "label": "Polycythaemia",
+      "type": "Condition",
+      "systems": [
+        "Blood and lymph"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C339",
+      "label": "Polyhydramnios/ oligohydramnios",
+      "type": "Condition",
+      "systems": [
+        "Pregnancy and the puerperium"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C340",
+      "label": "Polymyalgia rheumatica",
+      "type": "Condition",
+      "systems": [
+        "Musculoskeletal"
+      ],
+      "blocks": [
+        "MSK",
+        "Core MSK"
+      ],
+      "aliases": []
+    },
+    {
+      "id": "C341",
+      "label": "Polymyositis and dermatomyositis",
+      "type": "Condition",
+      "systems": [
+        "Musculoskeletal"
+      ],
+      "blocks": [
+        "MSK",
+        "Core MSK"
+      ],
+      "aliases": []
+    },
+    {
+      "id": "C342",
+      "label": "Post traumatic stress disorder",
+      "type": "Condition",
+      "systems": [
+        "Mental health"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C343",
+      "label": "Postpartum depression",
+      "type": "Condition",
+      "systems": [
+        "Mental health"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C344",
+      "label": "Postpartum haemorrhage",
+      "type": "Condition",
+      "systems": [
+        "Pregnancy and the puerperium"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C345",
+      "label": "Postpartum psychosis",
+      "type": "Condition",
+      "systems": [
+        "Mental health"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C346",
+      "label": "Prediabetes",
+      "type": "Condition",
+      "systems": [
+        "Endocrine and metabolic"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C347",
+      "label": "Prematurity",
+      "type": "Condition",
+      "systems": [
+        "Child health"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C348",
+      "label": "Pressure sores",
+      "type": "Condition",
+      "systems": [
+        "Skin and soft tissue"
+      ],
+      "blocks": [
+        "MSK",
+        "Related MSK"
+      ],
+      "aliases": []
+    },
+    {
+      "id": "C349",
+      "label": "Primary headache disorders (including migraine, cluster headache, tension headache)",
+      "type": "Condition",
+      "systems": [
+        "Brain and spinal cord"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C350",
+      "label": "Primary aldosteronism",
+      "type": "Condition",
+      "systems": [
+        "Endocrine and metabolic"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C351",
+      "label": "Prostate cancer",
+      "type": "Condition",
+      "systems": [
+        "Male genitourinary tract"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C352",
+      "label": "Prostatitis, epididymitis and orchitis",
+      "type": "Condition",
+      "systems": [
+        "Male genitourinary tract"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C353",
+      "label": "Psoriasis",
+      "type": "Condition",
+      "systems": [
+        "Skin and soft tissue"
+      ],
+      "blocks": [
+        "MSK",
+        "Related MSK"
+      ],
+      "aliases": []
+    },
+    {
+      "id": "C354",
+      "label": "Psychotic disorder",
+      "type": "Condition",
+      "systems": [
+        "Mental health"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C355",
+      "label": "Pulmonary embolism",
+      "type": "Condition",
+      "systems": [
+        "Heart and vasculature"
+      ],
+      "blocks": [
+        "MSK",
+        "Related MSK"
+      ],
+      "aliases": []
+    },
+    {
+      "id": "C356",
+      "label": "Pulmonary hypertension",
+      "type": "Condition",
+      "systems": [
+        "Heart and vasculature"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C357",
+      "label": "Pyelonephritis",
+      "type": "Condition",
+      "systems": [
+        "Kidneys and urinary tract"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C358",
+      "label": "Pyrexia of unknown origin",
+      "type": "Condition",
+      "systems": [
+        "Infections"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C360",
+      "label": "Quinsy/ peritonsillar abscess",
+      "type": "Condition",
+      "systems": [
+        "Ear, nose and throat"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C362",
+      "label": "Radiculopathies",
+      "type": "Condition",
+      "systems": [
+        "Peripheral nervous system and neuromuscular junction"
+      ],
+      "blocks": [
+        "MSK",
+        "Related MSK"
+      ],
+      "aliases": []
+    },
+    {
+      "id": "C363",
+      "label": "Raised intracranial pressure",
+      "type": "Condition",
+      "systems": [
+        "Brain and spinal cord"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C364",
+      "label": "Raynaud phenomenon",
+      "type": "Condition",
+      "systems": [
+        "Musculoskeletal"
+      ],
+      "blocks": [
+        "MSK",
+        "Core MSK"
+      ],
+      "aliases": []
+    },
+    {
+      "id": "C365",
+      "label": "Rectal prolapse",
+      "type": "Condition",
+      "systems": [
+        "Gastrointestinal tract"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C366",
+      "label": "Refeeding syndrome",
+      "type": "Condition",
+      "systems": [
+        "Endocrine and metabolic"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C367",
+      "label": "Renal cancer",
+      "type": "Condition",
+      "systems": [
+        "Kidneys and urinary tract"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C368",
+      "label": "Respiratory arrest",
+      "type": "Condition",
+      "systems": [
+        "Lungs, pleura and airways"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C369",
+      "label": "Respiratory failure",
+      "type": "Condition",
+      "systems": [
+        "Lungs, pleura and airways"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C370",
+      "label": "Retinal detachment",
+      "type": "Condition",
+      "systems": [
+        "Eye"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C371",
+      "label": "Rhabdomyolysis",
+      "type": "Condition",
+      "systems": [
+        "Kidneys and urinary tract"
+      ],
+      "blocks": [
+        "MSK",
+        "Related MSK"
+      ],
+      "aliases": []
+    },
+    {
+      "id": "C372",
+      "label": "Rheumatoid arthritis",
+      "type": "Condition",
+      "systems": [
+        "Musculoskeletal"
+      ],
+      "blocks": [
+        "MSK",
+        "Core MSK"
+      ],
+      "aliases": []
+    },
+    {
+      "id": "C373",
+      "label": "Rhinosinusitis",
+      "type": "Condition",
+      "systems": [
+        "Ear, nose and throat"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C374",
+      "label": "Right heart valve disease",
+      "type": "Condition",
+      "systems": [
+        "Heart and vasculature"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C375",
+      "label": "Rosacea",
+      "type": "Condition",
+      "systems": [
+        "Skin and soft tissue"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C376",
+      "label": "Rubella",
+      "type": "Condition",
+      "systems": [
+        "Infections"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C378",
+      "label": "Sarcoidosis",
+      "type": "Condition",
+      "systems": [
+        "Lungs, pleura and airways"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C379",
+      "label": "Sarcopenia/ frailty",
+      "type": "Condition",
+      "systems": [
+        "Multi-system diseases"
+      ],
+      "blocks": [
+        "MSK",
+        "Related MSK"
+      ],
+      "aliases": []
+    },
+    {
+      "id": "C380",
+      "label": "Scabies",
+      "type": "Condition",
+      "systems": [
+        "Skin and soft tissue"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C381",
+      "label": "Scarlet fever",
+      "type": "Condition",
+      "systems": [
+        "Child health"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C382",
+      "label": "Schizoaffective disorder",
+      "type": "Condition",
+      "systems": [
+        "Mental health"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C383",
+      "label": "Schizophrenia",
+      "type": "Condition",
+      "systems": [
+        "Mental health"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C384",
+      "label": "Scleroderma and mixed connective tissue",
+      "type": "Condition",
+      "systems": [
+        "Musculoskeletal"
+      ],
+      "blocks": [
+        "MSK",
+        "Core MSK"
+      ],
+      "aliases": [
+        "Scleroderma and mixed connective tissue disease"
+      ]
+    },
+    {
+      "id": "C385",
+      "label": "disease",
+      "type": "Condition",
+      "systems": [
+        "Musculoskeletal"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C386",
+      "label": "Self-harm",
+      "type": "Condition",
+      "systems": [
+        "Mental health"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C387",
+      "label": "Sepsis (including neutropenic sepsis)",
+      "type": "Condition",
+      "systems": [
+        "Infections"
+      ],
+      "blocks": [
+        "MSK",
+        "Related MSK"
+      ],
+      "aliases": []
+    },
+    {
+      "id": "C388",
+      "label": "Septic arthritis",
+      "type": "Condition",
+      "systems": [
+        "Musculoskeletal"
+      ],
+      "blocks": [
+        "MSK",
+        "Core MSK"
+      ],
+      "aliases": []
+    },
+    {
+      "id": "C389",
+      "label": "Seronegative spondyloarthropathies (including ankylosing spondylitis, reactive arthritis, enteropathic arthritis, psoriatic arthritis)",
+      "type": "Condition",
+      "systems": [
+        "Musculoskeletal"
+      ],
+      "blocks": [
+        "MSK",
+        "Core MSK"
+      ],
+      "aliases": []
+    },
+    {
+      "id": "C390",
+      "label": "Serotonin syndrome",
+      "type": "Condition",
+      "systems": [
+        "Drugs and drug effects"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C391",
+      "label": "Shock",
+      "type": "Condition",
+      "systems": [
+        "Heart and vasculature"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C392",
+      "label": "Sickle cell disease",
+      "type": "Condition",
+      "systems": [
+        "Blood and lymph"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C393",
+      "label": "Sjogren syndrome",
+      "type": "Condition",
+      "systems": [
+        "Musculoskeletal"
+      ],
+      "blocks": [
+        "MSK",
+        "Core MSK"
+      ],
+      "aliases": []
+    },
+    {
+      "id": "C394",
+      "label": "Skin manifestations of systemic disease (including acanthosis nigricans, livedo reticularis and petechiae/ purpura)",
+      "type": "Condition",
+      "systems": [
+        "Skin and soft tissue"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C395",
+      "label": "Skin ulcers (including arterial, venous and neuropathic ulcers)",
+      "type": "Condition",
+      "systems": [
+        "Skin and soft tissue"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C396",
+      "label": "Soft tissue injury",
+      "type": "Condition",
+      "systems": [
+        "Musculoskeletal"
+      ],
+      "blocks": [
+        "MSK",
+        "Core MSK"
+      ],
+      "aliases": []
+    },
+    {
+      "id": "C397",
+      "label": "Somatic symptom disorder",
+      "type": "Condition",
+      "systems": [
+        "Mental health"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C398",
+      "label": "Spinal cord compression",
+      "type": "Condition",
+      "systems": [
+        "Brain and spinal cord"
+      ],
+      "blocks": [
+        "MSK",
+        "Related MSK"
+      ],
+      "aliases": []
+    },
+    {
+      "id": "C399",
+      "label": "Spinal cord injury",
+      "type": "Condition",
+      "systems": [
+        "Brain and spinal cord"
+      ],
+      "blocks": [
+        "MSK",
+        "Related MSK"
+      ],
+      "aliases": []
+    },
+    {
+      "id": "C400",
+      "label": "Status epilepticus",
+      "type": "Condition",
+      "systems": [
+        "Brain and spinal cord"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C401",
+      "label": "Stevens-Johnson Syndrome/ toxic epidermal necrolysis (TEN)",
+      "type": "Condition",
+      "systems": [
+        "Skin and soft tissue"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C402",
+      "label": "Stroke",
+      "type": "Condition",
+      "systems": [
+        "Brain and spinal cord"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C403",
+      "label": "Subarachnoid haemorrhage",
+      "type": "Condition",
+      "systems": [
+        "Brain and spinal cord"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C404",
+      "label": "Subconjunctival haemorrhage",
+      "type": "Condition",
+      "systems": [
+        "Eye"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C405",
+      "label": "Subdural haemorrhage",
+      "type": "Condition",
+      "systems": [
+        "Brain and spinal cord"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C406",
+      "label": "Substance use disorder",
+      "type": "Condition",
+      "systems": [
+        "Mental health"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C407",
+      "label": "Superior vena cava obstruction",
+      "type": "Condition",
+      "systems": [
+        "Heart and vasculature"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C408",
+      "label": "Surgical site infection",
+      "type": "Condition",
+      "systems": [
+        "Infections"
+      ],
+      "blocks": [
+        "MSK",
+        "Related MSK"
+      ],
+      "aliases": []
+    },
+    {
+      "id": "C409",
+      "label": "Syncope (including vasovagal, cardiac)",
+      "type": "Condition",
+      "systems": [
+        "Heart and vasculature"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C410",
+      "label": "Syndrome of inappropriate antidiuretic",
+      "type": "Condition",
+      "systems": [],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C411",
+      "label": "hormone secretion (SIADH)",
+      "type": "Condition",
+      "systems": [],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C412",
+      "label": "Syphilis",
+      "type": "Condition",
+      "systems": [
+        "Infections"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C413",
+      "label": "Systemic lupus erythematosus",
+      "type": "Condition",
+      "systems": [
+        "Musculoskeletal"
+      ],
+      "blocks": [
+        "MSK",
+        "Core MSK"
+      ],
+      "aliases": []
+    },
+    {
+      "id": "C415",
+      "label": "Tachyarrhythmias (including atrial fibrillation, atrial flutter, supraventricular tachycardia, torsades de pointes, ventricular tachycardia, ventricular fibrillation)",
+      "type": "Condition",
+      "systems": [
+        "Heart and vasculature"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C416",
+      "label": "Termination of pregnancy",
+      "type": "Condition",
+      "systems": [
+        "Gynaecological tract"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C417",
+      "label": "Testicular cancer",
+      "type": "Condition",
+      "systems": [
+        "Male genitourinary tract"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C418",
+      "label": "Testicular torsion",
+      "type": "Condition",
+      "systems": [
+        "Male genitourinary tract"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C419",
+      "label": "Tetanus",
+      "type": "Condition",
+      "systems": [
+        "Infections"
+      ],
+      "blocks": [
+        "MSK",
+        "Related MSK"
+      ],
+      "aliases": []
+    },
+    {
+      "id": "C420",
+      "label": "Thyroid cancer",
+      "type": "Condition",
+      "systems": [
+        "Ear, nose and throat"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C421",
+      "label": "Thyroid nodules",
+      "type": "Condition",
+      "systems": [
+        "Ear, nose and throat"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C422",
+      "label": "Toxic megacolon",
+      "type": "Condition",
+      "systems": [
+        "Gastrointestinal tract"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C423",
+      "label": "Toxic shock syndrome",
+      "type": "Condition",
+      "systems": [
+        "Infections"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C424",
+      "label": "Toxoplasmosis",
+      "type": "Condition",
+      "systems": [
+        "Infections"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C425",
+      "label": "Transfusion reactions",
+      "type": "Condition",
+      "systems": [
+        "Blood and lymph"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C426",
+      "label": "Transient ischaemic attacks (TIA)",
+      "type": "Condition",
+      "systems": [
+        "Brain and spinal cord"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C427",
+      "label": "Transplantation (including graft rejection",
+      "type": "Condition",
+      "systems": [],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C428",
+      "label": "and immunosuppression)",
+      "type": "Condition",
+      "systems": [],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C429",
+      "label": "Trichomonas vaginalis",
+      "type": "Condition",
+      "systems": [
+        "Infections"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C430",
+      "label": "Trigeminal neuralgia",
+      "type": "Condition",
+      "systems": [
+        "Peripheral nervous system and neuromuscular junction"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C431",
+      "label": "Tuberculosis",
+      "type": "Condition",
+      "systems": [
+        "Infections"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C432",
+      "label": "Turner syndrome",
+      "type": "Condition",
+      "systems": [
+        "Genetic and congenital"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C433",
+      "label": "Typhoid",
+      "type": "Condition",
+      "systems": [
+        "Infections"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C435",
+      "label": "Upper respiratory tract infection",
+      "type": "Condition",
+      "systems": [
+        "Ear, nose and throat"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C436",
+      "label": "Urinary incontinence",
+      "type": "Condition",
+      "systems": [
+        "Kidneys and urinary tract"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C437",
+      "label": "Urinary retention/ obstructive uropathy",
+      "type": "Condition",
+      "systems": [
+        "Kidneys and urinary tract"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C438",
+      "label": "Urinary tract calculi",
+      "type": "Condition",
+      "systems": [
+        "Kidneys and urinary tract"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C439",
+      "label": "Urinary tract infection",
+      "type": "Condition",
+      "systems": [
+        "Kidneys and urinary tract"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C440",
+      "label": "Urticaria",
+      "type": "Condition",
+      "systems": [
+        "Skin and soft tissue"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C442",
+      "label": "Vaginal prolapse",
+      "type": "Condition",
+      "systems": [
+        "Gynaecological tract"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C443",
+      "label": "Variceal disease (including oesophageal varices)",
+      "type": "Condition",
+      "systems": [
+        "Gastrointestinal tract"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C444",
+      "label": "Varicella zoster virus",
+      "type": "Condition",
+      "systems": [
+        "Infections"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C445",
+      "label": "Vasa praevia",
+      "type": "Condition",
+      "systems": [
+        "Pregnancy and the puerperium"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C446",
+      "label": "Vasculitis/ vasculitides",
+      "type": "Condition",
+      "systems": [
+        "Musculoskeletal"
+      ],
+      "blocks": [
+        "MSK",
+        "Core MSK"
+      ],
+      "aliases": []
+    },
+    {
+      "id": "C447",
+      "label": "Venous insufficiency (including varicose veins)",
+      "type": "Condition",
+      "systems": [
+        "Heart and vasculature"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C448",
+      "label": "Vestibular schwannoma (acoustic neuroma)",
+      "type": "Condition",
+      "systems": [
+        "Brain and spinal cord"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C449",
+      "label": "Viral exanthema (including measles, rubella, varicella)",
+      "type": "Condition",
+      "systems": [
+        "Child health"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C450",
+      "label": "Visual field defects",
+      "type": "Condition",
+      "systems": [
+        "Eye"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C451",
+      "label": "Vitamin B12 and/ or folate deficiency",
+      "type": "Condition",
+      "systems": [
+        "Multi-system diseases"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C452",
+      "label": "Vitamin D deficiency",
+      "type": "Condition",
+      "systems": [
+        "Multi-system diseases"
+      ],
+      "blocks": [
+        "MSK",
+        "Related MSK"
+      ],
+      "aliases": []
+    },
+    {
+      "id": "C453",
+      "label": "Volvulus",
+      "type": "Condition",
+      "systems": [
+        "Gastrointestinal tract"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C454",
+      "label": "Venous thromboembolism (VTE) in pregnancy and puerperium",
+      "type": "Condition",
+      "systems": [
+        "Pregnancy and the puerperium"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C455",
+      "label": "Vulval cancer",
+      "type": "Condition",
+      "systems": [
+        "Gynaecological tract"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C457",
+      "label": "Wernicke encephalopathy/ Wernicke- Korsakoff syndrome",
+      "type": "Condition",
+      "systems": [],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C458",
+      "label": "Whooping cough",
+      "type": "Condition",
+      "systems": [
+        "Child health"
+      ],
+      "blocks": [],
+      "aliases": []
+    },
+    {
+      "id": "C460",
+      "label": "Zoonotic infections (including Lyme disease)",
+      "type": "Condition",
+      "systems": [
+        "Infections"
+      ],
+      "blocks": [
+        "MSK",
+        "Related MSK"
+      ],
+      "aliases": []
+    }
+  ]
+}

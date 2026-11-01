@@ -12,13 +12,16 @@
    Answer: D
 */
 
+import { parseQuestions as parseQuizText, replay } from './shared/quiz.js';
+import { connected } from './connected.js';
+
 (() => {
   'use strict';
 
   // ---- Themes (matches your Python dict) ----
   const THEMES = {
-    "Default Dark": {"BG_COLOR":"#2c3e50","TEXT_COLOR":"#ecf0f1","FRAME_COLOR":"#34495e","CORRECT_COLOR":"#27ae60","WRONG_COLOR":"#c0392b","NEUTRAL_COLOR":"#7f8c8d","BUTTON_COLOR":"#3498db","BUTTON_TEXT_COLOR":"#ffffff"},
-    "UCAT Light": {"BG_COLOR":"#f0f0f0","TEXT_COLOR":"#000000","FRAME_COLOR":"#ffffff","CORRECT_COLOR":"#27ae60","WRONG_COLOR":"#e74c3c","NEUTRAL_COLOR":"#bdc3c7","BUTTON_COLOR":"#3498db","BUTTON_TEXT_COLOR":"#ffffff"},
+    "Default Dark": {"BG_COLOR":"#101c2b","TEXT_COLOR":"#e8eef5","FRAME_COLOR":"#192a3e","CORRECT_COLOR":"#27ae60","WRONG_COLOR":"#c0392b","NEUTRAL_COLOR":"#718096","BUTTON_COLOR":"#66d4c4","BUTTON_TEXT_COLOR":"#0c2226"},
+    "UCAT Light": {"BG_COLOR":"#f0f0f0","TEXT_COLOR":"#000000","FRAME_COLOR":"#ffffff","CORRECT_COLOR":"#27ae60","WRONG_COLOR":"#e74c3c","NEUTRAL_COLOR":"#bdc3c7","BUTTON_COLOR":"#176394","BUTTON_TEXT_COLOR":"#ffffff"},
     "Classic Blue": {"BG_COLOR":"#aed6f1","TEXT_COLOR":"#17202a","FRAME_COLOR":"#d6eaf8","CORRECT_COLOR":"#229954","WRONG_COLOR":"#cb4335","NEUTRAL_COLOR":"#85929e","BUTTON_COLOR":"#2980b9","BUTTON_TEXT_COLOR":"#ffffff"},
     "High Contrast": {"BG_COLOR":"#000000","TEXT_COLOR":"#ffffff","FRAME_COLOR":"#222222","CORRECT_COLOR":"#00ff00","WRONG_COLOR":"#ff0000","NEUTRAL_COLOR":"#888888","BUTTON_COLOR":"#444444","BUTTON_TEXT_COLOR":"#ffffff"},
     "Forest": {"BG_COLOR":"#2d4a2e","TEXT_COLOR":"#f0f0f0","FRAME_COLOR":"#3d5c3d","CORRECT_COLOR":"#5a9367","WRONG_COLOR":"#c7524a","NEUTRAL_COLOR":"#8d8d8d","BUTTON_COLOR":"#4a7c59","BUTTON_TEXT_COLOR":"#ffffff"},
@@ -103,49 +106,7 @@
   }
 
   function parseQuestions(rawText) {
-    const blocks = rawText.trim().split(/\n\s*\n/);
-    const questions = [];
-    let qCounter = 0;
-
-    for (const block of blocks) {
-      const lines = block.split(/\n/).map(l => l.trim()).filter(Boolean);
-      if (!lines.length) continue;
-      qCounter += 1;
-
-      const options = {};
-      const qLines = [];
-      let answer = null;
-
-      for (const line of lines) {
-        const m = line.match(/^([A-E])\)\s*(.*)$/);
-        if (m) {
-          options[m[1]] = (m[2] ?? '').trim();
-          continue;
-        }
-        const a = line.match(/^Answer:\s*(.*)$/i);
-        if (a) {
-          answer = (a[1] ?? '').trim();
-          continue;
-        }
-        qLines.push(line);
-      }
-
-      const question = qLines.join('\n').trim();
-      if (!question) throw new Error(`Could not parse question block #${qCounter}: No question text found.`);
-      if (Object.keys(options).length !== 5) throw new Error(`Could not parse question block #${qCounter}: Expected 5 options (A-E), found ${Object.keys(options).length}.`);
-      if (!answer) throw new Error(`Could not parse question block #${qCounter}: No 'Answer:' line found.`);
-      if (!options[answer]) throw new Error(`Could not parse question block #${qCounter}: Answer '${answer}' is not a valid option key.`);
-
-      questions.push({
-        question,
-        options,
-        answer,
-        original_q_number: qCounter
-      });
-    }
-
-    if (!questions.length) throw new Error('No valid questions could be parsed from the input.');
-    return questions;
+    return parseQuizText(rawText).map(q => ({ ...q, id: crypto.randomUUID() }));
   }
 
   function resetQuizState() {
@@ -158,19 +119,21 @@
   }
 
   function goHome() {
+    if (answerSaving) return;
     resetQuizState();
     state.originalQuestionsBackup = [];
     state.screen = 'input';
     render();
   }
 
-  function startQuizWithQuestions(parsedQuestions) {
+  async function startQuizWithQuestions(parsedQuestions) {
     if (!parsedQuestions || !parsedQuestions.length) return;
     state.originalQuestionsBackup = parsedQuestions.slice();
-    retakeQuiz();
+    connected.selectedPack = null;
+    await retakeQuiz();
   }
 
-  function retakeQuiz() {
+  async function retakeQuiz() {
     if (!state.originalQuestionsBackup.length) {
       alert('No quiz loaded to retake.');
       return;
@@ -190,6 +153,7 @@
       selection_history: []
     }));
 
+    await connected.begin(state.questions);
     state.screen = 'quiz';
     render();
   }
@@ -290,14 +254,25 @@
   }
 
   function setScreenInput() {
+    if (answerSaving) return;
     state.screen = 'input';
     resetQuizState();
     render();
   }
 
-  function checkAnswer(selectedKey) {
+  let answerSaving = false;
+  async function checkAnswer(selectedKey) {
+    if (answerSaving) return;
     const record = state.answerRecords[state.currentIndex];
     if (record.is_locked) return;
+
+    answerSaving = true;
+    try {
+      await connected.answer(state.questions[state.currentIndex].id, selectedKey, state.currentIndex);
+    } catch (e) {
+      connected.notify(`Answer not saved: ${e.message}`, true);
+      return;
+    } finally { answerSaving = false; }
 
     record.selection_history.push(selectedKey);
     record.final_selection = selectedKey;
@@ -319,15 +294,19 @@
   }
 
   function prevQuestion() {
+    if (answerSaving) return;
     if (state.currentIndex > 0) {
       state.currentIndex -= 1;
+      connected.position(state.currentIndex).catch(e => connected.notify(e.message, true));
       render();
     }
   }
 
-  function nextQuestion() {
+  async function nextQuestion() {
+    if (answerSaving) return;
     if (state.currentIndex < state.questions.length - 1) {
       state.currentIndex += 1;
+      await connected.position(state.currentIndex);
       render();
       return;
     }
@@ -335,12 +314,15 @@
     // last question
     const skipped = getSkippedQuestions();
     if (skipped.length) return; // locked by UI
+    await connected.finish();
     state.screen = 'results';
     render();
   }
 
   function jumpToQuestion(index) {
+    if (answerSaving) return;
     state.currentIndex = index;
+    connected.position(index).catch(e => connected.notify(e.message, true));
     render();
   }
 
@@ -396,7 +378,7 @@ C) Jupiter
 D) Mercury
 E) Saturn
 Answer: B</pre>
-            <div class="help muted">Install as an app on iPhone/iPad: Share → <b>Add to Home Screen</b>. Works offline once loaded — your questions never leave the device.</div>
+            <div class="help muted">Install as an app on iPhone/iPad: Share → <b>Add to Home Screen</b>. ${connected.localOnly?'Your questions and answers stay in this browser. Export a backup before clearing browser data or moving to another device.':'Pasted and uploaded quizzes stay on this device unless you save them to your account. Downloaded packs work offline.'}</div>
           </aside>
         </div>
       </section>
@@ -418,7 +400,7 @@ Answer: B</pre>
           return;
         }
         const parsed = parseQuestions(raw);
-        startQuizWithQuestions(parsed);
+        await startQuizWithQuestions(parsed);
       } catch (e) {
         alert(String(e?.message || e));
       }
@@ -506,6 +488,8 @@ Answer: B</pre>
 
             <div class="options">${optsHtml}</div>
 
+            ${record.is_locked && q.explanation ? `<details class="explanation"><summary>Explanation and sources</summary><p>${escapeHtml(q.explanation)}</p>${(q.sources || []).map(source => `<p>${escapeHtml(source.title)}<br>${escapeHtml(source.reference)}<br><small>Retrieved ${escapeHtml(source.retrievedAt)}</small></p>`).join('')}</details>` : ''}
+
             <div class="footerBar">
               <div class="row">
                 <button id="prevBtn" class="btn secondary" ${state.currentIndex === 0 ? 'disabled' : ''}>← Back</button>
@@ -544,7 +528,7 @@ Answer: B</pre>
 
     // Footer
     document.getElementById('prevBtn').addEventListener('click', prevQuestion);
-    document.getElementById('nextBtn').addEventListener('click', nextQuestion);
+    document.getElementById('nextBtn').addEventListener('click', () => nextQuestion().catch(e => connected.notify(e.message, true)));
 
     // Keep the current question's chip visible in the navigator. The whole screen
     // is rebuilt on every render, which resets the rail's scroll — this re-anchors it.
@@ -602,7 +586,7 @@ Answer: B</pre>
     document.getElementById('reportBtn').addEventListener('click', () => {
       openModal('Detailed results report', buildDetailedReportText());
     });
-    document.getElementById('retakeBtn').addEventListener('click', retakeQuiz);
+    document.getElementById('retakeBtn').addEventListener('click', () => retakeQuiz().catch(e => connected.notify(e.message, true)));
     document.getElementById('homeBtn').addEventListener('click', setScreenInput);
   }
 
@@ -639,7 +623,7 @@ Answer: B</pre>
       }
       state.isRandomOrder = !!randomToggle.checked;
       savePrefs();
-      render();
+      randomToggleLabel.textContent = state.isRandomOrder ? 'Random' : 'Original';
     });
 
     // Modal copy
@@ -661,11 +645,11 @@ Answer: B</pre>
 
       const key = (e.key || '').toLowerCase();
 
-      if (state.screen === 'quiz') {
+      if (state.screen === 'quiz' && connected.tab === 'quiz' && !modal.open) {
         if (key === 'b') prevQuestion();
         if (key === ' ') {
           e.preventDefault();
-          nextQuestion();
+          nextQuestion().catch(error => connected.notify(error.message, true));
         }
       }
 
@@ -696,6 +680,29 @@ Answer: B</pre>
   }
 
   // ---- Boot ----
+  window.synapseQuestions = async () => {
+    if (state.screen !== 'input') return state.originalQuestionsBackup;
+    const pasted = document.getElementById('paste')?.value || '';
+    const file = document.getElementById('file')?.files?.[0];
+    return parseQuestions(pasted.trim() ? pasted : file ? await file.text() : '');
+  };
+  document.addEventListener('synapse:import', () => {if(state.screen!=='input')goHome();});
+  document.addEventListener('synapse:pack', e => {
+    state.originalQuestionsBackup = e.detail.questions;
+    retakeQuiz().catch(error => connected.notify(error.message, true));
+  });
+  document.addEventListener('synapse:session', e => {
+    const { pack, session } = e.detail;
+    state.originalQuestionsBackup = pack.questions;
+    state.questions = session.order.map(id => pack.questions.find(q => q.id === id));
+    const result = replay(pack.questions, session.events);
+    state.answerRecords = state.questions.map(q => result.records[q.id]);
+    state.score = result.score;
+    state.currentIndex = session.currentIndex;
+    state.isRandomOrder = state.questions.some((q,i) => q.id !== pack.questions[i].id);
+    state.screen = session.status === 'completed' || session.needsCompletion ? 'results' : 'quiz';
+    render();
+  });
   loadPrefs();
   initTopControls();
   initKeyboard();
@@ -703,5 +710,6 @@ Answer: B</pre>
   syncTopbarHeight();
   window.addEventListener('resize', syncTopbarHeight);
   render();
+  connected.init().catch(e => connected.notify(e.message, true));
 
 })();

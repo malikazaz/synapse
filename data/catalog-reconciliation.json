@@ -1,0 +1,60 @@
+{
+  "note": "Unmatched appendix labels are not silently assigned. Catalogue includes all Domain 5/6 entries.",
+  "issues": [
+    {
+      "source": "Appendix A",
+      "label": "Platelet disorders (including thrombocytosis, thrombocytopaenia)",
+      "system": "Blood and lymph"
+    },
+    {
+      "source": "Appendix A",
+      "label": "Syndrome of inappropriate antidiuretic hormone secretion (SIADH)",
+      "system": "Endocrine and metabolic"
+    },
+    {
+      "source": "Appendix A",
+      "label": "Asthma-chronic obstructive pulmonary disease (COPD) overlap",
+      "system": "Lungs, pleura and airways"
+    },
+    {
+      "source": "Appendix A",
+      "label": "Chronic obstructive pulmonary disease",
+      "system": "Lungs, pleura and airways"
+    },
+    {
+      "source": "Appendix A",
+      "label": "(COPD)",
+      "system": "Lungs, pleura and airways"
+    },
+    {
+      "source": "Appendix A",
+      "label": "Metabolic dysfunction-associated steatotic liver disease (MASLD)",
+      "system": "Liver, pancreas, biliary system"
+    },
+    {
+      "source": "Appendix A",
+      "label": "Hydrocoele/ varicocoele/ epididymal cyst",
+      "system": "Male genitourinary tract"
+    },
+    {
+      "source": "Appendix A",
+      "label": "Wernicke encephalopathy/ Wernicke-Korsakoff syndrome",
+      "system": "Brain and spinal cord"
+    },
+    {
+      "source": "Appendix A",
+      "label": "Guillain- Barré/ inflammatory demyelinating polyneuropathy",
+      "system": "Peripheral nervous system and neuromuscular junction"
+    },
+    {
+      "source": "Appendix A",
+      "label": "Labyrinthitis / vestibular neuritis",
+      "system": "Ear, nose and throat"
+    },
+    {
+      "source": "Appendix A",
+      "label": "Transplantation (including graft rejection and immunosuppression)",
+      "system": "Multi-system diseases"
+    }
+  ]
+}

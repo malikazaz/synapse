@@ -1,0 +1,34 @@
+{
+  "name": "synapse-ccs",
+  "version": "3.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "npm run build && wrangler dev",
+    "build": "node scripts/build.mjs",
+    "build:public": "node scripts/build.mjs --public",
+    "test:public": "playwright test --config playwright.public.config.js",
+    "typecheck": "tsc --noEmit",
+    "test": "tsx --test tests/*.test.ts",
+    "test:browser": "playwright test",
+    "test:worker": "wrangler deploy --dry-run --outdir .wrangler/build && node scripts/test-worker.mjs --browser",
+    "check": "npm run typecheck && npm test && npm run build",
+    "deploy": "node scripts/deploy.mjs",
+    "db:local": "wrangler d1 migrations apply synapse --local",
+    "seed:local": "wrangler d1 execute synapse --local --file data/catalog.sql"
+  },
+  "dependencies": {
+    "@cloudflare/workers-oauth-provider": "^1.2.4",
+    "@modelcontextprotocol/sdk": "^1.32.2",
+    "jose": "^6.2.14",
+    "zod": "^4.6.7"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^5.20261101.1",
+    "@playwright/test": "^1.64.1",
+    "@types/node": "^26.6.6",
+    "tsx": "^4.23.15",
+    "typescript": "^7.0.2",
+    "wrangler": "^4.156.0"
+  }
+}

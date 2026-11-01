@@ -1,0 +1,10 @@
+import {readFile} from 'node:fs/promises';
+import {spawnSync} from 'node:child_process';
+import {resolve} from 'node:path';
+const path=process.argv[2];if(!path)throw new Error('Supply the service-account JSON file path.');
+const raw=await readFile(path,'utf8'),data=JSON.parse(raw);
+if(data.type!=='service_account'||!data.client_email?.endsWith('.iam.gserviceaccount.com')||!data.private_key?.startsWith('-----BEGIN PRIVATE KEY-----'))throw new Error('Expected a Google service-account key JSON file.');
+const result=spawnSync(process.execPath,['node_modules/wrangler/bin/wrangler.js','secret','put','GOOGLE_SERVICE_ACCOUNT','--config','wrangler.production.jsonc'],{input:raw,encoding:'utf8',env:{...process.env,WRANGLER_LOG_PATH:resolve('.wrangler/logs'),WRANGLER_SEND_METRICS:'false'}});
+if(result.status!==0)throw new Error('Secret installation failed. Credential output suppressed.');
+console.log('GOOGLE_SERVICE_ACCOUNT installed. Workbook access is still controlled by sharing.');
+console.log('Service account: '+data.client_email);
