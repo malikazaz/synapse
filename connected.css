@@ -68,3 +68,12 @@ td small{display:block;opacity:.75;font-size:.75em;margin-top:5px}details{font-s
 #studyPlanForm [data-exam] input{max-width:100%;display:block;margin-top:8px}
 #studyPlanForm [data-exam] .row{align-items:end}
 .recall-panel{padding:12px 0}
+.curriculum-filters{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,230px),1fr));gap:14px;margin:20px 0}
+.curriculum-filters label{display:flex;flex-direction:column;gap:7px;font-size:.8em;min-width:0}
+.curriculum-filters select,.curriculum-filters input{width:100%;min-width:0}
+.topic-origin{margin:10px 0;font-size:.85em;overflow-wrap:anywhere}
+.topic-origin small{display:block;margin:5px 0;font-size:1em}
+.topic-origin details{margin:8px 0;font-size:1em}.topic-origin ul{padding-left:20px}
+.curriculum-table{min-width:760px}.curriculum-table td:first-child,.curriculum-table th:first-child{min-width:280px;width:46%}
+.earlier-groups{width:100%;margin:12px 0}.earlier-groups label{margin:8px 0}
+#unmappedGuideEntries{margin-top:24px;overflow-wrap:anywhere}

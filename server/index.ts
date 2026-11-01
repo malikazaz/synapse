@@ -26,7 +26,10 @@ async function routes(req:Request,env:Env,ctx:ExecutionContext):Promise<Response
   const actor=await actorFor(req,env);assert(actor,'Sign in to access your saved work.',401);
   if(req.method!=='GET')checkOrigin(req,env);
   const parts=path.split('/').filter(Boolean);
-  if(path==='/api/curriculum'&&req.method==='GET')return json(await curriculumContext(env));
+  if(path==='/api/curriculum'&&req.method==='GET'){
+    const filter=z.object({offset:z.coerce.number().int().min(0).default(0),limit:z.coerce.number().int().min(1).max(500).default(100)}).parse(Object.fromEntries(url.searchParams));
+    return json(await curriculumContext(env,filter));
+  }
   if(path==='/api/curriculum/preview'&&req.method==='POST')return json(await previewCurriculum(env,actor,await body(req)));
   if(path==='/api/curriculum/confirm'&&req.method==='POST'){const d=z.object({previewId:uuid}).strict().parse(await body(req));const result=await confirmCurriculum(env,actor,d.previewId);ctx.waitUntil(syncSheets(env));return json(result);}
   if(path==='/api/topics'&&req.method==='GET')return json(await store.topics(env));

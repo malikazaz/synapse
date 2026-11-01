@@ -46,6 +46,14 @@ try{
   assert.equal((await mcpCall('get_akt_generation_skill',{})).version,'akt-1');
   assert.equal((await mcpCall('get_performance_profile',{})).version,'performance-1');
   assert.equal((await mcpCall('get_curriculum_context',{})).blocks.length,0);
+  // Read-only pagination must expose guide origins beyond the original first 100.
+  await db.prepare("INSERT INTO curriculum_blocks VALUES('y3-fixture',3,'Fixture','Fixture','current','Guide.pdf',?,?)").bind('a'.repeat(64),new Date().toISOString()).run();
+  const guideItems=Array.from({length:102},(_,i)=>({id:randomUUID(),label:'Guide topic '+String(i).padStart(3,'0')}));
+  await db.prepare("INSERT INTO curriculum_items SELECT json_extract(value,'$.id'),'y3-fixture',json_extract(value,'$.label'),'Condition','C1','Radiology conditions','self-study','page 8','exact-normalized','' FROM json_each(?)").bind(JSON.stringify(guideItems)).run();
+  const firstPage=await(await call('/api/curriculum',{headers})).json(),lastPage=await(await call('/api/curriculum?offset=100&limit=500',{headers})).json();
+  assert.equal(firstPage.items.length,100);assert.equal(firstPage.nextOffset,100);assert.equal(lastPage.items.length,2);assert.equal(lastPage.nextOffset,null);assert.equal(lastPage.items[1].source_label,'Guide topic 101');
+  assert.equal((await call('/api/curriculum?offset=-1',{headers})).status,400);assert.equal((await call('/api/curriculum?limit=501',{headers})).status,400);
+  await db.prepare('DELETE FROM curriculum_items').run();await db.prepare('DELETE FROM curriculum_blocks').run();
   const generated=await mcpCall('save_question_pack',{requestId:randomUUID(),title:'Connected proof',mode:'diagnostic',questions:Array.from({length:20},(_,i)=>({question:`Integration question ${i}?`,options,answer:'A',explanation:'Test fixture explanation.',sources:[{title:'Test fixture',reference:'Local integration fixture; not clinical content',retrievedAt:new Date().toISOString()}],topicId:'C1',domain:'management',learningStage:'clinical',difficulty:'standard',learningObjective:'Test one integration fact',optionRationales:{A:'One is correct',B:'Two is not',C:'Three is not',D:'Four is not',E:'Five is not'}}))});
   assert.ok(generated.quizUrl??generated.url??generated.link,JSON.stringify(generated));
   query.set('scope','mcp:read');
