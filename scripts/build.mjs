@@ -12,6 +12,7 @@ for(const file of ['app.js','styles.css','connected.css','manifest.json','icon-1
 for(const file of ['quiz.js','offline.js'])await copyFile('shared/'+file,resolve(output,'shared',file));
 let html=await readFile('index.html','utf8');
 if(publicOnly){
+  html=html.replace(/  <script src="updates.js" type="module"><\/script>\r?\n/,'');
   html=html.replace('Your clinical learning companion','Your questions. Your pace.');
   html=html.replace(/  <nav class="workspace-nav"[\s\S]*?  <div class="connection-strip"/,`  <nav class="workspace-nav" aria-label="Local quiz tools">
     <button class="btn secondary small" id="resumeBtn">Resume saved quiz</button>
@@ -24,7 +25,7 @@ if(publicOnly){
   await copyFile('public/local.js',resolve(output,'connected.js'));
   await copyFile('public/sw.js',resolve(output,'sw.js'));
 }else{
-  for(const file of ['connected.js','workspace.js','study-ui.js','sw.js'])await copyFile(file,resolve(output,file));
+  for(const file of ['connected.js','workspace.js','study-ui.js','updates.js','sw.js'])await copyFile(file,resolve(output,file));
   for(const file of ['sources.js','learning.js'])await copyFile('shared/'+file,resolve(output,'shared',file));
 }
 await writeFile(resolve(output,'index.html'),html);

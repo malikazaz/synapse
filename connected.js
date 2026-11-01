@@ -116,6 +116,7 @@ class Connected {
     }catch(e){this.notify(e.message,true);}
   }
   async show(view,quiet=false){
+    this.beforeUpdate=null;
     if(view!=='quiz')document.dispatchEvent(new Event('synapse:leave-quiz'));
     const token=this.renderToken=(this.renderToken??0)+1;
     this.tab=view;document.getElementById('app').hidden=view!=='quiz';const panel=document.getElementById('workspace');panel.hidden=view==='quiz';
@@ -132,6 +133,7 @@ class Connected {
       if(view==='settings')await this.renderSettings(content);
       if(view==='study')await renderStudyPlan(content,this);
       if(view==='performance')await renderPerformance(content,this);
+      if(!content.hasChildNodes())throw new Error('This view could not be loaded. Update Synapse and try again.');
       if(this.renderToken===token){panel.replaceChildren(content);if(view==='home')this.homeUpdated=Date.now();}
     }catch(e){if(this.renderToken===token){panel.textContent=e.message;const retry=document.createElement('button');retry.className='btn secondary';retry.textContent='Try again';retry.onclick=()=>this.show(view);panel.append(retry);}}
   }

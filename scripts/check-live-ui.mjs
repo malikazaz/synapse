@@ -19,8 +19,12 @@ try {
   assert.equal(await page.locator('#workspace h1').innerText(),'Trusted sources');
   assert.equal(await page.locator('#sourceCount').innerText(),'25 references');
   await page.screenshot({path:'test-results/live-sources-phone.png'});
+  for(const view of ['study','performance']){
+    await page.goto(origin+'/?view='+view,{waitUntil:'networkidle'});
+    assert.match(await page.locator('#workspace').innerText(),/Sign in/);
+  }
   await page.locator('[data-view=quiz]').click();assert.equal(await page.locator('#paste').isVisible(),true);
-  console.log('Live home, Sources, sign-in control and paste/upload passed.');
+  console.log('Live home, Sources, Study plan/My weak points sign-in states and paste/upload passed.');
   const responses=await page.evaluate(async()=>Promise.all(['/api/progress','/.well-known/oauth-protected-resource/mcp'].map(async path=>{const r=await fetch(path,{signal:AbortSignal.timeout(15000)});return {path,status:r.status};})));
   assert.equal(responses[0].status,401);assert.equal(responses[1].status,200);
   assert.deepEqual(errors,[]);assert.deepEqual(external,[]);
