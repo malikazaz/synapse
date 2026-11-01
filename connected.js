@@ -1,6 +1,7 @@
 import {storage,prepareMutation,acknowledge,restoreDevice} from './shared/offline.js';
 import {replay,DOMAIN_LABELS,DOMAINS} from './shared/quiz.js';
 import {renderHome,renderSources} from './workspace.js';
+import {renderStudyPlan,renderPerformance,refreshStudySettings} from './study-ui.js';
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const id=()=>crypto.randomUUID();
 const date=s=>s?new Date(s).toLocaleDateString('en-GB'):'—';
@@ -26,10 +27,11 @@ class Connected {
     try{const status=await this.api('status');this.actor=status.actor;this.connected=status.connected;await storage('put','account',{kind:'account',actor:this.actor,connected:this.connected});}
     catch{const saved=await storage('get','account').catch(()=>null);this.actor=saved?.actor??null;this.connected=saved?.connected??false;}
     const btn=document.getElementById('accountBtn');btn.textContent=this.actor?'Sign out':'Sign in';btn.disabled=!this.connected;
+    await refreshStudySettings(this);
     this.initialised=true;
     this.notify(this.actor?'Your saved quizzes and progress are connected.':this.connected?'Paste or upload a quiz, or sign in to sync.':'Local quizzes ready. Connected services await account setup.');
     const params=new URLSearchParams(location.search);
-    try{if(params.has('mapping')){await this.show('packs');await this.renderMappings(document.getElementById('workspace'),params.get('mapping'));}else if(params.has('pack'))await this.openPack(params.get('pack'));else if(params.has('session'))await this.resume(params.get('session'));else if(!this.renderToken)await this.show(['home','sources','packs','progress','settings','quiz'].includes(params.get('view'))?params.get('view'):'home');}catch(e){this.notify(e.message,true);}
+    try{if(params.has('mapping')){await this.show('packs');await this.renderMappings(document.getElementById('workspace'),params.get('mapping'));}else if(params.has('pack'))await this.openPack(params.get('pack'));else if(params.has('session'))await this.resume(params.get('session'));else if(!this.renderToken)await this.show(['home','sources','packs','progress','settings','study','performance','quiz'].includes(params.get('view'))?params.get('view'):'home');}catch(e){this.notify(e.message,true);}
     window.addEventListener('online',()=>this.tick());window.addEventListener('focus',()=>this.tick());
     document.addEventListener('visibilitychange',()=>{if(!document.hidden)this.tick();});
     setInterval(()=>{if(!document.hidden)this.tick();},15000);
@@ -38,9 +40,11 @@ class Connected {
     this.active={kind:'session',id:id(),owner:this.selectedPack?this.actor?.id??this.selectedPack.owner:null,packId:this.selectedPack?.id??null,pack:this.selectedPack??{id:null,title:'Local quiz',questions},order:questions.map(q=>q.id),events:[],pending:[],currentIndex:0,revision:0,status:'active',serverCreated:false,needsCompletion:false,positionDirty:false,inflight:null,updatedAt:new Date().toISOString()};
     await this.persist();this.status();void this.flush();
   });}
+  async observe(questionId,measurement,sessionId){return this.serial(async()=>{if(!this.active||this.active.id!==sessionId||this.active.status!=='active')return;const before=structuredClone(this.active);this.active.observations??={};this.active.observations[questionId]=measurement;try{await this.persist();}catch(e){this.active=before;throw e;}});}
   async answer(questionId,selection,index){return this.serial(async()=>{
     if(!this.active)return;const before=structuredClone(this.active);
-    const event={id:id(),questionId,selection,at:new Date().toISOString()};
+    const measurement=this.active.observations?.[questionId];
+    const event={id:id(),questionId,selection,at:new Date().toISOString(),...(measurement?{measurement}:{} )};
     replay(this.active.pack.questions,[...this.active.events,event]);
     this.active.events.push(event);if(this.active.owner)this.active.pending.push(event);
     this.active.currentIndex=index;this.active.updatedAt=new Date().toISOString();
@@ -74,6 +78,7 @@ class Connected {
     if(active?.owner&&active.owner===this.actor?.id&&active.serverCreated&&!active.pending.length&&!active.inflight&&!active.needsCompletion&&!active.conflict&&navigator.onLine){
       try{const revision=active.revision,remote=await this.api('sessions/'+active.id);await this.serial(async()=>{const current=this.active;if(current?.id===active.id&&current.revision===revision&&!current.pending.length&&!current.inflight&&!current.needsCompletion&&!current.positionDirty&&!current.conflict&&remote.revision>revision)await this.installRemote(remote,current.pack,false);});}catch{}
     }
+    if(this.actor&&navigator.onLine)await refreshStudySettings(this);
     if(this.actor&&navigator.onLine){try{const sync=await this.api('sync');const pending=sync.jobs.some(j=>j.status!=='synced');document.getElementById('sheetStatus').textContent=!sync.enabled?'Sheet connection not configured':pending?'Sheet update pending':'Sheet up to date';}catch{}}
     if(this.tab==='home'&&Date.now()-(this.homeUpdated??0)>15000&&!document.getElementById('workspace').contains(document.activeElement))await this.show('home',true);
   }
@@ -111,6 +116,7 @@ class Connected {
     }catch(e){this.notify(e.message,true);}
   }
   async show(view,quiet=false){
+    if(view!=='quiz')document.dispatchEvent(new Event('synapse:leave-quiz'));
     const token=this.renderToken=(this.renderToken??0)+1;
     this.tab=view;document.getElementById('app').hidden=view!=='quiz';const panel=document.getElementById('workspace');panel.hidden=view==='quiz';
     document.getElementById('savePackBtn').hidden=view!=='quiz';
@@ -124,6 +130,8 @@ class Connected {
       if(view==='packs')await this.renderPacks(content);
       if(view==='progress')await this.renderProgress(content);
       if(view==='settings')await this.renderSettings(content);
+      if(view==='study')await renderStudyPlan(content,this);
+      if(view==='performance')await renderPerformance(content,this);
       if(this.renderToken===token){panel.replaceChildren(content);if(view==='home')this.homeUpdated=Date.now();}
     }catch(e){if(this.renderToken===token){panel.textContent=e.message;const retry=document.createElement('button');retry.className='btn secondary';retry.textContent='Try again';retry.onclick=()=>this.show(view);panel.append(retry);}}
   }
@@ -158,8 +166,8 @@ class Connected {
     if(!this.actor)throw new Error('Sign in to view your UKMLA progress.');
     let items,stale=false;try{items=await this.api('progress');await storage('put','progress:'+this.actor.id,{kind:'progress',owner:this.actor.id,items});}catch(e){items=(await storage('get','progress:'+this.actor.id))?.items;if(!items)throw e;stale=true;}
     const options=values=>[...new Set(values)].sort().map(s=>`<option>${esc(s)}</option>`).join('');
-    panel.innerHTML=`<p class="eyebrow">COVERAGE & RETENTION</p><h1>UKMLA progress</h1><p>First-attempt SBA evidence · rule ccs-1. Manual confidence remains in your Google Sheet.</p>${stale?'<p class="notice">Showing saved progress. Cloud updates are unavailable.</p>':''}<div class="row"><input id="topicSearch" placeholder="Search topics, aliases or IDs" aria-label="Search topics"><select id="ratingFilter" aria-label="Filter competency"><option value="">All ratings</option>${['Untested','Red','Amber','Green','Overdue'].map(s=>`<option>${s}</option>`).join('')}</select><select id="blockFilter" aria-label="Filter block"><option value="">All blocks</option>${options(items.flatMap(t=>t.blocks))}</select><select id="systemFilter" aria-label="Filter body system"><option value="">All body systems</option>${options(items.flatMap(t=>t.systems))}</select><select id="typeFilter" aria-label="Filter topic type"><option value="">Conditions & presentations</option><option>Condition</option><option>Presentation</option></select></div><p id="topicCount" role="status"></p><div class="table-scroll" tabindex="0" role="region" aria-label="Topic evidence; scroll horizontally on small screens"><table><thead><tr><th>Topic</th><th>Competency</th><th>Accuracy</th><th>Coverage</th><th>Next review</th></tr></thead><tbody id="progressRows"></tbody></table></div>`;
-    const draw=()=>{const query=panel.querySelector('#topicSearch').value.toLowerCase(),status=panel.querySelector('#ratingFilter').value,block=panel.querySelector('#blockFilter').value,system=panel.querySelector('#systemFilter').value,type=panel.querySelector('#typeFilter').value;const filtered=items.filter(t=>`${t.label} ${t.id} ${(t.aliases??[]).join(' ')}`.toLowerCase().includes(query)&&(!block||t.blocks.includes(block))&&(!system||t.systems.includes(system))&&(!type||t.type===type)&&(!status||(status==='Overdue'?t.overdue:t.status===status)));panel.querySelector('#topicCount').textContent=`${filtered.length} ${filtered.length===1?'topic':'topics'}`;panel.querySelector('#progressRows').innerHTML=filtered.map(t=>`<tr><td><strong>${esc(t.label)}</strong><small>${esc(t.type)} · ${esc(t.id)}</small><details><summary>Evidence</summary><p>${esc(t.reason)}</p>${t.domains.map((d,i)=>`<p>${esc(DOMAIN_LABELS[t.type][i])}: ${d.count} questions${d.accuracy===null?'':`, ${d.accuracy.toFixed(0)}%`}</p>`).join('')}</details></td><td><span class="rag ${t.status.toLowerCase()}">${t.status}</span>${t.overdue?'<small>Review overdue</small>':''}</td><td>${t.accuracy===null?'—':t.accuracy.toFixed(0)+'%'}</td><td>${t.coverage}/5<small>${t.evidenceCount} eligible questions</small></td><td>${date(t.nextReview)}</td></tr>`).join('')||'<tr><td colspan="5">No topics match these filters.</td></tr>';};
+    panel.innerHTML=`<p class="eyebrow">COVERAGE & RETENTION</p><h1>UKMLA progress</h1><p>First-attempt knowledge evidence · rule ccs-2-akt. All learning stages share one topic record. Manual confidence remains in your Google Sheet.</p>${stale?'<p class="notice">Showing saved progress. Cloud updates are unavailable.</p>':''}<div class="row"><input id="topicSearch" placeholder="Search topics, aliases or IDs" aria-label="Search topics"><select id="ratingFilter" aria-label="Filter competency"><option value="">All ratings</option>${['Untested','Red','Amber','Green','Overdue'].map(s=>`<option>${s}</option>`).join('')}</select><select id="blockFilter" aria-label="Filter block"><option value="">All blocks</option>${options(items.flatMap(t=>t.blocks))}</select><select id="systemFilter" aria-label="Filter body system"><option value="">All body systems</option>${options(items.flatMap(t=>t.systems))}</select><select id="typeFilter" aria-label="Filter topic type"><option value="">Conditions & presentations</option><option>Condition</option><option>Presentation</option></select></div><p id="topicCount" role="status"></p><div class="table-scroll" tabindex="0" role="region" aria-label="Topic evidence; scroll horizontally on small screens"><table><thead><tr><th>Topic</th><th>Competency</th><th>Accuracy</th><th>Coverage</th><th>Next review</th></tr></thead><tbody id="progressRows"></tbody></table></div>`;
+    const draw=()=>{const query=panel.querySelector('#topicSearch').value.toLowerCase(),status=panel.querySelector('#ratingFilter').value,block=panel.querySelector('#blockFilter').value,system=panel.querySelector('#systemFilter').value,type=panel.querySelector('#typeFilter').value;const filtered=items.filter(t=>`${t.label} ${t.id} ${(t.aliases??[]).join(' ')}`.toLowerCase().includes(query)&&(!block||t.blocks.includes(block))&&(!system||t.systems.includes(system))&&(!type||t.type===type)&&(!status||(status==='Overdue'?t.overdue:t.status===status)));panel.querySelector('#topicCount').textContent=`${filtered.length} ${filtered.length===1?'topic':'topics'}`;panel.querySelector('#progressRows').innerHTML=filtered.map(t=>`<tr><td><strong>${esc(t.label)}</strong><small>${esc(t.type)} · ${esc(t.id)}</small><details><summary>Evidence</summary><p>${esc(t.reason)}</p>${(t.learning?.stages??[]).map(s=>`<p>${esc(s.label)}: ${s.evidenceCount} fresh questions${s.accuracy===null?'':`, ${s.accuracy.toFixed(0)}% in latest ${s.recentCount}`}</p>`).join('')}${t.learning?.unclassifiedCount?`<p>${t.learning.unclassifiedCount} earlier questions have no stage label.</p>`:''}${t.domains.map((d,i)=>`<p>${esc(DOMAIN_LABELS[t.type][i])}: ${d.count} questions${d.accuracy===null?'':`, ${d.accuracy.toFixed(0)}%`}</p>`).join('')}</details></td><td><span class="rag ${t.status.toLowerCase()}">${t.status}</span>${t.overdue?'<small>Review overdue</small>':''}</td><td>${t.accuracy===null?'—':t.accuracy.toFixed(0)+'%'}</td><td>${t.coverage}/5<small>${t.evidenceCount} eligible questions</small></td><td>${date(t.nextReview)}</td></tr>`).join('')||'<tr><td colspan="5">No topics match these filters.</td></tr>';};
     panel.querySelectorAll('input,select').forEach(el=>el.oninput=draw);draw();
   }
   async renderSettings(panel){
@@ -179,6 +187,8 @@ class Connected {
   async signOut(){
     if(this.busy){this.notify('Wait for the current save to finish before signing out.');return;}
     const all=await storage('all'),unsynced=all.filter(r=>r.kind==='session'&&r.owner===this.actor.id&&(r.pending.length||r.inflight||r.needsCompletion||!r.serverCreated));
+    const draft=all.find(r=>r.kind==='study-draft'&&r.owner===this.actor.id);
+    if(draft){if(!confirm('Your study plan has an unsaved draft. Download a copy before signing out? Cancel to return and save it.'))return;download('synapse-study-plan-draft.json',draft);}
     if(unsynced.length){if(!confirm('There is unsynced work. Export a copy before signing out and clearing this account’s device data?'))return;download('synapse-unsynced.json',{format:'synapse-device-v1',records:unsynced});}
     try{const response=await fetch('./auth/logout',{method:'POST',credentials:'same-origin'});if(!response.ok)throw new Error('Sign-out failed.');
       const db=await import('./shared/offline.js');const handle=await db.openDatabase();await new Promise((resolve,reject)=>{const tx=handle.transaction('records','readwrite'),s=tx.objectStore('records'),cursor=s.openCursor();cursor.onsuccess=()=>{const c=cursor.result;if(c){if(c.value.owner===this.actor.id||c.key==='account')c.delete();c.continue();}};tx.oncomplete=resolve;tx.onerror=()=>reject(tx.error);});handle.close();location.assign('./');

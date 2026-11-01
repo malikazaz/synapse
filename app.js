@@ -268,6 +268,7 @@ import { connected } from './connected.js';
 
     answerSaving = true;
     try {
+      await saveObservation();
       await connected.answer(state.questions[state.currentIndex].id, selectedKey, state.currentIndex);
     } catch (e) {
       connected.notify(`Answer not saved: ${e.message}`, true);
@@ -348,6 +349,7 @@ import { connected } from './connected.js';
 
     if (state.screen === 'input') return renderInput();
     if (state.screen === 'quiz') return renderQuiz();
+    pauseObservation();
     return renderResults();
   }
 
@@ -428,11 +430,34 @@ Answer: B</pre>
     });
   }
 
+  const revealedQuestions = new Set();
+  let observation=null,observationKey=null,observedQuestion=null,lastTick=0,recalling=false;
+  function accrue(){if(!observation||!lastTick)return;const delta=Math.max(0,Math.round(performance.now()-lastTick));observation.activeMs=Math.min(86400000,observation.activeMs+delta);if(recalling)observation.recallMs=Math.min(observation.activeMs,observation.recallMs+delta);lastTick=performance.now();}
+  async function saveObservation(){if(!observation||!connected.observe)return;accrue();await connected.observe(observedQuestion,{...observation},observationKey?.split(':')[0]);}
+  function observeQuestion(q,hideOptions,locked){
+    if(!connected.observe)return;
+    const key=`${connected.active?.id}:${q.id}`;
+    if(key!==observationKey){void saveObservation().catch(e=>connected.notify(e.message,true));const previous=connected.active?.observations?.[q.id]??connected.active?.events.filter(e=>e.questionId===q.id).at(-1)?.measurement;observation={activeMs:0,recallMs:0,...previous,visits:Math.min(10000,(previous?.visits??0)+1)};observationKey=key;observedQuestion=q.id;}
+    accrue();recalling=hideOptions;lastTick=!locked&&!document.hidden&&document.hasFocus()?performance.now():0;
+  }
+  function pauseObservation(){void saveObservation().catch(e=>connected.notify(e.message,true));lastTick=0;}
+  function resumeObservation(){if(state.screen==='quiz'&&!app.hidden&&!state.answerRecords[state.currentIndex]?.is_locked){lastTick=performance.now();}}
+  if(!connected.localOnly){
+    setInterval(()=>{if(lastTick)void saveObservation().catch(e=>connected.notify(e.message,true));},5000);
+    document.addEventListener('visibilitychange',()=>document.hidden?pauseObservation():resumeObservation());
+    window.addEventListener('blur',pauseObservation);window.addEventListener('focus',resumeObservation);
+    document.addEventListener('synapse:leave-quiz',pauseObservation);
+  }
   function renderQuiz() {
     const total = state.questions.length;
     const q = state.questions[state.currentIndex];
     const record = state.answerRecords[state.currentIndex];
 
+    const revealId = `${connected.active?.id ?? 'local'}:${q.id}`;
+    const recallFirst = ['foundation','focused'].includes(q.learningStage) && connected.studySettings?.recallFirst !== false;
+    const hideOptions = recallFirst && !record.selection_history.length && !revealedQuestions.has(revealId);
+    const stageLabel = {foundation:'Foundations',focused:'Focused topic',clinical:'Clinical application'}[q.learningStage];
+    observeQuestion(q,hideOptions,record.is_locked);
     const qNumDisplay = state.currentIndex + 1;
     let progressText = `Question ${qNumDisplay} / ${total}`;
     if (state.isRandomOrder) progressText += ` · Original Q.${q.original_q_number}`;
@@ -484,11 +509,13 @@ Answer: B</pre>
               </div>
             </div>
 
+            ${stageLabel?`<p class="eyebrow">${stageLabel} · ${escapeHtml(q.difficulty??'')}</p>`:''}
             <div class="question">${escapeHtml(q.question)}</div>
+            ${!connected.localOnly&&!record.selection_history.length?`<label class="fine-print">Confidence (optional) <select id="answerConfidence"><option value="">Not recorded</option><option value="unsure">Unsure / guessing</option><option value="partial">Partly sure</option><option value="confident">Confident</option></select></label>`:''}
 
-            <div class="options">${optsHtml}</div>
+            <div class="options">${hideOptions?'<div class="recall-panel"><p>Try answering from memory before looking at the choices.</p><button class="btn" id="revealOptions">Reveal A–E options</button><p class="fine-print">Only your first selected option counts towards your score.</p></div>':optsHtml}</div>
 
-            ${record.is_locked && q.explanation ? `<details class="explanation"><summary>Explanation and sources</summary><p>${escapeHtml(q.explanation)}</p>${(q.sources || []).map(source => `<p>${escapeHtml(source.title)}<br>${escapeHtml(source.reference)}<br><small>Retrieved ${escapeHtml(source.retrievedAt)}</small></p>`).join('')}</details>` : ''}
+            ${record.is_locked && q.explanation ? `<details class="explanation"><summary>Explanation and sources</summary><p>${escapeHtml(q.explanation)}</p>${q.optionRationales?`<ul>${Object.entries(q.optionRationales).sort().map(([k,v])=>`<li><strong>${escapeHtml(k)}.</strong> ${escapeHtml(v)}</li>`).join('')}</ul>`:''}${(q.sources || []).map(source => `<p>${escapeHtml(source.title)}<br>${escapeHtml(source.reference)}<br><small>Retrieved ${escapeHtml(source.retrievedAt)}</small></p>`).join('')}</details>` : ''}
 
             <div class="footerBar">
               <div class="row">
@@ -504,6 +531,9 @@ Answer: B</pre>
       </section>
     `;
 
+    const revealButton = app.querySelector('#revealOptions');
+    if(revealButton)revealButton.onclick=async()=>{revealButton.disabled=true;try{if(observation){accrue();observation.optionsRevealedAt??=new Date().toISOString();await saveObservation();}revealedQuestions.add(revealId);renderQuiz();app.querySelector('button.opt')?.focus();}catch(e){connected.notify(e.message,true);revealButton.disabled=false;}};
+    const confidence=app.querySelector('#answerConfidence');if(confidence){confidence.value=observation?.confidence??'';confidence.onchange=()=>{if(confidence.value)observation.confidence=confidence.value;else delete observation.confidence;void saveObservation().catch(e=>connected.notify(e.message,true));};}
     // Wire option buttons
     app.querySelectorAll('button.opt').forEach(btn => {
       btn.addEventListener('click', () => checkAnswer(btn.dataset.key));

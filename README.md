@@ -43,7 +43,7 @@ Downloaded packs and pending answers remain on the device. Sync retries on openi
 
 The initial catalogue contains 655 conditions/presentations with permanent IDs, preserving MSK Record IDs. Eleven unresolved Appendix A labels are in [reconciliation](data/catalog-reconciliation.json). Connections previews later catalogue imports before confirmation.
 
-Rule `ccs-1` scores first answers to distinct questions in completed, mapped sessions. Exact duplicates, retakes and contextual tags add no mastery credit. Red is below 50%; Green needs 85% recent accuracy, two questions per domain, no domain below 50%, and spaced fresh assessment evidence. Other assessed topics are Amber. These are study rules, not validated clinical competence. Due dates and overdue status are separate.
+Rule `ccs-2-akt` scores first answers to distinct questions in completed, mapped sessions. Exact duplicates, retakes and contextual tags add no mastery credit. Red is below 50%; Green needs 85% recent accuracy, two questions per domain, no domain below 50%, spaced fresh assessment evidence, and at least five clinical-application questions scoring 80% or better in the recent window. Other assessed topics are Amber. These are study rules, not validated clinical competence. Due dates and overdue status are separate.
 
 The database is authoritative. Sheet writes are limited to CCS Progress, CCS Sessions and MSK J:N, linked by Record ID. Manual confidence, recall and notes stay separate. Failed writes leave results safely in D1 and retry through a five-minute scheduled Worker.
 
@@ -74,3 +74,6 @@ The Worker proof uses isolated storage and test-only injected sessions. It exerc
 Connections exports/restores device packs and sessions, and the account's catalogue, packs and assessment history. Account restore requires an empty account, checks fingerprints/answer paths/scores, and is limited to 2 MB/5,000 rows; use D1 export/import for larger histories. Device restore refuses to overwrite a different continuation.
 
 Local-only question text stays on the device. Explicit saves upload it to Cloudflare; authorised ChatGPT tools can retrieve it. Sheets receives progress/session summaries. Original source documents stay in ChatGPT or Drive. Private API/auth responses are never cached by the service worker.
+
+
+Personal AKT learning now includes synced exam dates and block preferences, recall-first foundation/focused questions, stage-aware progress and a detailed weak-points profile. See [the learning and measurement contract](docs/AKT-LEARNING.md). The nine MCP tools include `get_akt_generation_skill`, `get_performance_profile` and `get_curriculum_context`. No OpenAI inference connection is used.

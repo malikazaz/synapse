@@ -3,6 +3,7 @@ import { packInput, updateInput, proposalInput, reviewInput, uuid } from './sche
 import { assert, HttpError, now, type Env, type Actor } from './types';
 import { fingerprint, digest, replay, balancedKey, LETTERS, DOMAINS } from '../shared/quiz.js';
 import { calculateCompetency, eligibleEvidence } from '../shared/competency.js';
+import {learningProgress} from '../shared/learning.js';
 
 export async function topics(env: Env) {
   const { results } = await env.DB.prepare('SELECT * FROM topics WHERE active=1 ORDER BY type,label').all<any>();
@@ -26,10 +27,17 @@ export async function savePack(env: Env, actor: Actor, input: unknown, origin: '
     assert((!!q.topicId === !!q.domain), 'Supply both topic and domain, or neither.');
     if (q.topicId) assert(known.has(q.topicId), 'Unknown topic ID.');
     if (origin === 'chatgpt') assert(q.sources.length && q.explanation.trim() && q.topicId && q.domain, 'Generated questions require sources, explanation and a primary mapping.');
+    if(origin==='chatgpt'){
+      assert(q.learningStage&&q.difficulty&&q.learningObjective&&q.optionRationales,'Generated questions require learningStage, difficulty, learningObjective and optionRationales for all five choices. Read get_akt_generation_skill.');
+      assert(new Set(Object.values(q.options).map(s=>s.trim().toLowerCase())).size===5,'Options must be distinct.');
+      assert(!Object.values(q.options).some(s=>/^(all|none) of the above[.!]?$/i.test(s.trim())),'Use specific, plausible options instead of all/none of the above.');
+      assert(q.sources.every(s=>Date.parse(s.retrievedAt)<=Date.now()+300000),'Source retrieval dates cannot be in the future.');
+    }
     const options = { ...q.options };
+    const optionRationales=q.optionRationales?{...q.optionRationales}:undefined;
     const answer = key[i] as keyof typeof options;
-    if (answer !== q.answer) [options[answer], options[q.answer]] = [options[q.answer], options[answer]];
-    const clean = { ...q, options, answer };
+    if (answer !== q.answer) { [options[answer], options[q.answer]] = [options[q.answer], options[answer]];if(optionRationales)[optionRationales[answer],optionRationales[q.answer]]=[optionRationales[q.answer],optionRationales[answer]]; }
+    const clean = { ...q, options, answer,...(optionRationales?{optionRationales}:{}) };
     return { id:crypto.randomUUID(), payload:clean, fingerprint:await fingerprint(clean), position:i };
   }));
   const time = now();
@@ -85,12 +93,12 @@ export async function evidence(env: Env, actor: Actor) {
   ) SELECT e.id AS eventId,e.exposure_order AS exposureOrder,q.fingerprint,e.session_id AS sessionId,e.received_at AS exposedAt,s.completed_at AS completedAt,m.topic_id AS topicId,m.domain,e.selection,q.payload,x.fingerprint AS excluded
   FROM first_answers e JOIN questions q ON q.id=e.question_id JOIN sessions s ON s.id=e.session_id
   LEFT JOIN mappings m ON m.question_id=q.id LEFT JOIN exclusions x ON x.fingerprint=q.fingerprint WHERE e.n=1`).bind(actor.id).all<any>();
-  return results.map(r=>({...r,correct:r.selection===JSON.parse(r.payload).answer}));
+  return results.map(r=>({...r,correct:r.selection===JSON.parse(r.payload).answer,learningStage:JSON.parse(r.payload).learningStage??null}));
 }
 export async function progress(env: Env, actor: Actor) {
   const [ts,ev]=await Promise.all([topics(env),evidence(env,actor)]);
   const eligible=eligibleEvidence(ev);
-  return ts.map(t=>({...t,...calculateCompetency(eligible.filter(e=>e.topicId===t.id))}));
+  return ts.map(t=>{const rows=eligible.filter(e=>e.topicId===t.id);return {...t,...calculateCompetency(rows),learning:learningProgress(rows)};});
 }
 export async function proposeMappings(env: Env, actor: Actor, input: unknown) {
   const d=proposalInput.parse(input),p=await getPack(env,actor,d.packId),known=new Set((await topics(env)).map(t=>t.id));

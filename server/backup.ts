@@ -2,8 +2,12 @@ import { z } from 'zod';
 import { type Env,type Actor,assert } from './types';
 import { question,uuid,eventInput,domain } from './schema';
 import { fingerprint,replay } from '../shared/quiz.js';
-const tables=['topics','packs','questions','mappings','mapping_proposals','sessions','mutations','answer_events','exclusions','reviews','audit'] as const;
+import {studyPreferences} from './study';
+const tables=['topics','curriculum_blocks','curriculum_items','packs','questions','mappings','mapping_proposals','sessions','mutations','answer_events','exclusions','reviews','audit','study_settings'] as const;
 const columns:Record<string,string[]>={
+  curriculum_blocks:['id','year','label','topic_block','status','source_name','source_hash','imported_at'],
+  curriculum_items:['id','block_id','source_label','source_type','topic_id','section','priority','source_locator','match_method','notes'],
+  study_settings:['owner','revision','payload','updated_at'],
   topics:['id','label','type','systems','blocks','aliases','active'],
   packs:['id','owner','title','mode','origin','created_at','request_hash'],questions:['id','pack_id','position','payload','fingerprint'],mappings:['question_id','topic_id','domain','confirmed_at'],
   mapping_proposals:['id','pack_id','owner','payload','status','created_at'],sessions:['id','owner','pack_id','revision','status','started_at','completed_at','state','score','last_mutation'],
@@ -12,12 +16,16 @@ const columns:Record<string,string[]>={
 export async function exportBackup(env:Env,actor:Actor){
   // The deployment is single-owner. Assert ownership before exporting related tables.
   const foreign=await env.DB.prepare('SELECT count(*) n FROM packs WHERE owner<>?').bind(actor.id).first<any>();assert(!foreign.n,'Backup requires a single-owner database.',409);
-  const data:Record<string,any[]>={};for(const t of tables)data[t]=(await env.DB.prepare(`SELECT * FROM ${t}`).all<any>()).results;
-  return {format:'synapse-backup-v1',exportedAt:new Date().toISOString(),data};
+  const data:Record<string,any[]>={};for(const t of tables)data[t]=t==='study_settings'?(await env.DB.prepare('SELECT * FROM study_settings WHERE owner=?').bind(actor.id).all<any>()).results:(await env.DB.prepare(`SELECT * FROM ${t}`).all<any>()).results;
+  return {format:'synapse-backup-v2',exportedAt:new Date().toISOString(),data};
 }
 export async function restoreBackup(env:Env,actor:Actor,input:unknown){
-  const b=z.object({format:z.literal('synapse-backup-v1'),exportedAt:z.string().datetime(),data:z.record(z.string(),z.array(z.record(z.string(),z.unknown())).max(30000))}).strict().parse(input);
+  const b=z.object({format:z.enum(['synapse-backup-v1','synapse-backup-v2']),exportedAt:z.string().datetime(),data:z.record(z.string(),z.array(z.record(z.string(),z.unknown())).max(30000))}).strict().parse(input);
+  if(b.format==='synapse-backup-v1'){assert(!Object.hasOwn(b.data,'study_settings'),'Invalid legacy backup.');b.data.study_settings=[];b.data.curriculum_blocks=[];b.data.curriculum_items=[];}
   assert(Object.keys(b.data).sort().join() === [...tables].sort().join(),'Backup table set is invalid.');
+  assert(b.data.study_settings.length<=1,'Backup contains multiple study plans.');
+  for(const row of b.data.study_settings){studyPreferences.parse(JSON.parse(String(row.payload)));z.number().int().positive().parse(row.revision);z.iso.datetime().parse(row.updated_at);}
+  if(b.data.study_settings.length){const saved=await env.DB.prepare('SELECT owner FROM study_settings WHERE owner=?').bind(actor.id).first();assert(!saved,'Restore requires an account without saved study settings; export your current plan first.',409);}
   const occupied=await env.DB.prepare('SELECT count(*) n FROM packs').first<any>();assert(!occupied.n,'Restore requires an empty account; export your existing data first.',409);
   const qs=new Map<string,any>();
   const known=(await env.DB.prepare('SELECT id,type FROM topics').all<any>()).results;

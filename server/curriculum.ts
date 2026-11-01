@@ -1,0 +1,33 @@
+import {z} from 'zod';
+import {type Env,type Actor,assert,now} from './types';
+import {digest} from '../shared/quiz.js';
+import {topics} from './store';
+const block=z.object({id:z.string().regex(/^y\d+-[a-z0-9-]+$/),year:z.number().int().min(1).max(10),label:z.string().min(1).max(150),topicBlock:z.string().min(1).max(150),status:z.enum(['current','studied','upcoming']),sourceName:z.string().min(1).max(300),sourceHash:z.string().regex(/^[a-f0-9]{64}$/)}).strict();
+const item=z.object({id:z.string().uuid(),blockId:z.string(),sourceLabel:z.string().min(1).max(1000),sourceType:z.enum(['Condition','Presentation','Knowledge']),topicId:z.string().nullable(),section:z.string().max(200),priority:z.enum(['core','self-study','supplementary']),sourceLocator:z.string().min(1).max(500),matchMethod:z.enum(['exact-normalized','explicit-alias','contained-in-topic','classification-note','unmatched','local-objective']),notes:z.string().max(1500)}).strict();
+export const curriculumInput=z.object({blocks:z.array(block).min(1).max(100),items:z.array(item).max(5000)}).strict();
+export async function curriculumContext(env:Env,filter:{year?:number;blockId?:string;topicId?:string;offset?:number;limit?:number}={}){
+ const blocks=(await env.DB.prepare('SELECT * FROM curriculum_blocks ORDER BY year,CASE status WHEN \'current\' THEN 0 WHEN \'studied\' THEN 1 ELSE 2 END,label').all<any>()).results.filter(b=>!filter.year||b.year===filter.year);
+ const ids=new Set(blocks.filter(b=>!filter.blockId||b.id===filter.blockId).map(b=>b.id));
+ const items=(await env.DB.prepare('SELECT i.*,t.label AS topic_label,t.type AS topic_type FROM curriculum_items i LEFT JOIN topics t ON t.id=i.topic_id ORDER BY i.block_id,i.priority,i.section,i.source_label').all<any>()).results.filter(i=>ids.has(i.block_id)&&(!filter.topicId||i.topic_id===filter.topicId));
+ const offset=filter.offset??0,limit=filter.limit??100;
+ return {blocks:blocks.map(b=>({...b,matchedTopics:new Set(items.filter(i=>i.block_id===b.id&&i.topic_id).map(i=>i.topic_id)).size,unmatchedItems:items.filter(i=>i.block_id===b.id&&i.match_method==='unmatched').length})),items:items.slice(offset,offset+limit),total:items.length,nextOffset:offset+limit<items.length?offset+limit:null,instructions:'Block status is learning history, not assessed competence. UKMLA IDs/types remain authoritative; guide wording and classifications are preserved separately. Broader-topic matches do not imply coverage of every subtype. Unmatched entries award no competency credit. Source guides define learning scope, not current clinical recommendations. Year 4 and later blocks can be added through a preview without changing Year 3 IDs.'};
+}
+export async function previewCurriculum(env:Env,actor:Actor,value:unknown){
+ const d=curriculumInput.parse(value),known=await topics(env),ids=new Set(known.map(t=>t.id)),blockIds=new Set(d.blocks.map(b=>b.id));
+ assert(blockIds.size===d.blocks.length&&new Set(d.items.map(i=>i.id)).size===d.items.length,'Duplicate curriculum IDs.');
+ assert(d.items.every(i=>blockIds.has(i.blockId)&&(!i.topicId||ids.has(i.topicId))),'Unknown curriculum block or topic.');
+ assert(d.items.every(i=>i.topicId?!['unmatched','local-objective'].includes(i.matchMethod):['unmatched','local-objective'].includes(i.matchMethod)),'Mapping status and topic ID disagree.');
+ const previewId=crypto.randomUUID();await env.DB.prepare('INSERT INTO settings VALUES(?,?)').bind('curriculum-preview:'+previewId,JSON.stringify({owner:actor.id,data:d,catalogHash:await digest(known),expiresAt:Date.now()+3600000})).run();
+ return {previewId,blocks:d.blocks,matched:d.items.filter(i=>i.topicId).length,unmatched:d.items.filter(i=>i.matchMethod==='unmatched'),supplementary:d.items.filter(i=>i.matchMethod==='local-objective').length,preserved:'Existing topic IDs, labels, types, domains, associations and assessment history are preserved. New block associations are additive.'};
+}
+export async function confirmCurriculum(env:Env,actor:Actor,previewId:string){
+ const row=await env.DB.prepare('SELECT value FROM settings WHERE key=?').bind('curriculum-preview:'+previewId).first<any>();assert(row,'Curriculum preview not found.',404);const p=JSON.parse(row.value);assert(p.owner===actor.id&&p.expiresAt>Date.now(),'Curriculum preview expired.',409);
+ const known=await topics(env);assert(p.catalogHash===await digest(known),'Catalogue changed; preview again.',409);const d=curriculumInput.parse(p.data),at=now();
+ const bs=d.blocks.map(b=>({id:b.id,year:b.year,label:b.label,topic_block:b.topicBlock,status:b.status,source_name:b.sourceName,source_hash:b.sourceHash,imported_at:at}));
+ const its=d.items.map(i=>({id:i.id,block_id:i.blockId,source_label:i.sourceLabel,source_type:i.sourceType,topic_id:i.topicId,section:i.section,priority:i.priority,source_locator:i.sourceLocator,match_method:i.matchMethod,notes:i.notes}));
+ const stmts=[];
+ for(const [table,rows,columns] of [['curriculum_blocks',bs,['id','year','label','topic_block','status','source_name','source_hash','imported_at']],['curriculum_items',its,['id','block_id','source_label','source_type','topic_id','section','priority','source_locator','match_method','notes']]] as const){stmts.push(env.DB.prepare(`INSERT INTO ${table}(${columns.join(',')}) SELECT ${columns.map(k=>`json_extract(value,'$.${k}')`).join(',')} FROM json_each(?) WHERE true ON CONFLICT(id) DO UPDATE SET ${columns.filter(k=>k!=='id').map(k=>`${k}=excluded.${k}`).join(',')}`).bind(JSON.stringify(rows)));}
+ const updated=known.filter(t=>d.items.some(i=>i.topicId===t.id)).map(t=>({id:t.id,blocks:[...new Set([...t.blocks,...d.items.filter(i=>i.topicId===t.id).map(i=>d.blocks.find(b=>b.id===i.blockId)!.topicBlock)])]}));
+ stmts.push(env.DB.prepare("UPDATE topics SET blocks=(SELECT json_extract(value,'$.blocks') FROM json_each(?) WHERE json_extract(value,'$.id')=topics.id) WHERE id IN (SELECT json_extract(value,'$.id') FROM json_each(?))").bind(JSON.stringify(updated),JSON.stringify(updated)));
+ stmts.push(env.DB.prepare('INSERT INTO audit VALUES(?,?,?,?,?)').bind(crypto.randomUUID(),actor.id,'curriculum_import',JSON.stringify({blocks:d.blocks,itemIds:d.items.map(i=>i.id),unresolvedIds:d.items.filter(i=>i.matchMethod==='unmatched').map(i=>i.id),contentHash:await digest(d)}),at));stmts.push(env.DB.prepare('INSERT INTO sync_jobs(id,owner,next_at,updated_at) VALUES(?,?,?,?)').bind(crypto.randomUUID(),actor.id,at,at));stmts.push(env.DB.prepare('DELETE FROM settings WHERE key=?').bind('curriculum-preview:'+previewId));await env.DB.batch(stmts);return {imported:true,blocks:d.blocks.length,items:d.items.length,topicAssociationsUpdated:updated.length};
+}

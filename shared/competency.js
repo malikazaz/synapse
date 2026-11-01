@@ -1,5 +1,5 @@
 import { DOMAINS } from './quiz.js';
-export const RULE_VERSION = 'ccs-1';
+export const RULE_VERSION = 'ccs-2-akt';
 const DAY = 86400000;
 
 // rows are first selections, ordered by actual first exposure. Excluded/unmapped
@@ -27,8 +27,10 @@ function snapshot(rows) {
   const latest = assessments.at(-1);
   const retained = latest && latest.accuracy >= 85 && assessments.some(a => Date.parse(latest.at) - Date.parse(a.at) >= 7 * DAY);
   const covered = domains.every(d => d.count >= 2);
+  const clinical=recent.filter(r=>r.learningStage==='clinical');
+  const applied=clinical.length>=5&&clinical.filter(r=>r.correct).length/clinical.length>=.8;
   let status = !recent.length ? 'Untested' : accuracy < 50 ? 'Red' : 'Amber';
-  if (accuracy >= 85 && covered && domains.every(d => d.accuracy >= 50) && retained) status = 'Green';
+  if (accuracy >= 85 && covered && domains.every(d => d.accuracy >= 50) && retained && applied) status = 'Green';
   const reasons = [];
   if (!recent.length) reasons.push('No eligible first-attempt evidence');
   else {
@@ -36,8 +38,9 @@ function snapshot(rows) {
     if (!covered) reasons.push('Need two questions in each domain');
     if (domains.some(d => d.count && d.accuracy < 50)) reasons.push('A domain is below 50%');
     if (!retained) reasons.push('Need a successful fresh reassessment at least seven days later');
+    if (!applied) reasons.push('Need five clinical-application questions with at least 80% accuracy in the recent window');
   }
-  return { status, accuracy, domains, coverage: domains.filter(d => d.count >= 2).length, reason: reasons.join('; ') || 'Coverage and retention demonstrated' };
+  return { status, accuracy, domains, applicationEvidence:clinical.length,coverage: domains.filter(d => d.count >= 2).length, reason: reasons.join('; ') || 'Knowledge coverage, application and retention demonstrated' };
 }
 
 export function calculateCompetency(rows, now = new Date().toISOString()) {

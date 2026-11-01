@@ -22,7 +22,7 @@ test('fingerprints ignore numbering, answer letters, and option order',async()=>
   assert.equal(await fingerprint(q),await fingerprint(other));
   for(const n of [1,7,20,31]){const key=balancedKey(n);const counts='ABCDE'.split('').map(k=>[...key].filter(l=>l===k).length);assert.equal(key.length,n);assert.ok(Math.max(...counts)-Math.min(...counts)<=1);}
 });
-function ev(n:number,at='2026-10-01T12:00:00Z',session='one',correct=true):any[]{return Array.from({length:n},(_,i)=>({eventId:session+i,fingerprint:session+i,sessionId:session,topicId:'C1',domain:DOMAINS[i%5],correct,completedAt:at,exposedAt:at,excluded:false}));}
+function ev(n:number,at='2026-10-01T12:00:00Z',session='one',correct=true):any[]{return Array.from({length:n},(_,i)=>({eventId:session+i,fingerprint:session+i,sessionId:session,topicId:'C1',learningStage:'clinical',domain:DOMAINS[i%5],correct,completedAt:at,exposedAt:at,excluded:false}));}
 test('untested, red, provisional amber and coverage/retention green boundaries',()=>{
   assert.equal(calculateCompetency([]).status,'Untested');assert.equal(calculateCompetency(ev(5,undefined,undefined,false)).status,'Red');
   assert.equal(calculateCompetency(ev(20)).status,'Amber');

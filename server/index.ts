@@ -1,3 +1,5 @@
+import {curriculumContext,previewCurriculum,confirmCurriculum} from './curriculum';
+import {performanceProfile} from './performance';
 import OAuthProvider from '@cloudflare/workers-oauth-provider';
 import { ZodError,z } from 'zod';
 import { type Env,assert,HttpError,json,now } from './types';
@@ -8,6 +10,7 @@ import { mcpHandler } from './mcp';
 import { exportBackup,restoreBackup } from './backup';
 import { uuid } from './schema';
 import {previewCatalog,confirmCatalog} from './catalog';
+import {getStudySettings,saveStudySettings} from './study';
 
 async function body(req:Request){
   assert(Number(req.headers.get('content-length')??0)<=2*1024*1024,'Request too large.',413);
@@ -23,7 +26,12 @@ async function routes(req:Request,env:Env,ctx:ExecutionContext):Promise<Response
   const actor=await actorFor(req,env);assert(actor,'Sign in to access your saved work.',401);
   if(req.method!=='GET')checkOrigin(req,env);
   const parts=path.split('/').filter(Boolean);
+  if(path==='/api/curriculum'&&req.method==='GET')return json(await curriculumContext(env));
+  if(path==='/api/curriculum/preview'&&req.method==='POST')return json(await previewCurriculum(env,actor,await body(req)));
+  if(path==='/api/curriculum/confirm'&&req.method==='POST'){const d=z.object({previewId:uuid}).strict().parse(await body(req));const result=await confirmCurriculum(env,actor,d.previewId);ctx.waitUntil(syncSheets(env));return json(result);}
   if(path==='/api/topics'&&req.method==='GET')return json(await store.topics(env));
+  if(path==='/api/study-settings'&&req.method==='GET')return json(await getStudySettings(env,actor));
+  if(path==='/api/study-settings'&&req.method==='POST')return json(await saveStudySettings(env,actor,await body(req)));
   if(path==='/api/catalog/preview'&&req.method==='POST')return json(await previewCatalog(env,actor,await body(req)));
   if(path==='/api/catalog/confirm'&&req.method==='POST'){const d=z.object({previewId:uuid}).strict().parse(await body(req));return json(await confirmCatalog(env,actor,d.previewId));}
   if(path==='/api/progress'&&req.method==='GET')return json(await store.progress(env,actor));
@@ -40,6 +48,7 @@ async function routes(req:Request,env:Env,ctx:ExecutionContext):Promise<Response
     const id=uuid.parse(parts[2]);if(req.method==='GET')return json(await store.getSession(env,actor,id));
     if(req.method==='POST'){const s=await store.updateSession(env,actor,id,await body(req));if(s.status==='completed')ctx.waitUntil(syncSheets(env));return json(s);}
   }
+  if(path==='/api/performance'&&req.method==='GET')return json(await performanceProfile(env,actor,{topicId:url.searchParams.get('topicId')??undefined,block:url.searchParams.get('block')??undefined,allBlocks:url.searchParams.get('allBlocks')==='true'}));
   if(path==='/api/results'&&req.method==='GET')return json(await store.results(env,actor,url.searchParams.get('id')||undefined));
   if(path==='/api/mappings'&&req.method==='POST')return json(await store.proposeMappings(env,actor,await body(req)));
   if(path==='/api/mappings'&&req.method==='GET')return json((await env.DB.prepare("SELECT * FROM mapping_proposals WHERE owner=? AND pack_id=? AND status='pending'").bind(actor.id,uuid.parse(url.searchParams.get('packId'))).all<any>()).results.map(r=>({...r,payload:JSON.parse(r.payload)})));

@@ -8,7 +8,7 @@ export const SOURCE_POLICY=[
   'For prescribing verify indication, dose, route, frequency, duration, age/weight, renal or hepatic adjustments, pregnancy, contraindications and relevant safety alerts. Do not invent missing details. Distinguish licensed product information from guideline-supported off-label use.',
   'Teaching sites, textbooks and question banks are learning aids; cross-check management and numerical thresholds against current clinical references. Write original questions; do not copy paid banks, bypass access controls or bulk reproduce licensed material.',
   'Use five plausible options and one defensibly best answer, explaining the correct answer and key distractors. Cover recognition, investigations, management and red flags, not just recall of labels. Vary age, setting and presentation; include uncertainty and escalation where appropriate.',
-  'SBA performance is study evidence, not a pass prediction or proof of bedside competence. Pair knowledge work with supervised placement practice, observed examination and communication skills, prescribing practice and official school assessments.'
+  'SBA performance is study evidence, not a pass prediction or proof of bedside competence. This system focuses on AKT knowledge. Use official school assessments and mocks to judge exam readiness.'
 ];
 const source=(name,group,url,use,access='Public guidance; check individual document status and reuse terms.')=>({name,group,url,use,access});
 export const TRUSTED_SOURCES=[

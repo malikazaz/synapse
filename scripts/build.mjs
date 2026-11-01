@@ -24,8 +24,8 @@ if(publicOnly){
   await copyFile('public/local.js',resolve(output,'connected.js'));
   await copyFile('public/sw.js',resolve(output,'sw.js'));
 }else{
-  for(const file of ['connected.js','workspace.js','sw.js'])await copyFile(file,resolve(output,file));
-  await copyFile('shared/sources.js',resolve(output,'shared/sources.js'));
+  for(const file of ['connected.js','workspace.js','study-ui.js','sw.js'])await copyFile(file,resolve(output,file));
+  for(const file of ['sources.js','learning.js'])await copyFile('shared/'+file,resolve(output,'shared',file));
 }
 await writeFile(resolve(output,'index.html'),html);
 await writeFile(resolve(output,'.nojekyll'),'');

@@ -381,18 +381,8 @@ textarea.big{
   gap: 10px;
   flex-wrap: wrap;
 }
-.warn{
-  font-size: 12px;
-  color: var(--wrong);
-  font-weight: 700;
-  min-height: 18px;
-}
-.warn:not(:empty){
-  padding: 8px 10px;
-  border-radius: 10px;
-  background: color-mix(in srgb, var(--wrong) 14%, transparent 86%);
-  border-left: 3px solid var(--wrong);
-}
+.warn{font-size:12px;color:var(--wrong);font-weight:700;min-height:18px}
+.warn:not(:empty){padding:8px 10px;border-radius:10px;background:color-mix(in srgb,var(--wrong) 14%,transparent 86%)}
 
 .kbdhint{
   margin-top: 16px;

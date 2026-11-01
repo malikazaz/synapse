@@ -13,7 +13,7 @@ const mf=new Miniflare(convertV4MiniflareOptions({host:'127.0.0.1',port:8791,mod
 const sha=s=>createHash('sha256').update(s).digest('hex');
 try{
   const db=await mf.getD1Database('DB');
-  const sql=await readFile('migrations/0001_initial.sql','utf8');for(const statement of sql.split(';').map(s=>s.trim()).filter(Boolean))await db.prepare(statement).run();
+  const sql=(await Promise.all((await readdir('migrations')).filter(f=>f.endsWith('.sql')).sort().map(f=>readFile('migrations/'+f,'utf8')))).join('\n');for(const statement of sql.split(';').map(s=>s.trim()).filter(Boolean))await db.prepare(statement).run();
   await db.prepare("INSERT INTO topics(id,label,type) VALUES('C1','Example','Condition')").run();
   await db.prepare('INSERT INTO web_sessions VALUES(?,?,?)').bind(sha('test-session'),'owner',Date.now()+3600000).run();
   const call=(path,opts={})=>mf.dispatchFetch(origin+path,opts);
@@ -39,11 +39,14 @@ try{
   const code=new URL(allowed.headers.get('location')).searchParams.get('code');
   const tokenResponse=await call('/oauth/token',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:new URLSearchParams({grant_type:'authorization_code',client_id:client.client_id,code,redirect_uri:callbackUrl,code_verifier:verifier,resource:origin+'/mcp'}).toString()});assert.equal(tokenResponse.status,200);const tokens=await tokenResponse.json();
   const mcpHeaders={Authorization:'Bearer '+tokens.access_token,'Content-Type':'application/json',Accept:'application/json, text/event-stream'};
-  const tools=await call('/mcp',{method:'POST',headers:mcpHeaders,body:JSON.stringify({jsonrpc:'2.0',id:1,method:'tools/list',params:{}})});assert.equal(tools.status,200);const listed=await tools.json();assert.equal(listed.result.tools.length,6);
+  const tools=await call('/mcp',{method:'POST',headers:mcpHeaders,body:JSON.stringify({jsonrpc:'2.0',id:1,method:'tools/list',params:{}})});assert.equal(tools.status,200);const listed=await tools.json();assert.equal(listed.result.tools.length,9);
   const context=await call('/mcp',{method:'POST',headers:mcpHeaders,body:JSON.stringify({jsonrpc:'2.0',id:2,method:'tools/call',params:{name:'get_study_context',arguments:{}}})});assert.equal(context.status,200);const result=await context.json();assert.equal(result.result.structuredContent.topics[0].status,'Untested');
   assert.equal(result.result.structuredContent.sourcePolicy.version,'uk-sources-1');assert.ok(result.result.structuredContent.sourcePolicy.references.some(s=>s.name==='BNF'));
   const mcpCall=async(name,args)=>{const response=await call('/mcp',{method:'POST',headers:mcpHeaders,body:JSON.stringify({jsonrpc:'2.0',id:randomUUID(),method:'tools/call',params:{name,arguments:args}})});const body=await response.json();assert.equal(response.status,200);assert.ok(!body.result.isError,JSON.stringify(body));return body.result.structuredContent;};
-  const generated=await mcpCall('save_question_pack',{requestId:randomUUID(),title:'Connected proof',mode:'diagnostic',questions:Array.from({length:20},(_,i)=>({question:`Integration question ${i}?`,options,answer:'A',explanation:'Test fixture explanation.',sources:[{title:'Test fixture',reference:'Local integration fixture; not clinical content',retrievedAt:new Date().toISOString()}],topicId:'C1',domain:'management'}))});
+  assert.equal((await mcpCall('get_akt_generation_skill',{})).version,'akt-1');
+  assert.equal((await mcpCall('get_performance_profile',{})).version,'performance-1');
+  assert.equal((await mcpCall('get_curriculum_context',{})).blocks.length,0);
+  const generated=await mcpCall('save_question_pack',{requestId:randomUUID(),title:'Connected proof',mode:'diagnostic',questions:Array.from({length:20},(_,i)=>({question:`Integration question ${i}?`,options,answer:'A',explanation:'Test fixture explanation.',sources:[{title:'Test fixture',reference:'Local integration fixture; not clinical content',retrievedAt:new Date().toISOString()}],topicId:'C1',domain:'management',learningStage:'clinical',difficulty:'standard',learningObjective:'Test one integration fact',optionRationales:{A:'One is correct',B:'Two is not',C:'Three is not',D:'Four is not',E:'Five is not'}}))});
   assert.ok(generated.quizUrl??generated.url??generated.link,JSON.stringify(generated));
   query.set('scope','mcp:read');
   const readConsent=await call('/authorize?'+query,{headers}),readHtml=await readConsent.text(),readCsrf=readHtml.match(/name="csrf" value="([^"]+)"/)[1];
@@ -55,7 +58,7 @@ try{
   assert.equal(denied.result.isError,true);assert.match(denied.result.content[0].text,/mcp:write scope required/);
   assert.equal((await db.prepare("SELECT count(*) n FROM packs WHERE title='Must not save'").first()).n,0);
   mcpHeaders.Authorization=readHeaders.Authorization; // Re-consent invalidates the earlier grant.
-  console.log('Worker integration passed: private API, CSRF, real D1 writes, idempotency, OAuth consent/token exchange, read-only scope enforcement, six authenticated MCP tools and 20-question generation.');
+  console.log('Worker integration passed: private API, CSRF, real D1 writes, idempotency, OAuth consent/token exchange, read-only scope enforcement, nine authenticated MCP tools and 20-question generation.');
   if(process.argv.includes('--browser')){
     const {chromium}=await import('@playwright/test');const browser=await chromium.launch();
     const callbackServer=createServer((_req,res)=>{res.writeHead(200,{'Content-Type':'text/html'});res.end('<h1>OAuth callback reached</h1>');});
@@ -86,6 +89,7 @@ try{
       await phone.locator('[data-view="packs"]').click();await phone.locator('[data-conflict="remote"]').click();await phone.waitForFunction(()=>document.querySelector('[data-key="B"]')?.classList.contains('wrong'));
       const archive=await phone.evaluate(async id=>(await import('/shared/offline.js')).storage('get','conflict-archive:'+id),concurrent.id);assert.equal(archive.local.events[0].selection,'A');assert.equal(archive.remote.state.events[0].selection,'B');
       await phone.screenshot({path:'test-results/connected-phone.png',fullPage:true});assert.deepEqual(errors,[]);
+      await phone.locator('[data-view="performance"]').click();await phone.getByRole('heading',{name:'Your weak points',exact:true}).waitFor();assert.equal(await phone.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),true);await phone.screenshot({path:'test-results/performance-phone.png',fullPage:true});assert.deepEqual(errors,[]);
       // Exercise the HTML form's cross-origin OAuth redirect in a real browser.
       // fetch(..., redirect:'manual') cannot detect a browser CSP navigation block.
       const consentContext=await browser.newContext({serviceWorkers:'block'});
