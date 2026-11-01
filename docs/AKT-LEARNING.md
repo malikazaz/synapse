@@ -47,6 +47,12 @@ The app presents teaching blocks, guide sections, teaching scope (core, self-dir
 
 Earlier catalogue groups, including Core MSK and Related MSK, appear separately from teaching blocks. Existing study-plan and exam selections keep their original stored values; browsing filters do not update settings, mappings, scores or the Sheet. The read-only curriculum API now supports bounded pagination so the app can display every guide entry, including those beyond the first 100. Owner-specific offline copies are stored in IndexedDB and labelled when stale. No catalogue migration, source re-import or spreadsheet edit is part of this presentation change.
 
+## Ending or discarding sessions
+
+My question packs separates active, completed, ended-early and discarded attempts. End session completes a fully answered attempt under normal first-answer scoring; otherwise it closes it as incomplete practice. Discard removes an unfinished attempt from active study, with a confirmation, while retaining its answers in a collapsed history. Neither action can discard a completed result. Incomplete or discarded attempts never award competency credit, and their prior exposures still prevent repeat questions earning fresh credit.
+
+Account actions require a connection and synced answers. Closing uses revision checks, idempotent mutation IDs and an audit record. Other-device conflicts retain local answers for resolution. Local-only attempts can be closed offline. Account and device backups retain ended/discarded history; the current reader also accepts older backups. Closing incomplete attempts requires no spreadsheet changes; ordinary completed results use the existing sync path.
+
 ## Research and reference collection
 
 The MCP playbook is original application guidance in `server/akt-skill.ts`, with clinical reference policy in `shared/sources.js`. It is returned as a tool, not a promise that ChatGPT has automatically read every source. Before saving a generated pack, ChatGPT must retrieve the playbook and verify each actual clinical claim.

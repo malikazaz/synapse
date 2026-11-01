@@ -47,6 +47,9 @@ async function routes(req:Request,env:Env,ctx:ExecutionContext):Promise<Response
     if(req.method==='POST')return json(await store.createSession(env,actor,await body(req)),201);
     if(req.method==='GET')return json((await env.DB.prepare('SELECT s.id,s.pack_id,s.status,s.revision,s.started_at,s.completed_at,s.score,p.title,json_array_length(s.state,\'$.order\') AS question_count,(SELECT COUNT(DISTINCT a.question_id) FROM answer_events a WHERE a.session_id=s.id) AS answered FROM sessions s JOIN packs p ON p.id=s.pack_id WHERE s.owner=? ORDER BY COALESCE(s.completed_at,s.started_at) DESC LIMIT 100').bind(actor.id).all()).results);
   }
+  if(parts[1]==='sessions'&&parts.length===4&&parts[3]==='close'&&req.method==='POST'){
+    const s=await store.closeSession(env,actor,uuid.parse(parts[2]),await body(req));if(s.status==='completed')ctx.waitUntil(syncSheets(env));return json(s);
+  }
   if(parts[1]==='sessions'&&parts.length===3){
     const id=uuid.parse(parts[2]);if(req.method==='GET')return json(await store.getSession(env,actor,id));
     if(req.method==='POST'){const s=await store.updateSession(env,actor,id,await body(req));if(s.status==='completed')ctx.waitUntil(syncSheets(env));return json(s);}

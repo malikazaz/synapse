@@ -34,7 +34,8 @@ export async function restoreBackup(env:Env,actor:Actor,input:unknown){
   for(const row of b.data.sessions){
     const state=JSON.parse(String(row.state)),events=z.array(eventInput).parse(state.events);const packQs=[...qs.values()].filter(q=>q.packId===row.pack_id);
     assert(packQs.length>0&&Array.isArray(state.order)&&state.order.length===packQs.length&&new Set(state.order).size===packQs.length&&state.order.every((id:string)=>packQs.some(q=>q.id===id)),'Invalid backup question order.');
-    const result=replay(packQs,events);assert(result.score===row.score,'Backup score mismatch.');assert(['active','completed'].includes(String(row.status)),'Invalid session status.');
+    const result=replay(packQs,events);assert(result.score===row.score,'Backup score mismatch.');assert(['active','completed','ended','discarded'].includes(String(row.status)),'Invalid session status.');
+    if(row.status!=='completed')assert(!row.completed_at,'Only completed sessions may award assessment evidence.');
     if(row.status==='completed')assert(result.answered===packQs.length&&!!row.completed_at,'Incomplete session marked complete.');
     const stored=b.data.answer_events.filter(e=>e.session_id===row.id).sort((a,b)=>Number(a.sequence)-Number(b.sequence));
     assert(stored.length===events.length&&stored.every((e,i)=>e.id===events[i].id&&e.question_id===events[i].questionId&&e.selection===events[i].selection&&e.sequence===i&&e.answered_at===events[i].at),'Backup answer history is inconsistent.');

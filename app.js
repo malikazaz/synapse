@@ -169,11 +169,13 @@ import { connected } from './connected.js';
   }
 
   function buildSummaryText(forDisplay) {
-    const total = state.questions.length;
-    if (!total) return 'No questions were loaded.';
+    const stopped=['ended','discarded'].includes(connected.active?.status);
+    const answered=state.answerRecords.filter(r=>r.final_selection!==null).length;
+    const total = stopped?answered:state.questions.length;
+    if (!state.questions.length) return 'No questions were loaded.';
 
     const correct = state.score;
-    const pct = (correct / total) * 100;
+    const pct = total?(correct / total) * 100:0;
 
     const wrongIds = [];
     for (let i = 0; i < state.answerRecords.length; i++) {
@@ -193,6 +195,7 @@ import { connected } from './connected.js';
     return [
       '[ SUMMARY ]',
       `- Score: ${correct}/${total} (${pct.toFixed(2)}%)`,
+      `- Questions answered: ${answered}/${state.questions.length}`,
       `- Correct (1st attempt): ${correct}`,
       `- Incorrect (1st attempt): ${wrongIds.length}`,
       `- Questions wrong (${idLabel}): ${wrongIds.length ? wrongIds.join(', ') : 'None'}`
@@ -212,7 +215,7 @@ import { connected } from './connected.js';
     ];
     if (state.isRandomOrder) headerLines.push('- Question Text: The full text of the question for reference.');
 
-    const summaryText = buildSummaryText(false);
+    const summaryText = (['ended','discarded'].includes(connected.active?.status)?`Session status: ${connected.active.status}. Incomplete/discarded practice; no competency credit.\n\n`:'')+buildSummaryText(false);
 
     const analysisLines = ['---', '[ DETAILED ANALYSIS ]', ''];
 
@@ -226,7 +229,7 @@ import { connected } from './connected.js';
       if (sessionIndex === -1) continue;
 
       const record = state.answerRecords[sessionIndex];
-      const status = record.first_try_correct ? 'CORRECT on first attempt' : 'INCORRECT on first attempt';
+      const status = !record.selection_history.length?'NOT ANSWERED':record.first_try_correct ? 'CORRECT on first attempt' : 'INCORRECT on first attempt';
       const historyStr = record.selection_history.length ? record.selection_history.join(' -> ') : 'Not Answered';
       const qIdentifier = state.isRandomOrder
         ? `[ Original Question ID: ${qData.original_q_number} ]`
@@ -578,7 +581,9 @@ Answer: B</pre>
   }
 
   function renderResults() {
-    const total = state.questions.length;
+    const stopped = ['ended','discarded'].includes(connected.active?.status);
+    const answered=state.answerRecords.filter(r=>r.final_selection!==null).length;
+    const total = stopped?answered:state.questions.length;
     const correct = state.score;
     const pct = total ? (correct / total) * 100 : 0;
 
@@ -590,14 +595,14 @@ Answer: B</pre>
       }
     }
     const idLabel = state.isRandomOrder ? 'Original IDs' : 'IDs';
-    const wrongLine = wrongIds.length
+    const wrongLine = stopped ? `Saved practice: ${answered}/${state.questions.length} questions answered. No competency credit is awarded for this attempt.` : wrongIds.length
       ? `Wrong on first attempt (${idLabel}): ${escapeHtml(wrongIds.join(', '))}`
       : 'Flawless — every question right on the first try! 🎉';
 
     app.innerHTML = `
       <section class="card padded results-card">
         <div class="results-hero">
-          <div class="results-kicker">Quiz finished</div>
+          <div class="results-kicker">${stopped?(connected.active.status==='discarded'?'Discarded attempt':'Session ended early'):'Quiz finished'}</div>
           <div class="score-big"><span class="score-correct">${correct}</span><span class="score-slash">/</span><span class="score-total">${total}</span></div>
           <div class="score-pct">${pct.toFixed(0)}%</div>
           <div class="results-sub">${wrongLine}</div>
@@ -730,7 +735,7 @@ Answer: B</pre>
     state.score = result.score;
     state.currentIndex = session.currentIndex;
     state.isRandomOrder = state.questions.some((q,i) => q.id !== pack.questions[i].id);
-    state.screen = session.status === 'completed' || session.needsCompletion ? 'results' : 'quiz';
+    state.screen = ['completed','ended','discarded'].includes(session.status) || session.needsCompletion ? 'results' : 'quiz';
     render();
   });
   loadPrefs();

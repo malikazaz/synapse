@@ -62,7 +62,7 @@ export async function getSession(env: Env, actor: Actor, id: string) {
   return {...s,state:JSON.parse(s.state)};
 }
 export function applyUpdate(s: any, pack: any, data: z.infer<typeof updateInput>) {
-  assert(s.status==='active','Session already completed.',409);
+  assert(s.status==='active','Session already completed or closed.',409);
   assert(s.revision===data.expectedRevision,'Session changed on another device.',409);
   const all = [...s.state.events,...data.events];
   assert(new Set(all.map(e=>e.id)).size===all.length,'Duplicate answer event.');
@@ -94,6 +94,21 @@ export async function evidence(env: Env, actor: Actor) {
   FROM first_answers e JOIN questions q ON q.id=e.question_id JOIN sessions s ON s.id=e.session_id
   LEFT JOIN mappings m ON m.question_id=q.id LEFT JOIN exclusions x ON x.fingerprint=q.fingerprint WHERE e.n=1`).bind(actor.id).all<any>();
   return results.map(r=>({...r,correct:r.selection===JSON.parse(r.payload).answer,learningStage:JSON.parse(r.payload).learningStage??null}));
+}
+export async function closeSession(env:Env,actor:Actor,id:string,input:unknown){
+  const d=z.object({mutationId:uuid,expectedRevision:z.number().int().nonnegative(),action:z.enum(['end','discard'])}).strict().parse(input),hash=await digest(d);
+  const existing=await env.DB.prepare('SELECT * FROM mutations WHERE id=? AND session_id=?').bind(d.mutationId,id).first<any>();
+  if(existing){assert(existing.payload_hash===hash,'Mutation ID reused.',409);return getSession(env,actor,id);}
+  const s=await getSession(env,actor,id);assert(s.status==='active','Only an unfinished session can be ended or discarded. Completed results are preserved.',409);
+  assert(s.revision===d.expectedRevision,'Session changed on another device. Refresh before closing it.',409);
+  const pack=await getPack(env,actor,s.pack_id),result=replay(pack.questions,s.state.events),time=now();
+  const status=d.action==='discard'?'discarded':result.answered===pack.questions.length?'completed':'ended';
+  const state={...s.state,lifecycle:{action:d.action,at:time}},guard='EXISTS(SELECT 1 FROM sessions WHERE id=? AND owner=? AND last_mutation=?)';
+  const statements=[env.DB.prepare("UPDATE sessions SET status=?,state=?,score=?,completed_at=?,revision=revision+1,last_mutation=? WHERE id=? AND owner=? AND revision=? AND status='active'").bind(status,JSON.stringify(state),result.score,status==='completed'?time:null,d.mutationId,id,actor.id,d.expectedRevision),
+    env.DB.prepare(`INSERT INTO mutations SELECT ?,?,?,? WHERE ${guard}`).bind(d.mutationId,id,hash,s.revision+1,id,actor.id,d.mutationId),
+    env.DB.prepare(`INSERT INTO audit SELECT ?,?,?,?,? WHERE ${guard}`).bind(d.mutationId,actor.id,'close_session',JSON.stringify({sessionId:id,action:d.action,status,answered:result.answered}),time,id,actor.id,d.mutationId)];
+  if(status==='completed')statements.push(env.DB.prepare(`INSERT INTO sync_jobs(id,owner,next_at,updated_at) SELECT ?,?,?,? WHERE ${guard}`).bind(d.mutationId,actor.id,time,time,id,actor.id,d.mutationId));
+  const changes=await env.DB.batch(statements);assert(changes[0].meta.changes===1,'Session changed on another device. Refresh before closing it.',409);return getSession(env,actor,id);
 }
 export async function progress(env: Env, actor: Actor) {
   const [ts,ev]=await Promise.all([topics(env),evidence(env,actor)]);

@@ -11,6 +11,7 @@ export async function storage(action,key,value){
   });
 }
 export function prepareMutation(session){
+  if(['ended','discarded'].includes(session.status))return null;
   if(session.inflight)return session.inflight;
   if(session.status==='completed'&&!session.pending.length&&!session.needsCompletion)return null;
   if(!session.pending.length&&!session.needsCompletion&&!session.positionDirty)return null;
@@ -20,7 +21,7 @@ export function acknowledge(session,server,mutation){
   const ids=new Set(mutation.events.map(e=>e.id));
   const pending=session.pending.filter(e=>!ids.has(e.id));
   const needsCompletion=session.needsCompletion&&!mutation.complete;
-  return {...session,revision:server.revision,events:[...server.state.events,...pending],pending,inflight:null,positionDirty:session.currentIndex!==mutation.currentIndex,needsCompletion,status:needsCompletion?'finishing':server.status,serverCreated:true};
+  return {...session,revision:server.revision,events:[...server.state.events,...pending],pending,inflight:null,positionDirty:session.currentIndex!==mutation.currentIndex,needsCompletion,status:needsCompletion?'finishing':server.status,conflict:!!session.conflict||(['ended','discarded'].includes(server.status)&&pending.length>0),serverCreated:true};
 }
 
 export function validateDeviceBackup(backup,owner){
@@ -35,7 +36,7 @@ export function validateDeviceBackup(backup,owner){
     if(new Set(questionIds).size!==questionIds.length||pack.questions.some(q=>!uuid.test(q.id)||typeof q.question!=='string'||!LETTERS.includes(q.answer)||LETTERS.some(k=>typeof q.options?.[k]!=='string')))throw new Error('Invalid backup questions.');
     if(pack.questions.some(q=>!Number.isInteger(q.original_q_number)||q.original_q_number<1||q.original_q_number>200||(q.explanation!==undefined&&typeof q.explanation!=='string')||(q.sources!==undefined&&!Array.isArray(q.sources))))throw new Error('Invalid backup question metadata.');
     if(record.kind==='pack'){if(!uuid.test(pack.id))throw new Error('Invalid pack ID.');entries.push(['pack:'+pack.id,record]);continue;}
-    if(!uuid.test(record.id)||typeof record.updatedAt!=='string'||!Number.isFinite(Date.parse(record.updatedAt))||!['active','finishing','completed'].includes(record.status)||!Array.isArray(record.events)||!Array.isArray(record.pending)||record.events.length>10000||!Array.isArray(record.order)||record.order.length!==questionIds.length||new Set(record.order).size!==questionIds.length||record.order.some(q=>!questionIds.includes(q))||!Number.isInteger(record.currentIndex)||record.currentIndex<0||record.currentIndex>=questionIds.length||!Number.isInteger(record.revision)||record.revision<0)throw new Error('Invalid backup session.');
+    if(!uuid.test(record.id)||typeof record.updatedAt!=='string'||!Number.isFinite(Date.parse(record.updatedAt))||!['active','finishing','completed','ended','discarded'].includes(record.status)||!Array.isArray(record.events)||!Array.isArray(record.pending)||record.events.length>10000||!Array.isArray(record.order)||record.order.length!==questionIds.length||new Set(record.order).size!==questionIds.length||record.order.some(q=>!questionIds.includes(q))||!Number.isInteger(record.currentIndex)||record.currentIndex<0||record.currentIndex>=questionIds.length||!Number.isInteger(record.revision)||record.revision<0)throw new Error('Invalid backup session.');
     if(record.events.some(e=>!uuid.test(e.id)||!Number.isFinite(Date.parse(e.at)))||new Set(record.events.map(e=>e.id)).size!==record.events.length||record.pending.some(e=>!record.events.some(saved=>JSON.stringify(saved)===JSON.stringify(e))))throw new Error('Invalid backup answer history.');
     replay(pack.questions,record.events);
     entries.push(['session:'+record.id,record]);

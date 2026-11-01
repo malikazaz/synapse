@@ -98,6 +98,16 @@ try{
       const archive=await phone.evaluate(async id=>(await import('/shared/offline.js')).storage('get','conflict-archive:'+id),concurrent.id);assert.equal(archive.local.events[0].selection,'A');assert.equal(archive.remote.state.events[0].selection,'B');
       await phone.screenshot({path:'test-results/connected-phone.png',fullPage:true});assert.deepEqual(errors,[]);
       await phone.locator('[data-view="performance"]').click();await phone.getByRole('heading',{name:'Your weak points',exact:true}).waitFor();assert.equal(await phone.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),true);await phone.screenshot({path:'test-results/performance-phone.png',fullPage:true});assert.deepEqual(errors,[]);
+      // Close an account session on the phone; another device must see the same history.
+      const endedId=randomUUID(),discardedId=randomUUID();
+      for(const id of [endedId,discardedId])assert.equal((await call('/api/sessions',{method:'POST',headers,body:JSON.stringify({id,packId:p.id,order:p.questions.map(q=>q.id)})})).status,201);
+      assert.equal((await call('/api/sessions/'+endedId+'/close',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({mutationId:randomUUID(),expectedRevision:0,action:'end'})})).status,401);
+      await phone.goto(origin+'/?session='+endedId);await phone.locator('[data-key="A"]').waitFor();await phone.locator('[data-view="packs"]').click();phone.once('dialog',d=>d.accept());await phone.locator(`[data-close-session="end"][data-session-id="${endedId}"]`).click();await phone.locator(`#endedSessions [data-resume="${endedId}"]`).waitFor();
+      assert.equal((await db.prepare('SELECT status FROM sessions WHERE id=?').bind(endedId).first()).status,'ended');
+      await computer.goto(origin+'/?view=packs');await computer.locator(`#endedSessions [data-resume="${endedId}"]`).waitFor();computer.once('dialog',d=>d.accept());await computer.locator(`[data-close-session="discard"][data-session-id="${discardedId}"]`).click();await computer.locator('#discardedSessions').waitFor();
+      assert.equal((await db.prepare('SELECT status FROM sessions WHERE id=?').bind(discardedId).first()).status,'discarded');
+      assert.equal((await call('/api/sessions/'+first.id+'/close',{method:'POST',headers,body:JSON.stringify({mutationId:randomUUID(),expectedRevision:2,action:'discard'})})).status,409);
+      assert.deepEqual(errors,[]);console.log('Account session controls passed: phone end, computer discard, cross-device history, anonymous denial and completed-result protection.');
       // Exercise the HTML form's cross-origin OAuth redirect in a real browser.
       // fetch(..., redirect:'manual') cannot detect a browser CSP navigation block.
       const consentContext=await browser.newContext({serviceWorkers:'block'});

@@ -1,3 +1,4 @@
+import {isClosed,hasPending,sessionSummaries,sessionListHtml,closeFromList} from './session-ui.js';
 import {renderCurriculumProgress} from './curriculum-ui.js';
 import {storage,prepareMutation,acknowledge,restoreDevice} from './shared/offline.js';
 import {replay,DOMAIN_LABELS,DOMAINS} from './shared/quiz.js';
@@ -55,7 +56,7 @@ class Connected {
   async finish(){return this.serial(async()=>{if(!this.active)return;this.active.needsCompletion=!!this.active.owner;this.active.status=this.active.owner?'finishing':'completed';this.active.updatedAt=new Date().toISOString();await this.persist();this.status();void this.flush();});}
   status(){const el=document.getElementById('saveStatus');if(!el)return;const s=this.active;el.textContent=!s?'':s.conflict?'Conflict: choose a continuation':!s.owner?'Saved on device':s.pending.length||s.inflight||!s.serverCreated||s.needsCompletion?'Saved on device · sync pending':'Synced';}
   async flush(target=this.active){
-    if(this.busy||!navigator.onLine)return;const s=target;if(!s?.owner||s.owner!==this.actor?.id||s.conflict||s.archived)return;
+    if(this.busy||!navigator.onLine)return;const s=target;if(!s?.owner||s.owner!==this.actor?.id||s.conflict||s.archived||isClosed(s))return;
     this.busy=true;
     try{
       if(!s.serverCreated){const created=await this.api('sessions',{id:s.id,packId:s.packId,order:s.order});s.serverCreated=true;s.revision=created.revision;await this.persist(s);}
@@ -87,13 +88,17 @@ class Connected {
   async installRemote(remote,pack,navigate=true){this.selectedPack=pack;this.active={kind:'session',id:remote.id,owner:remote.owner,packId:pack.id,pack,order:remote.state.order,events:remote.state.events,pending:[],currentIndex:remote.state.currentIndex,revision:remote.revision,status:remote.status,serverCreated:true,needsCompletion:false,positionDirty:false,inflight:null,updatedAt:remote.completed_at??remote.started_at};await this.persist();this.emit(navigate);}
   async resume(sessionId){
     const local=await storage('get','session:'+sessionId);
+    if(local?.owner&&local.owner===this.actor?.id&&local.serverCreated&&navigator.onLine){
+      const remote=await this.api('sessions/'+sessionId);
+      if(remote.revision>local.revision){if(hasPending(local)){local.conflict=true;await storage('put','session:'+local.id,local);await this.show('packs');this.notify('This session changed on another device. Resolve the conflict before continuing.',true);return;}await this.installRemote(remote,local.pack);return;}
+    }
     if(local){if(local.owner&&local.owner!==this.actor?.id)throw new Error('Sign in to the account that owns this session.');this.active=local;this.selectedPack=local.packId?local.pack:null;this.emit();await this.tick();return;}
     const remote=await this.api('sessions/'+sessionId),pack=await this.api('packs/'+remote.pack_id);await this.installRemote(remote,pack);
   }
   async resumeLatest(){
     const locals=(await storage('all')).filter(r=>r.kind==='session'&&!r.archived&&(!r.owner||r.owner===this.actor?.id));
     let cloud=[];if(this.actor){try{cloud=await this.api('sessions');}catch{cloud=(await storage('get','dashboard:'+this.actor.id))?.sessions??[];}}
-    const sessions=[...new Map([...cloud.map(s=>({...s,updatedAt:s.completed_at??s.started_at})),...locals].map(s=>[s.id,s])).values()].sort((a,b)=>Number(a.status==='completed')-Number(b.status==='completed')||b.updatedAt.localeCompare(a.updatedAt));
+    const sessions=sessionSummaries(cloud,locals).filter(s=>!isClosed(s)||s.conflict).sort((a,b)=>Number(a.status==='completed')-Number(b.status==='completed')||(b.completed_at??b.started_at).localeCompare(a.completed_at??a.started_at));
     if(!sessions.length){this.notify('No saved sessions yet. Paste or upload a quiz to begin.');return;}
     if(sessions[0].conflict){await this.show('packs');this.notify('Choose a continuation for the conflicting session.');return;}
     await this.resume(sessions[0].id);
@@ -142,8 +147,9 @@ class Connected {
     let packs=(await storage('all')).filter(r=>r.kind==='pack'&&r.owner===this.actor?.id).map(r=>r.pack),sessions=[];
     if(this.actor&&navigator.onLine){packs=await this.api('packs');sessions=await this.api('sessions');}
     const locals=(await storage('all')).filter(r=>r.kind==='session'&&!r.archived&&(!r.owner||r.owner===this.actor?.id));
-    const conflicts=locals.filter(s=>s.conflict);
-    panel.innerHTML=`<h1>My question packs</h1><p>Open a saved pack to start a new attempt. Downloaded packs work offline.</p>${conflicts.map(s=>`<article class="card padded"><h2>Conflicting session</h2><p>${esc(s.pack.title)}. Both continuations are preserved. Keeping local work creates a separate practice attempt.</p><button class="btn" data-conflict="remote" data-id="${s.id}">Use cloud continuation</button> <button class="btn secondary" data-conflict="local" data-id="${s.id}">Keep local as separate attempt</button><button class="btn ghost" data-export="${s.id}">Export both</button></article>`).join('')}<div class="pack-grid">${packs.map(p=>`<article class="card padded"><h2>${esc(p.title)}</h2><p>${esc(p.mode)}</p><button class="btn" data-pack="${p.id}">Start quiz</button> <button class="btn secondary" data-map="${p.id}">Topic mappings</button></article>`).join('')||'<p>No saved packs yet. Paste or upload a quiz, then save it to your account.</p>'}</div><h2>Continue a session</h2>${[...new Map([...sessions,...locals.map(s=>({id:s.id,title:s.pack.title,status:s.status}))].map(s=>[s.id,s])).values()].map(s=>`<p><button class="btn secondary" data-resume="${s.id}">${esc(s.title)} · ${esc(s.status)}</button></p>`).join('')}`;
+    const rows=sessionSummaries(sessions,locals),conflicts=rows.filter(s=>s.conflict);
+    panel.innerHTML=`<h1>My question packs</h1><p>Open a saved pack to start a new attempt. Downloaded packs work offline.</p>${conflicts.map(s=>`<article class="card padded"><h2>Conflicting session</h2><p>${esc(s.title)}. Both continuations are preserved. Keeping local work creates a separate practice attempt.</p><button class="btn" data-conflict="remote" data-id="${s.id}">Use cloud continuation</button> <button class="btn secondary" data-conflict="local" data-id="${s.id}">Keep local as separate attempt</button><button class="btn ghost" data-export="${s.id}">Export both</button></article>`).join('')}<div class="pack-grid">${packs.map(p=>`<article class="card padded"><h2>${esc(p.title)}</h2><p>${esc(p.mode)}</p><button class="btn" data-pack="${p.id}">Start quiz</button> <button class="btn secondary" data-map="${p.id}">Topic mappings</button></article>`).join('')||'<p>No saved packs yet. Paste or upload a quiz, then save it to your account.</p>'}</div>${sessionListHtml(rows)}`;
+    panel.querySelectorAll('[data-close-session]').forEach(b=>b.onclick=async()=>{b.disabled=true;try{await closeFromList(this,b.dataset.sessionId,b.dataset.closeSession);}catch(e){this.notify(e.message,true);}finally{b.disabled=false;}});
     panel.querySelectorAll('[data-pack]').forEach(b=>b.onclick=()=>this.openPack(b.dataset.pack).catch(e=>this.notify(e.message,true)));
     panel.querySelectorAll('[data-resume]').forEach(b=>b.onclick=()=>this.resume(b.dataset.resume).catch(e=>this.notify(e.message,true)));
     panel.querySelectorAll('[data-map]').forEach(b=>b.onclick=()=>this.renderMappings(panel,b.dataset.map).catch(e=>this.notify(e.message,true)));
