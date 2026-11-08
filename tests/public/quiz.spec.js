@@ -14,6 +14,7 @@ test('public paste, first-answer score, offline resume, report and retake make n
 });
 test('public upload and device export restore retain answer history',async({page,context})=>{
   await page.goto('./');await page.locator('#file').setInputFiles({name:'quiz.txt',mimeType:'text/plain',buffer:Buffer.from(quiz)});await page.locator('#loadBtn').click();await page.locator('[data-key=A]').click();await expect(page.locator('[data-key=A]')).toHaveClass(/wrong/);
+  if(await page.locator('#quizToolsBtn').isVisible())await page.locator('#quizToolsBtn').click();
   const downloading=page.waitForEvent('download');await page.locator('#exportLocal').click();const file=await downloading;const backupPath=await file.path();
   const clean=await context.browser().newContext();try{const other=await clean.newPage();await other.goto('http://127.0.0.1:8788/synapse/');await other.locator('#restoreLocal').setInputFiles(backupPath);await expect(other.locator('#connectionNotice')).toContainText('Backup restored');await other.locator('#resumeBtn').click();await expect(other.locator('[data-key=A]')).toHaveClass(/wrong/);await other.locator('[data-key=B]').click();await expect(other.locator('#score')).toHaveText('Score 0');}finally{await clean.close();}
 });

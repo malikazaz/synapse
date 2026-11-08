@@ -9,6 +9,8 @@ export async function resume(page){
   await page.locator('#resumeBtn').click();
 }
 export async function display(page,change){
-  await page.locator('#appearanceBtn').click();await change();
+  if(await page.locator('#quizToolsBtn').isVisible()){await page.locator('#quizToolsBtn').click();await page.locator('#quizDisplayBtn').click();}
+  else await page.locator('#appearanceBtn').click();
+  await change();
   await page.getByRole('button',{name:'Close display settings',exact:true}).click();
 }

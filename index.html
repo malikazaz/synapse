@@ -5,6 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <title>Synapse</title>
   <meta name="theme-color" content="#2c3e50" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-title" content="Synapse" />
+  <link rel="apple-touch-icon" href="icon-192.png" />
   <link rel="manifest" href="manifest.json" />
   <link rel="icon" href="icon-192.png" />
   <link rel="stylesheet" href="styles.css" />
@@ -44,6 +47,14 @@
       </label>
     </div>
     <p class="fine-print">Your display preferences stay on this device. Question order applies when starting a new quiz.</p>
+  </dialog>
+
+  <dialog id="quizToolsDialog" class="sheet-dialog" aria-labelledby="quizToolsTitle">
+    <div class="sheet-heading"><h2 id="quizToolsTitle">Quiz settings</h2><button class="icon-btn" data-dismiss aria-label="Close quiz settings">✕</button></div>
+    <button id="quizDisplayBtn" class="btn secondary">Display & text size</button>
+    <div id="quizToolsActions"></div>
+    <div id="quizToolsStatus"></div>
+    <details class="install-help"><summary>Study without Safari's bars</summary><p>In Safari, tap Share → Add to Home Screen, turn on <strong>Open as Web App</strong> if shown, then tap Add. Open Synapse from that icon for a dedicated study window.</p><p>Your account packs and synced progress will be there after signing in. Save or export any device-only quizzes before switching.</p></details>
   </dialog>
 
   <nav class="workspace-nav" aria-label="Synapse workspace">

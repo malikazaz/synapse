@@ -5,7 +5,8 @@ const mobile=matchMedia('(max-width: 720px)'),nav=document.querySelector('.works
 const more=document.getElementById('moreDialog'),appearance=document.getElementById('appearanceDialog');
 let opener=null;
 function open(dialog,button){opener=button;dialog.showModal();document.body.classList.add('sheet-open');}
-for(const dialog of [more,appearance]){
+const quizTools=document.getElementById('quizToolsDialog');
+for(const dialog of [more,appearance,quizTools]){
   if(!dialog)continue;
   dialog.querySelector('[data-dismiss]')?.addEventListener('click',()=>dialog.close());
   dialog.addEventListener('click',e=>{if(e.target!==dialog)return;const r=dialog.getBoundingClientRect();if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom)dialog.close();});
@@ -41,3 +42,35 @@ if(window.visualViewport){
   const update=()=>document.body.classList.toggle('keyboard-open',mobile.matches&&window.innerHeight-window.visualViewport.height>150);
   window.visualViewport.addEventListener('resize',update);
 }
+
+// A bounded study viewport: only the question scrolls, never the page behind it.
+const quizApp=document.getElementById('app');
+const toolGroups=[document.querySelector('.quiz-actions'),document.querySelector('.connection-strip'),...(!moreBtn?[nav]:[])].filter(Boolean).map(el=>{
+  const marker=document.createComment('quiz tools return here');el.before(marker);return {el,marker};
+});
+function updateQuizFocus(){
+  const focused=mobile.matches&&document.body.dataset.quizScreen==='quiz'&&!quizApp.hidden;
+  document.body.classList.toggle('quiz-focused',focused);
+  for(const {el,marker} of toolGroups){
+    const destination=el.classList.contains('connection-strip')?document.getElementById('quizToolsStatus'):document.getElementById('quizToolsActions');
+    if(focused&&el.parentElement!==destination)destination.append(el);
+    else if(!focused&&el.parentNode!==marker.parentNode)marker.after(el);
+  }
+  if(!focused&&quizTools.open)quizTools.close();
+  updateQuizStatus();
+}
+function updateQuizStatus(){
+  const status=quizApp.querySelector('.quiz-live-status');if(!status)return;
+  const error=document.querySelector('#connectionNotice.error');
+  const text=error?.textContent||document.getElementById('saveStatus')?.textContent||'Saved on device';
+  if(status.textContent!==text)status.textContent=text;
+  status.classList.toggle('error',Boolean(error));
+}
+new MutationObserver(updateQuizFocus).observe(document.body,{attributes:true,attributeFilter:['data-quiz-screen','data-current-view']});
+new MutationObserver(updateQuizFocus).observe(quizApp,{attributes:true,attributeFilter:['hidden'],childList:true});
+const statusStrip=document.querySelector('.connection-strip');
+if(statusStrip)new MutationObserver(updateQuizStatus).observe(statusStrip,{childList:true,subtree:true,characterData:true,attributes:true,attributeFilter:['class']});
+mobile.addEventListener('change',updateQuizFocus);
+document.addEventListener('click',event=>{const trigger=event.target.closest('#quizToolsBtn');if(trigger)open(quizTools,trigger);});
+document.getElementById('quizDisplayBtn').addEventListener('click',()=>{quizTools.close();open(appearance,document.getElementById('quizToolsBtn'));});
+updateQuizFocus();

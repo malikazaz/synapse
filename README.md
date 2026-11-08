@@ -19,7 +19,9 @@ The GitHub and Cloudflare sites have separate browser storage. Public users can 
 
 The private app has bottom navigation for Home, New quiz, My packs, Progress and More. More contains Study plan, My weak points, Sources, Connections and sign-in/out. Display opens theme, text-size and question-order settings. The public runner keeps its local quiz and backup tools.
 
-Home puts your unfinished session first, followed by current evidence and study priorities. Progress uses readable topic cards on phones, with teaching-block/search controls and optional filters under Refine topics. Quiz navigation starts collapsed on phones; Question list opens it when needed. During a quiz, bottom navigation hides and Back/Next follow the options in the page, so no app toolbar covers an answer. Navigation returns on exit or completion. Exit quiz returns to Home with your attempt saved. The ChatGPT prompt opens in a dismissible sheet.
+Home puts your unfinished session first, followed by current evidence and study priorities. Progress uses readable topic cards on phones, with teaching-block/search controls and optional filters under Refine topics. Quiz navigation starts collapsed on phones; Question list opens it when needed. During a phone quiz, a compact question header and a reserved Back/Next row surround the scrollable question area. The page itself stays still; neither toolbar covers an answer. The three-dot quiz menu holds Display, save/account tools and detailed sync status; save errors remain visible beside the quiz controls. Navigation returns on exit or completion. Exit quiz returns to Home with your attempt saved. The ChatGPT prompt opens in a dismissible sheet.
+
+For a dedicated iPhone study window, use Safari Share → Add to Home Screen → Open as Web App (if offered), then launch the Home Screen icon. The manifest already requests standalone display. Sign in again for synced account packs; save/export device-only quizzes before switching browser storage. The site cannot force Safari to hide its own controls.
 
 Refresh the private app and choose **Update Synapse** when offered to install a new offline version while preserving saved answers.
 

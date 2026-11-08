@@ -179,3 +179,49 @@ button,a,input,select,summary{-webkit-tap-highlight-color:transparent;touch-acti
   :where(button,input,select,summary,textarea){scroll-margin-bottom:calc(var(--dock-height) + 24px);scroll-margin-top:12px}
 }
 @media(prefers-reduced-motion:no-preference){.sheet-dialog[open]{animation:sheet-enter .18s ease-out}@keyframes sheet-enter{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}}
+
+/* Focused phone quiz. Header/footer reserve real space; they never overlap choices. */
+#quizToolsBtn,.list-icon,.quiz-footer-info{display:none}
+#quizToolsActions{display:grid;gap:12px;margin-top:20px}
+#quizToolsActions .quiz-actions{display:flex;padding:0;gap:8px;flex-wrap:wrap}
+#quizToolsStatus .connection-strip{display:flex;margin:18px 0;padding:0;opacity:1;flex-wrap:wrap}
+.install-help{margin-top:24px;font-size:14px;line-height:1.6}.install-help summary{min-height:44px;cursor:pointer}
+@media(max-width:720px){
+  body.quiz-focused{overflow:hidden;overscroll-behavior:none;height:100dvh;padding:0}
+  .quiz-focused>.topbar,.quiz-focused>.workspace-nav{display:none}
+  .quiz-focused #app.app{position:fixed;inset:0;height:100dvh;max-width:none;margin:0;padding:env(safe-area-inset-top) max(12px,env(safe-area-inset-right)) env(safe-area-inset-bottom) max(12px,env(safe-area-inset-left));background:var(--bg);overflow:hidden}
+  .quiz-focused .grid.quiz{display:block;height:100%;position:relative}
+  .quiz-focused .quizmain{height:100%;padding:0;border:0;border-radius:0;background:transparent;box-shadow:none}
+  .quiz-focused .qpane{height:100%;display:grid;grid-template-rows:auto minmax(0,1fr) auto;min-height:0}
+  .quiz-focused .quiz-top{padding:8px 0 0;display:flex;flex-direction:column-reverse}
+  .quiz-focused .progress-wrap{margin:0}.quiz-focused .progress-track{height:3px;border:0}
+  .quiz-focused .progress-meta{display:none}
+  .quiz-focused .quizHeader{display:grid;grid-template-columns:minmax(0,1fr) auto auto auto;gap:4px;margin:0 0 8px}
+  .quiz-focused .quizHeader>.row{display:contents}
+  .quiz-focused #score{display:none}
+  .quiz-focused #progress{background:none;border:0;padding:0 4px;font-size:12px;line-height:1.4;border-radius:0}
+  .quiz-focused .quizHeader .btn{background:none;color:var(--text);border:0;min-width:44px;min-height:44px;padding:8px;font-size:12px}
+  .quiz-focused #quizToolsBtn{display:block;font-size:17px;letter-spacing:1px}
+  .quiz-focused .list-label{display:none}.quiz-focused .list-icon{display:inline;font-size:24px}
+  .quiz-focused .quiz-scroll{min-height:0;overflow-y:auto;overflow-x:hidden;overscroll-behavior-y:contain;-webkit-overflow-scrolling:touch;scroll-padding-block:12px;padding:0 4px 18px;outline-offset:-2px}
+  .quiz-focused .quiz-scroll>.eyebrow{font-size:10px;margin:14px 0 8px;letter-spacing:.06em;opacity:.75}
+  .quiz-focused .question{font-size:max(16px,var(--fs));line-height:1.45;margin:16px 0;font-weight:650}
+  .quiz-focused .quiz-scroll>.eyebrow+.question{margin-top:8px}
+  .quiz-focused .quizmain label:has(#answerConfidence){margin:8px 0;font-size:11px;gap:6px;justify-content:flex-start}
+  .quiz-focused #answerConfidence{min-height:36px;padding:4px 8px;max-width:62%;margin-left:auto}
+  .quiz-focused .options{gap:8px;margin-top:12px}
+  .quiz-focused .opt{padding:10px;gap:10px;min-height:48px;border-radius:12px;font-weight:600;font-size:max(15px,var(--fs))}
+  .quiz-focused .opt-text{line-height:1.35}
+  .quiz-focused .opt-key{width:24px;height:24px;font-size:12px;border-radius:7px}
+  .quiz-focused .footerBar{margin:0;padding:6px 4px 8px;gap:5px;background:var(--bg);max-height:40dvh;overflow:auto;flex-shrink:0}
+  .quiz-focused .footerBar>.row{grid-template-columns:1fr 2fr;gap:10px}
+  .quiz-focused .footerBar .btn{min-height:48px;font-size:14px}
+  .quiz-focused .quiz-footer-info{display:flex;align-items:center;justify-content:space-between;width:100%;gap:10px;min-height:22px}
+  .quiz-focused .quiz-live-status{font-size:10px;line-height:1.4;opacity:.75;overflow-wrap:anywhere}
+  .quiz-focused .quiz-live-status.error{color:var(--wrong);opacity:1;font-weight:650}
+  .quiz-focused .quiz-footer-info .btn{min-height:36px;font-size:12px;padding:4px 8px;white-space:nowrap}
+  .quiz-focused .navigator:not(.collapsed){position:absolute;z-index:5;top:64px;left:0;right:0;max-height:60%;padding:16px;overflow:auto;box-shadow:0 16px 40px #0006;border:1px solid var(--line)}
+  .quiz-focused .quiz-scroll :where(button,input,select,summary,textarea){scroll-margin:10px 0}
+  .quiz-focused #quizToolsActions #resumeBtn{display:none}
+  .quiz-focused #quizToolsActions .workspace-nav{position:static;display:flex;flex-wrap:wrap}
+}

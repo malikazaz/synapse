@@ -79,3 +79,13 @@ Mobile answer visibility correction:
 
 - Back/Next now stay in normal page flow after the answer options. The fixed app navigation is hidden only while answering on phone-width screens; Exit quiz and completion restore it. Redundant Resume and routine connection text are hidden during answering, while save status, errors and Save to my account remain available.
 - A short-viewport regression checks D and E at both 320px and 390px widths with 600px height: each option can be fully scrolled into view, its centre receives taps, and the footer begins below the final option. Wrong/correct selections, exit/resume and completion retain scoring and restore navigation. Public paste/upload and real account offline/sync/session checks pass with the revised navigation.
+
+
+Focused phone quiz — 2026-11-08 (supersedes the page-flow footer above):
+
+- Phone quizzes use a bounded dynamic viewport with compact header, an independently scrolling question region, and a separate Back/Next row. Controls reserve actual layout space instead of overlaying answers. New questions reset only the question scroll; answering preserves the current question's scroll. The question list closes after selecting a question.
+- Branding, navigation, save-pack and detailed connection information move out of the answering surface. Existing save/export/status elements move into a native quiz-settings dialog, retaining their handlers, and return on exit/desktop resize. A compact status line still exposes save errors during answering. Explanation has a reachable footer shortcut after a correct answer; recall-first, confidence and first-answer scoring are unchanged.
+- Added Apple Home Screen metadata and an in-menu installation guide. Standalone mode is user-selected; the app does not claim to hide Safari's native chrome or transfer unsynced browser storage automatically.
+- Chromium checks cover short 320/390px screens, lower-choice hit targets, bounded scrolling, 30px text, 480px viewport height, recall reveal, explanation access, errors, dialog focus return, exit/resume/completion and restoring desktop controls. Existing 40 browser checks plus two new focused-screen checks pass. All 25 unit/database checks, six public checks, and the isolated real-Worker/account/offline/session tests pass. Physical iPhone testing remains a user-device check.
+
+- All four focused/mobile flow tests also passed in Playwright WebKit 27.2 on Windows. Reproduce after building with `npx playwright install webkit` and `npx playwright test --config playwright.webkit.config.js`. This exercises the Safari engine, not native iPhone browser chrome.

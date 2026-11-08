@@ -329,6 +329,7 @@ import './shell.js';
   function jumpToQuestion(index) {
     if (answerSaving) return;
     state.currentIndex = index;
+    if(matchMedia('(max-width: 720px)').matches)state.navCollapsed=true;
     connected.position(index).catch(e => connected.notify(e.message, true));
     render();
     focusQuestion();
@@ -337,7 +338,8 @@ import './shell.js';
   function focusQuestion(){
     if(matchMedia('(max-width: 720px)').matches){
       const question=app.querySelector('.question');
-      question?.focus({preventScroll:true});question?.scrollIntoView({block:'start',behavior:'instant'});
+      question?.focus({preventScroll:true});
+      const scroll=app.querySelector('.quiz-scroll');if(scroll)scroll.scrollTop=0;
     }
   }
 
@@ -464,6 +466,8 @@ Answer: B</pre>
     document.addEventListener('synapse:leave-quiz',pauseObservation);
   }
   function renderQuiz() {
+    const previousScroll=app.querySelector('.quiz-scroll');
+    const scrollTop=previousScroll?.dataset.questionId===state.questions[state.currentIndex].id?previousScroll.scrollTop:0;
     const total = state.questions.length;
     const q = state.questions[state.currentIndex];
     const record = state.answerRecords[state.currentIndex];
@@ -508,6 +512,7 @@ Answer: B</pre>
 
         <section class="card padded quizmain">
           <div class="qpane">
+            <div class="quiz-top">
             <div class="progress-wrap" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${pctDone}" aria-label="Quiz progress">
               <div class="progress-track"><div class="progress-fill" style="width:${pctDone}%"></div></div>
               <div class="progress-meta">${answeredCount} / ${total} answered</div>
@@ -519,14 +524,17 @@ Answer: B</pre>
                 <div class="badge score" id="score">Score ${state.score}</div>
               </div>
               <div class="row" style="align-items:center">
-                <button id="toggleNavBtn" class="btn secondary small" aria-expanded="${!state.navCollapsed}" aria-controls="questionNavigator">${state.navCollapsed ? 'Question list' : 'Hide list'}</button>
+                <button id="toggleNavBtn" aria-label="Question list" class="btn secondary small" aria-expanded="${!state.navCollapsed}" aria-controls="questionNavigator"><span class="list-label">${state.navCollapsed ? 'Question list' : 'Hide list'}</span><span class="list-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M9 6h11M9 12h11M9 18h11M4 6h.01M4 12h.01M4 18h.01"/></svg></span></button>
+                <button id="quizToolsBtn" class="btn ghost small" aria-label="Quiz settings and save status" aria-haspopup="dialog">•••</button>
                 <button id="homeBtn" class="btn secondary small" title="Your answers remain saved on this device">${connected.localOnly?'New quiz':'Exit quiz'}</button>
               </div>
             </div>
 
+            </div>
+            <div class="quiz-scroll" data-question-id="${escapeHtml(q.id)}" tabindex="0" role="region" aria-label="Question and answer choices">
             ${stageLabel?`<p class="eyebrow">${stageLabel} · ${escapeHtml(q.difficulty??'')}</p>`:''}
             <div class="question" tabindex="-1">${escapeHtml(q.question)}</div>
-            ${!connected.localOnly&&!record.selection_history.length?`<label class="fine-print">Confidence (optional) <select id="answerConfidence"><option value="">Not recorded</option><option value="unsure">Unsure / guessing</option><option value="partial">Partly sure</option><option value="confident">Confident</option></select></label>`:''}
+            ${!connected.localOnly&&!record.selection_history.length?`<label class="fine-print"><span>Confidence <small>(optional)</small></span> <select id="answerConfidence"><option value="">Not recorded</option><option value="unsure">Unsure / guessing</option><option value="partial">Partly sure</option><option value="confident">Confident</option></select></label>`:''}
 
             <div class="options">${hideOptions?'<div class="recall-panel"><p>Try answering from memory before looking at the choices.</p><button class="btn" id="revealOptions">Reveal A–E options</button><p class="fine-print">Only your first selected option counts towards your score.</p></div>':optsHtml}</div>
 
@@ -534,7 +542,9 @@ Answer: B</pre>
 
             ${record.is_locked && q.explanation ? `<details class="explanation"><summary>Explanation and sources</summary><p>${escapeHtml(q.explanation)}</p>${q.optionRationales?`<ul>${Object.entries(q.optionRationales).sort().map(([k,v])=>`<li><strong>${escapeHtml(k)}.</strong> ${escapeHtml(v)}</li>`).join('')}</ul>`:''}${(q.sources || []).map(source => `<p>${escapeHtml(source.title)}<br>${escapeHtml(source.reference)}<br><small>Retrieved ${escapeHtml(source.retrievedAt)}</small></p>`).join('')}</details>` : ''}
 
+            </div>
             <div class="footerBar">
+              <div class="quiz-footer-info"><span class="quiz-live-status" role="status"></span>${record.is_locked&&q.explanation?'<button id="reviewExplanation" class="btn ghost small">Explanation ↑</button>':''}</div>
               <div class="row">
                 <button id="prevBtn" class="btn secondary" ${state.currentIndex === 0 ? 'disabled' : ''}>← Back</button>
                 <button id="nextBtn" class="btn" ${finishDisabled ? 'disabled' : ''}>${isLast ? 'Finish ✓' : 'Next →'}</button>
@@ -548,8 +558,10 @@ Answer: B</pre>
       </section>
     `;
 
+    const scroll=app.querySelector('.quiz-scroll');if(scroll)scroll.scrollTop=scrollTop;
+    app.querySelector('#reviewExplanation')?.addEventListener('click',()=>{const explanation=app.querySelector('.explanation');explanation.open=!explanation.open;if(explanation.open)explanation.scrollIntoView({block:'start',behavior:'instant'});});
     const revealButton = app.querySelector('#revealOptions');
-    if(revealButton)revealButton.onclick=async()=>{revealButton.disabled=true;try{if(observation){accrue();observation.optionsRevealedAt??=new Date().toISOString();await saveObservation();}revealedQuestions.add(revealId);renderQuiz();app.querySelector('button.opt')?.focus();}catch(e){connected.notify(e.message,true);revealButton.disabled=false;}};
+    if(revealButton)revealButton.onclick=async()=>{revealButton.disabled=true;try{if(observation){accrue();observation.optionsRevealedAt??=new Date().toISOString();await saveObservation();}revealedQuestions.add(revealId);renderQuiz();app.querySelector('button.opt')?.focus({preventScroll:true});}catch(e){connected.notify(e.message,true);revealButton.disabled=false;}};
     const confidence=app.querySelector('#answerConfidence');if(confidence){confidence.value=observation?.confidence??'';confidence.onchange=()=>{if(confidence.value)observation.confidence=confidence.value;else delete observation.confidence;void saveObservation().catch(e=>connected.notify(e.message,true));};}
     // Wire option buttons
     app.querySelectorAll('button.opt').forEach(btn => {
