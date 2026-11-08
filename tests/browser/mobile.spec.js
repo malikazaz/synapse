@@ -17,7 +17,7 @@ test('mobile navigation, sheets and large text remain usable across phone sizes'
   await display(page,async()=>{await page.locator('#themeSelect').selectOption('UCAT Light');await page.locator('#fontSize').fill('30');});
   for(const width of [320,390,430,844]){
     await page.setViewportSize({width,height:844});
-    expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);
+    await expect.poll(()=>page.evaluate(()=>({viewport:innerWidth,overflow:Math.max(0,document.documentElement.scrollWidth-innerWidth),elements:[...document.querySelectorAll('body *')].filter(el=>el.getBoundingClientRect().right>innerWidth+1&&el.getBoundingClientRect().width>0).slice(0,5).map(el=>el.tagName+'.'+el.className)})),{message:`No horizontal overflow at ${width}px with large text`}).toMatchObject({viewport:width,overflow:0});
     if(width>720)await expect(page.locator('.workspace-nav [data-view=sources]')).toBeVisible();
     else{await page.locator('#moreBtn').click();await expect(page.locator('#moreItems [data-view=sources]')).toBeVisible();await page.getByRole('button',{name:'Close menu',exact:true}).click();}
   }
