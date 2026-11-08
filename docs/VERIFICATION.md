@@ -89,3 +89,11 @@ Focused phone quiz — 2026-11-08 (supersedes the page-flow footer above):
 - Chromium checks cover short 320/390px screens, lower-choice hit targets, bounded scrolling, 30px text, 480px viewport height, recall reveal, explanation access, errors, dialog focus return, exit/resume/completion and restoring desktop controls. Existing 40 browser checks plus two new focused-screen checks pass. All 25 unit/database checks, six public checks, and the isolated real-Worker/account/offline/session tests pass. Physical iPhone testing remains a user-device check.
 
 - All four focused/mobile flow tests also passed in Playwright WebKit 27.2 on Windows. Reproduce after building with `npx playwright install webkit` and `npx playwright test --config playwright.webkit.config.js`. This exercises the Safari engine, not native iPhone browser chrome.
+
+
+AKT practice-paper guidance — 2026-11-08:
+
+- Live `get_akt_generation_skill` was successfully retrieved before editing (akt-1). Server instructions, study context and homepage prompts already referenced it; there is no historical per-pack call/compliance log, so past use was not asserted.
+- Updated playbook to akt-2 with general editorial lessons from all 30 supplied questions, staged-learning application and a pre-save review. Original PDF, extracted text, renderings and the item-specific assessment remain under ignored private storage. No paper questions, guessed answer key or account assessments were saved.
+- Updated MCP instructions/descriptions and the homepage prompt to request the current playbook before drafting each pack. All existing tool names, input schemas, topic IDs, domain rules and scoring remain compatible. This is guidance, not automatic clinical validation or a new inference service.
+- Typecheck and 25 unit/database checks passed. Authenticated Worker integration checks verify akt-2 retrieval, matching study-context version, required-before-generation flag, calibration and quality-review delivery, and the save tool's instruction to retrieve the playbook. Existing pack, OAuth, offline answer and session tests pass. Ten desktop/phone workspace checks pass.

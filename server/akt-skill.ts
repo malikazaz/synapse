@@ -1,5 +1,5 @@
 // Original Synapse workflow guidance. Reference documents remain at their publishers.
-export const AKT_SKILL_VERSION='akt-1';
+export const AKT_SKILL_VERSION='akt-2';
 export const AKT_REFERENCES=[
   {id:'msc-practice',title:'MSC official AKT practice papers',url:'https://www.medschools.ac.uk/for-students/medical-licensing-assessment/practice-exam-for-the-ms-akt/',use:'UK exam format and application level; reviewed September 2026. Read examples for structure, never copy or closely paraphrase their questions.',rights:'Personal noncommercial downloads; no systematic question-bank extraction.'},
   {id:'msc-handbook',title:'MSC student handbook 2026/27',url:'https://www.medschools.ac.uk/wp-content/uploads/2026/10/MS-AKT-Student-Handbook-2027.pdf',use:'Official student-facing exam context; check the current edition for the exam year.',rights:'MSC personal-use terms.'},
@@ -7,11 +7,11 @@ export const AKT_REFERENCES=[
   {id:'retrieval-review',title:'Trumble et al. Distributed and retrieval practice in health professions education (2024)',url:'https://link.springer.com/article/10.1007/s10459-023-10274-3',use:'Systematic review supporting retrieval and distributed practice, with heterogeneous studies. Does not validate Synapse thresholds or guarantee an exam result.',rights:'CC BY 4.0; retain attribution and identify adaptations.'}
 ];
 export const AKT_SKILL={
-  version:AKT_SKILL_VERSION,reviewedAt:'2026-11-01',scope:'Personal UK medical-school AKT knowledge learning. No OSCE, placement sign-off or observed clinical competence tracking.',
+  version:AKT_SKILL_VERSION,reviewedAt:'2026-11-08',scope:'Personal UK medical-school AKT knowledge learning. No OSCE, placement sign-off or observed clinical competence tracking.',
   workflow:[
     'Read get_study_context before choosing a topic or generating. Read get_curriculum_context for the relevant year/block guide scope, core versus self-directed content and unresolved labels. Respect requested topics, stage, number and supplied material; otherwise use active blocks, due reviews, domain gaps, stage evidence and upcoming exams. Exam proximity changes priorities, never lowers evidence requirements.',
     'The learner learns through questions. Default to a short foundation pack for new or unclassified topics, not a preliminary lecture or immediate long clinical scenarios. Ask a clarification only when needed. The learner can explicitly override the recommended stage.',
-    'Read this skill before saving generated questions. Draft a blueprint of primary topic, primary domain, learning objective, stage and difficulty for each question. Use exact catalogue IDs. A short pack can focus on one gap; do not force five domains into every pack or fabricate coverage.',
+    'Call get_akt_generation_skill at the start of each requested generation task, before drafting; do not rely on a remembered older version. Apply practicePaperCalibration and preSaveReview before saving. Draft a blueprint of primary topic, primary domain, learning objective, stage and difficulty for each question. Use exact catalogue IDs. A short pack can focus on one gap; do not force five domains into every pack or fabricate coverage.',
     'Use user-requested generation only. Save an original pack and return its direct link. Synapse presents the stem first, then the learner reveals options and chooses A–E. The private mental recall is not marked or represented as a correct answer.',
     'After the learner requests review, retrieve completed results; distinguish first-answer errors from retry paths. Explain the misconception, relevant source and one concrete corrective step; save a supported review. Wait for a new request before generating another pack.'
   ],
@@ -42,11 +42,91 @@ export const AKT_SKILL={
     'Self-audit every item: solve without the key, challenge the strongest alternative, check source support, stage and domain, remove ambiguity and inspect bias. Repair or omit failures. AI self-review is not clinician validation and does not guarantee factual correctness.',
     'Use original cases and wording. Official sample questions demonstrate format; do not reproduce or closely paraphrase them or paid question banks. Preserve access/licence distinctions for any downloaded materials.'
   ],
+  practicePaperCalibration:{
+  "reviewedAt": "2026-11-08",
+  "sampleSize": 30,
+  "basis": "Editorial assessment of a user-supplied 30-item AKT practice PDF. Only general lessons are retained here; the original questions and document are not redistributed.",
+  "limitations": "No answer key, item-performance data or verified publisher provenance was supplied. This is a style and ambiguity review, not validation of every clinical answer, exam representativeness or psychometric quality.",
+  "patternsToKeep": [
+    "Short, coherent cases with a clear lead-in and one decision. AKT-style does not mean long: include time course, functional impact, discriminating examination findings and relevant negative findings when they change the answer.",
+    "Test interpretation of findings, not just naming a diagnosis: use mechanism, anatomy, investigation selection, treatment sequence, complications, prognosis and appropriate non-intervention as the blueprint requires.",
+    "Provide usable investigation data with units and reference ranges. Distinguish the purpose of a test, diagnostic specificity, an initial test and a confirmatory test.",
+    "Use plausible near alternatives that expose a specific misconception. A treatment may be appropriate at a different stage or by a different route; explain that difference rather than teaching that every distractor is universally wrong."
+  ],
+  "rules": [
+    {
+      "id": "conceal-answer-cues",
+      "instruction": "Do not copy author-facing topic headings, objectives or answer-revealing labels into learner-visible stems. A heading naming the hidden diagnosis or drug toxicity can answer the question. Neutral numbering is enough in mixed clinical assessments. A user-requested topic-specific foundation pack may name its topic, but must not give away the particular fact being tested."
+    },
+    {
+      "id": "complete-decision-context",
+      "instruction": "Check whether an omitted fact could change the best option: setting, stability, severity, duration, treatment already tried, pregnancy, allergy type, renal function or contraindications. Include only decision-changing facts. Do not require an unstated exposure merely because the intended diagnosis is familiar."
+    },
+    {
+      "id": "match-action-to-leadin",
+      "instruction": "Specify whether the task is diagnosis, best medication, immediate stabilisation, next investigation, definitive treatment, referral or long-term management. A drug-only list cannot support an unrestricted overall-management question if an essential urgent action is absent. State any completed stabilisation/assessment and distinguish the tested action from parallel safety measures in the explanation."
+    },
+    {
+      "id": "explicit-pathway-branch",
+      "instruction": "If a test or treatment choice depends on a clinical score, risk category, threshold or pathway stage, supply enough facts to establish that branch. Calculate it independently; do not silently award subjective score components or infer all missing risk factors are absent. Specify timing and contingency when a first test and subsequent test are both options."
+    },
+    {
+      "id": "separate-competing-causes",
+      "instruction": "When two drugs, diagnoses or recent changes can explain the symptoms, provide a discriminating feature, timeline or examination result that makes one clearly best. Do not use a memorable buzzword to dismiss a plausible concurrent cause. If the strongest alternative remains defensible, revise or omit the question."
+    },
+    {
+      "id": "qualified-reassurance",
+      "instruction": "Reassurance, observation, no antibiotics and review are legitimate correct actions when supported by the facts. Specify relevant exclusions, review timing and escalation triggers in the explanation. Avoid teaching that a positive test mandates treatment or that a single normal sign excludes a dangerous alternative."
+    },
+    {
+      "id": "credible-parallel-options",
+      "instruction": "Keep all five options at the same decision level and grammatically parallel. Prefer four believable learner errors over implausible filler. Check overlapping answers, hidden combination options and clues from option length, wording, units or alphabetical position. Do not force drug-only homogeneity when the lead-in legitimately asks which overall action is appropriate."
+    },
+    {
+      "id": "data-and-version-check",
+      "instruction": "Check time course, laterality, examination terms, lab values, units, reference ranges, doses and routes for internal consistency. Verify current guidance at generation, including age-specific thresholds and first-line recommendations. A sample paper without answers is never clinical evidence for the chosen key. Do not infer a publication date from an item identifier."
+    },
+    {
+      "id": "map-the-tested-decision",
+      "instruction": "Assign the primary topic and existing competency domain from what the lead-in actually assesses, not from the author heading or every condition mentioned. Histology in a diagnostic vignette may assess mechanisms; a question under an investigation heading may actually ask recognition. Do not rename the official catalogue/domain structure or award secondary-tag credit."
+    },
+    {
+      "id": "cognitive-stage-not-vignette-length",
+      "instruction": "A patient vignette alone does not make an item clinical application. Classify by the reasoning required. Foundation tests one concept; focused tests a short comparison or interpretation; clinical requires applying findings to a patient-specific decision. Do not inflate application evidence with a basic fact wrapped in a patient story."
+    },
+    {
+      "id": "independence-and-fairness",
+      "instruction": "Each question must stand alone. Do not let neighbouring stems, headings, explanations or a predictable answer pattern reveal later keys. Retain clinically relevant demographics; remove irrelevant ethnicity and other stereotype cues. Use clear UK terminology and proofread spelling and duplicated words."
+    },
+    {
+      "id": "personal-blueprint-not-sample-ratios",
+      "instruction": "Do not copy this small paper's topic proportions or make every pack management-heavy. Use the learner's requested stage, UKMLA topic/domain gaps and retention needs. Keep the same core topic/domain history across foundational, focused and clinical work; never treat the sample as a complete exam blueprint."
+    }
+  ],
+  "stageApplication": {
+    "foundation": "Extract the underlying concept and ask it directly before introducing a case. Preserve recall-first. Explain what the concept means and why the alternatives are wrong; do not start a new topic with a full exam paper merely because the reference material uses vignettes.",
+    "focused": "Use one discriminating comparison or a small set of findings. Ask why a test, mechanism or management principle fits this context. Add enough context to separate close alternatives without inflating stem length.",
+    "clinical": "Build a new concise vignette requiring a patient-specific decision. Include decisive safety/pathway context and credible alternatives. Integrate knowledge already practised, while retaining an independent primary topic/domain mapping."
+  }
+},
+  preSaveReview:{
+  "method": "Before save_question_pack, review the draft as if the key were unknown. These are authoring checks performed in ChatGPT, not automatic clinical validation by Synapse.",
+  "checks": [
+    "Cover options and headings: is the task answerable from the stem and lead-in?",
+    "Argue for the strongest distractor: what stated fact makes it less appropriate? If that fact is absent, repair the stem or options.",
+    "Check the exact current source supports the key, decisive qualifiers and explanation. Identify access limitations honestly; omit unsupported claims.",
+    "Check the complete clinical action and safety context, including immediate care or referral when relevant; do not allow a narrow exam answer to teach unsafe omission.",
+    "Verify primary mapping, reasoning stage and difficulty separately; check that introductory material has not been labelled clinical application.",
+    "Check all five rationales against option meaning, not letters: they must explain each option in this case without implying that plausible alternatives are always wrong. Synapse remaps options and rationales when balancing the key.",
+    "Audit the pack for duplicated objectives, answer leakage between items, repetitive stems and unjustified coverage claims."
+  ],
+  "outcome": "Repair or omit any item with more than one defensible best answer, a missing decisive fact, unsupported clinical content, an unsafe overall-management implication or an answer-revealing heading. Do not describe AI self-audit as clinician review or a guarantee of correctness."
+},
   saveContract:{
     requiredPerGeneratedQuestion:['question','options (A–E)','answer','explanation','sources [{title,reference,retrievedAt}]','topicId','domain','learningStage','difficulty','learningObjective','optionRationales (A–E)'],
     learningStage:['foundation','focused','clinical'],difficulty:['introductory','standard','challenging'],
     defaults:'Foundation packs use the learner’s configured size (initially 10); diagnostic 20, remediation 10, mixed/synthesis 20. All are overridable. Keep the existing diagnostic/remediation/synthesis pack modes; stage is per question.',
-    answerPositions:'Synapse balances the key and remaps option rationales together. Supply an answerKey only if requested. Never put answer letters in stem text or learningObjective.',
+    answerPositions:'Synapse balances the key and remaps option rationales together. Supply an answerKey only if requested. Never put answer letters in stem text or learningObjective. Refer to option meaning rather than fixed answer letters in explanations and rationales, because balancing can change those letters.',
     verification:'Server checks structure, mappings and scoring, not the truth of the clinical content. Store accurate sources; if the learner disputes an item, explain the exclusion workflow rather than changing a historical question or competency rating directly.'
   },
   evidenceReferences:AKT_REFERENCES

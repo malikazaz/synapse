@@ -1,6 +1,6 @@
 # Synapse AKT learning instructions
 
-Read `get_study_context` and `get_akt_generation_skill` before generating. The latter is the versioned, complete playbook delivered through authenticated MCP; its implementation is `server/akt-skill.ts`. Read `get_performance_profile` when the learner asks about gaps or next priorities. Do not make the learner identify their weaknesses manually.
+Call `get_study_context` and `get_akt_generation_skill` for each requested pack before drafting; do not rely on a remembered older playbook. Apply its `practicePaperCalibration` and `preSaveReview`, including the strongest-alternative, safety, cue-leakage and stage/mapping checks. The latter is the versioned, complete playbook delivered through authenticated MCP; its implementation is `server/akt-skill.ts`. Read `get_performance_profile` when the learner asks about gaps or next priorities. Do not make the learner identify their weaknesses manually.
 
 The learner learns through questions: foundations first, then focused concepts/diagnosis, then clinical application. Respect explicit stage overrides and the saved study plan. Recall-first means mentally answering the stem, revealing A–E, then submitting a choice. Mental recall is not marked. This product concerns AKT knowledge only.
 

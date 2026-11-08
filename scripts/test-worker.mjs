@@ -49,7 +49,14 @@ try{
   const context=await call('/mcp',{method:'POST',headers:mcpHeaders,body:JSON.stringify({jsonrpc:'2.0',id:2,method:'tools/call',params:{name:'get_study_context',arguments:{}}})});assert.equal(context.status,200);const result=await context.json();assert.equal(result.result.structuredContent.topics[0].status,'Untested');
   assert.equal(result.result.structuredContent.sourcePolicy.version,'uk-sources-1');assert.ok(result.result.structuredContent.sourcePolicy.references.some(s=>s.name==='BNF'));
   const mcpCall=async(name,args)=>{const response=await call('/mcp',{method:'POST',headers:mcpHeaders,body:JSON.stringify({jsonrpc:'2.0',id:randomUUID(),method:'tools/call',params:{name,arguments:args}})});const body=await response.json();assert.equal(response.status,200);assert.ok(!body.result.isError,JSON.stringify(body));return body.result.structuredContent;};
-  assert.equal((await mcpCall('get_akt_generation_skill',{})).version,'akt-1');
+  const skill=await mcpCall('get_akt_generation_skill',{});assert.equal(skill.version,'akt-2');
+  assert.equal(result.result.structuredContent.generationSkill.version,skill.version);
+  assert.equal(result.result.structuredContent.generationSkill.requiredBeforeGeneration,true);
+  assert.equal(skill.practicePaperCalibration.sampleSize,30);
+  assert.ok(skill.practicePaperCalibration.rules.some(r=>r.id==='explicit-pathway-branch'));
+  assert.ok(skill.practicePaperCalibration.rules.some(r=>r.id==='cognitive-stage-not-vignette-length'));
+  assert.ok(skill.preSaveReview.checks.length>=7);
+  assert.match(listed.result.tools.find(t=>t.name==='save_question_pack').description,/get_akt_generation_skill/);
   assert.equal((await mcpCall('get_performance_profile',{})).version,'performance-1');
   assert.equal((await mcpCall('get_curriculum_context',{})).blocks.length,0);
   // Read-only pagination must expose guide origins beyond the original first 100.
