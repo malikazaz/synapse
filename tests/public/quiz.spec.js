@@ -5,7 +5,7 @@ test('public paste, first-answer score, offline resume, report and retake make n
   context.on('request',r=>{const u=new URL(r.url());if(u.hostname!=='127.0.0.1'||/\/(api|auth|oauth|mcp)(\/|$)/.test(u.pathname)||r.method()!=='GET')forbidden.push(r.url());});
   page.on('pageerror',e=>errors.push(e.message));await page.goto('./');
   await expect(page.locator('#paste')).toBeVisible();await expect(page.locator('#accountBtn,[data-view],#savePackBtn,#workspace')).toHaveCount(0);
-  await page.locator('#paste').fill(quiz);await page.locator('.toggle').click();await expect(page.locator('#randomToggle')).toBeChecked();await expect(page.locator('#paste')).toHaveValue(quiz);
+  await page.locator('#paste').fill(quiz);await page.locator('#appearanceBtn').click();await page.locator('.toggle').click();await expect(page.locator('#randomToggle')).toBeChecked();await page.getByRole('button',{name:'Close display settings',exact:true}).click();await expect(page.locator('#paste')).toHaveValue(quiz);
   await page.locator('#loadBtn').click();await page.locator('[data-key=A]').click();await expect(page.locator('[data-key=A]')).toHaveClass(/wrong/);
   await page.evaluate(()=>navigator.serviceWorker.ready);await page.waitForFunction(()=>!!navigator.serviceWorker.controller);await context.setOffline(true);await page.reload();await page.locator('#resumeBtn').click();await expect(page.locator('[data-key=A]')).toHaveClass(/wrong/);
   await page.locator('[data-key=B]').click();await expect(page.locator('#score')).toHaveText('Score 0');await page.locator('#nextBtn').click();await page.locator('#reportBtn').click();await expect(page.locator('#modalText')).toHaveValue(/Answer Path: A -> B/);

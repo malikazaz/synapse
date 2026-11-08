@@ -8,7 +8,7 @@ const root=resolve('.'),output=resolve(target);
 if(!['dist','dist-public'].includes(target)||!output.startsWith(root+sep))throw new Error('Unsafe build output path.');
 await rm(output,{recursive:true,force:true});
 await mkdir(resolve(output,'shared'),{recursive:true});
-for(const file of ['app.js','styles.css','connected.css','manifest.json','icon-192.png','icon-512.png'])await copyFile(file,resolve(output,file));
+for(const file of ['app.js','shell.js','styles.css','connected.css','mobile.css','manifest.json','icon-192.png','icon-512.png'])await copyFile(file,resolve(output,file));
 for(const file of ['quiz.js','offline.js'])await copyFile('shared/'+file,resolve(output,'shared',file));
 let html=await readFile('index.html','utf8');
 if(publicOnly){

@@ -15,6 +15,14 @@ An offline-capable quiz runner with a private UKMLA competency tracker, using Cl
 
 The GitHub and Cloudflare sites have separate browser storage. Public users can export/restore local backups to move between devices; they do not receive automatic cloud sync.
 
+## On your phone
+
+The private app has bottom navigation for Home, New quiz, My packs, Progress and More. More contains Study plan, My weak points, Sources, Connections and sign-in/out. Display opens theme, text-size and question-order settings. The public runner keeps its local quiz and backup tools.
+
+Home puts your unfinished session first, followed by current evidence and study priorities. Progress uses readable topic cards on phones, with teaching-block/search controls and optional filters under Refine topics. Quiz navigation starts collapsed on phones; Question list opens it when needed, and Back/Next remain within reach. Exit quiz returns to Home with your attempt saved. The ChatGPT prompt opens in a dismissible sheet.
+
+Refresh the private app and choose **Update Synapse** when offered to install a new offline version while preserving saved answers.
+
 ## Own quizzes
 
 Paste text or upload `.txt`, without signing in. Put a blank line between questions:

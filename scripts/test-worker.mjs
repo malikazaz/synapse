@@ -97,7 +97,7 @@ try{
       await phone.locator('[data-view="packs"]').click();await phone.locator('[data-conflict="remote"]').click();await phone.waitForFunction(()=>document.querySelector('[data-key="B"]')?.classList.contains('wrong'));
       const archive=await phone.evaluate(async id=>(await import('/shared/offline.js')).storage('get','conflict-archive:'+id),concurrent.id);assert.equal(archive.local.events[0].selection,'A');assert.equal(archive.remote.state.events[0].selection,'B');
       await phone.screenshot({path:'test-results/connected-phone.png',fullPage:true});assert.deepEqual(errors,[]);
-      await phone.locator('[data-view="performance"]').click();await phone.getByRole('heading',{name:'Your weak points',exact:true}).waitFor();assert.equal(await phone.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),true);await phone.screenshot({path:'test-results/performance-phone.png',fullPage:true});assert.deepEqual(errors,[]);
+      await phone.locator('#moreBtn').click();await phone.locator('[data-view="performance"]').click();await phone.getByRole('heading',{name:'Your weak points',exact:true}).waitFor();assert.equal(await phone.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),true);await phone.screenshot({path:'test-results/performance-phone.png',fullPage:true});assert.deepEqual(errors,[]);
       // Close an account session on the phone; another device must see the same history.
       const endedId=randomUUID(),discardedId=randomUUID();
       for(const id of [endedId,discardedId])assert.equal((await call('/api/sessions',{method:'POST',headers,body:JSON.stringify({id,packId:p.id,order:p.questions.map(q=>q.id)})})).status,201);

@@ -9,17 +9,23 @@
   <link rel="icon" href="icon-192.png" />
   <link rel="stylesheet" href="styles.css" />
   <link rel="stylesheet" href="connected.css" />
+  <link rel="stylesheet" href="mobile.css" />
 </head>
 <body>
   <header class="topbar">
     <div class="brand">
-      <div class="logo" aria-hidden="true">🧠</div>
+      <div class="logo" aria-hidden="true">S<span>·</span></div>
       <div>
         <div class="brand-title">Synapse</div>
         <div class="brand-sub">Your clinical learning companion</div>
       </div>
     </div>
 
+    <button id="appearanceBtn" class="btn ghost small" aria-haspopup="dialog" aria-controls="appearanceDialog">Display</button>
+  </header>
+
+  <dialog id="appearanceDialog" class="sheet-dialog" aria-labelledby="appearanceTitle">
+    <div class="sheet-heading"><div><p class="eyebrow">MAKE IT YOURS</p><h2 id="appearanceTitle">Display & quiz settings</h2></div><button class="icon-btn" data-dismiss aria-label="Close display settings">✕</button></div>
     <div class="settings">
       <label class="field">
         <span>Theme</span>
@@ -27,7 +33,7 @@
       </label>
 
       <label class="field">
-        <span>Font</span>
+        <span>Text size</span>
         <input id="fontSize" type="range" min="10" max="30" step="1" />
       </label>
 
@@ -37,7 +43,8 @@
         <span class="toggle-label" id="randomToggleLabel">Original</span>
       </label>
     </div>
-  </header>
+    <p class="fine-print">Your display preferences stay on this device. Question order applies when starting a new quiz.</p>
+  </dialog>
 
   <nav class="workspace-nav" aria-label="Synapse workspace">
     <button class="btn secondary small" data-view="home" aria-pressed="true">Home</button>
@@ -49,11 +56,17 @@
     <button class="btn secondary small" data-view="performance" aria-pressed="false">My weak points</button>
     <button class="btn secondary small" data-view="settings" aria-pressed="false">Connections</button>
     <button class="btn small" id="accountBtn" disabled>Sign in</button>
+    <button class="btn secondary small" id="moreBtn" aria-haspopup="dialog" aria-controls="moreDialog">More</button>
   </nav>
   <div class="quiz-actions"><button class="btn ghost small" id="resumeBtn">Resume saved quiz</button><button class="btn ghost small" id="savePackBtn">Save to my account</button></div>
   <div class="connection-strip" role="status" aria-live="polite"><span id="connectionNotice"></span><span id="saveStatus"></span><span id="sheetStatus"></span></div>
   <main id="app" class="app"></main>
   <section id="workspace" class="workspace" hidden aria-label="Saved work and competency"></section>
+
+  <dialog id="moreDialog" class="sheet-dialog" aria-labelledby="moreTitle">
+    <div class="sheet-heading"><div><p class="eyebrow">YOUR STUDY SPACE</p><h2 id="moreTitle">More from Synapse</h2></div><button class="icon-btn" data-dismiss aria-label="Close menu">✕</button></div>
+    <div id="moreItems" class="more-items"></div>
+  </dialog>
 
   <dialog id="modal" class="modal">
     <form method="dialog" class="modal-card">

@@ -17,7 +17,7 @@ async function fixture(page){
 }
 test('teaching blocks, sections, scope and body systems filter independently without losing guide origins',async({page,context},info)=>{
   const f=await fixture(page);await page.goto('/?view=progress');await expect(page.locator('#topicCount')).toHaveText('8 topics');
-  expect(f.offsets).toEqual([0,2]);await expect(page.locator('#blockFilter option')).toHaveCount(7);await expect(page.locator('#blockFilter')).not.toContainText('Core MSK');
+  await page.locator('.filter-details>summary').click();expect(f.offsets).toEqual([0,2]);await expect(page.locator('#blockFilter option')).toHaveCount(7);await expect(page.locator('#blockFilter')).not.toContainText('Core MSK');
   await page.getByLabel('Filter teaching block').selectOption('MSK');await expect(page.locator('#topicCount')).toHaveText('3 topics');
   const bladder=page.locator('#progressRows tr').filter({has:page.locator('strong', {hasText:'Bladder cancer'})});await expect(bladder).toContainText('Radiology conditions');await expect(bladder).toContainText('Self-directed study');await expect(bladder).toContainText('Kidneys and urinary tract');
   await bladder.getByText('Why this topic is here',{exact:true}).click();await expect(bladder).toContainText('MSK guide.pdf');await expect(bladder).toContainText('page 8, table 2');await expect(bladder).not.toContainText('Urological conditions');

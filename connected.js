@@ -126,6 +126,7 @@ class Connected {
     if(view!=='quiz')document.dispatchEvent(new Event('synapse:leave-quiz'));
     const token=this.renderToken=(this.renderToken??0)+1;
     this.tab=view;document.getElementById('app').hidden=view!=='quiz';const panel=document.getElementById('workspace');panel.hidden=view==='quiz';
+    document.dispatchEvent(new CustomEvent('synapse:view',{detail:{view,quiet}}));
     document.getElementById('savePackBtn').hidden=view!=='quiz';
     document.querySelectorAll('[data-view]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.view===view)));
     if(view==='quiz')return;

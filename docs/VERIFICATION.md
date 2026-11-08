@@ -54,3 +54,13 @@ Boundaries:
 - JSON restore is capped at 2 MB/5,000 rows; use D1 backups above this. Free-tier quota failures delay sync without enabling paid resources.
 
 Publication: the public quiz runner is deployed to https://malikazaz.github.io/synapse/. Private deployment and workbook identifiers are intentionally omitted; keep them in ignored local setup notes.
+
+
+Mobile interface release — 2026-11-08:
+
+- Compact header; five-item bottom navigation for private phone views; accessible native dialogs for secondary navigation, display preferences and the personalised ChatGPT prompt. Controls retain their event handlers when crossing the phone/desktop breakpoint. No third-party fonts, icons, trackers or runtime services were introduced.
+- Mobile home prioritises the unfinished attempt, then evidence and next actions. Progress retains stable topic IDs, teaching-block/guide/body-system filters and the existing evidence, but displays topic cards on phones and a table on larger screens. Advanced filters have a visible active count.
+- Larger touch controls, safe-area spacing, keyboard-aware navigation, long-question wrapping, a collapsed question list, sticky Back/Next, explicit correct/retry feedback and an Exit quiz action. Display dialogs cannot trigger quiz keyboard shortcuts.
+- Thirty-six browser checks cover phone/desktop flows, 320/390/430/844px widths, 30px text, light/dark themes, keyboard dismissal and focus return, draft preservation, long questions, offline reload and the previous-version upgrade. Six public-build checks cover the project subpath, uploads, random order, scoring, reports, retakes and backup restore without private requests. These are automated Chromium viewports, not a claim of physical-device Safari testing.
+- Isolated Worker/browser checks preserve owner-only access, offline answers, cross-device continuation, session ending/discarding and conflicts. No schema, scoring, curriculum or spreadsheet changes are part of this release.
+- Deployed private mobile release `65f5bde4-90fb-46b5-ac03-13dcf4593ce0`. Read-only live phone checks passed for More navigation, Display settings, Sources, signed-out study/progress gates, paste/upload and OAuth discovery, with no external/inference requests.

@@ -15,6 +15,14 @@ try {
   await page.goto(origin,{waitUntil:'networkidle'});
   assert.equal(await page.locator('#workspace h1').innerText(),'Make your next study session count.');
   assert.equal(await page.locator('#accountBtn').isEnabled(),true);
+  await page.locator('#moreBtn').click();
+  assert.equal(await page.locator('#moreDialog').isVisible(),true);
+  await page.locator('#moreItems [data-view=sources]').click();
+  await page.locator('#sourceCount').waitFor();
+  assert.equal(await page.locator('#moreDialog').isVisible(),false);
+  await page.locator('#appearanceBtn').click();
+  assert.equal(await page.locator('#themeSelect').isVisible(),true);
+  await page.getByRole('button',{name:'Close display settings',exact:true}).click();
   await page.goto(origin+'/?view=sources',{waitUntil:'networkidle'});
   assert.equal(await page.locator('#workspace h1').innerText(),'Trusted sources');
   assert.equal(await page.locator('#sourceCount').innerText(),'25 references');

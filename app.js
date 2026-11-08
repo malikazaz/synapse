@@ -14,6 +14,7 @@
 
 import { parseQuestions as parseQuizText, replay } from './shared/quiz.js';
 import { connected } from './connected.js';
+import './shell.js';
 
 (() => {
   'use strict';
@@ -44,7 +45,7 @@ import { connected } from './connected.js';
     score: 0,
     answerRecords: [],
 
-    navCollapsed: false,
+    navCollapsed: matchMedia('(max-width: 720px)').matches,
 
     keyBuf: [],
     pendingFocus: null
@@ -303,6 +304,7 @@ import { connected } from './connected.js';
       state.currentIndex -= 1;
       connected.position(state.currentIndex).catch(e => connected.notify(e.message, true));
       render();
+      focusQuestion();
     }
   }
 
@@ -312,6 +314,7 @@ import { connected } from './connected.js';
       state.currentIndex += 1;
       await connected.position(state.currentIndex);
       render();
+      focusQuestion();
       return;
     }
 
@@ -328,6 +331,14 @@ import { connected } from './connected.js';
     state.currentIndex = index;
     connected.position(index).catch(e => connected.notify(e.message, true));
     render();
+    focusQuestion();
+  }
+
+  function focusQuestion(){
+    if(matchMedia('(max-width: 720px)').matches){
+      const question=app.querySelector('.question');
+      question?.focus({preventScroll:true});question?.scrollIntoView({block:'start',behavior:'instant'});
+    }
   }
 
   function openModal(title, text) {
@@ -338,6 +349,7 @@ import { connected } from './connected.js';
 
   // ---- Render ----
   function render() {
+    document.body.dataset.quizScreen = state.screen;
     setCSSVars(THEMES[state.themeName]);
 
     // Sync controls
@@ -492,7 +504,7 @@ Answer: B</pre>
 
     app.innerHTML = `
       <section class="grid quiz ${state.navCollapsed ? 'nav-collapsed' : ''}">
-        <aside class="card navigator ${state.navCollapsed ? 'collapsed' : ''}" aria-label="Question navigator">${navButtons}</aside>
+        <aside id="questionNavigator" class="card navigator ${state.navCollapsed ? 'collapsed' : ''}" aria-label="Question navigator">${navButtons}</aside>
 
         <section class="card padded quizmain">
           <div class="qpane">
@@ -507,16 +519,18 @@ Answer: B</pre>
                 <div class="badge score" id="score">Score ${state.score}</div>
               </div>
               <div class="row" style="align-items:center">
-                <button id="toggleNavBtn" class="btn secondary small">${state.navCollapsed ? 'Show list' : 'Hide list'}</button>
-                <button id="homeBtn" class="btn secondary small" title="Return to the home screen to start a new quiz">Home</button>
+                <button id="toggleNavBtn" class="btn secondary small" aria-expanded="${!state.navCollapsed}" aria-controls="questionNavigator">${state.navCollapsed ? 'Question list' : 'Hide list'}</button>
+                <button id="homeBtn" class="btn secondary small" title="Your answers remain saved on this device">${connected.localOnly?'New quiz':'Exit quiz'}</button>
               </div>
             </div>
 
             ${stageLabel?`<p class="eyebrow">${stageLabel} · ${escapeHtml(q.difficulty??'')}</p>`:''}
-            <div class="question">${escapeHtml(q.question)}</div>
+            <div class="question" tabindex="-1">${escapeHtml(q.question)}</div>
             ${!connected.localOnly&&!record.selection_history.length?`<label class="fine-print">Confidence (optional) <select id="answerConfidence"><option value="">Not recorded</option><option value="unsure">Unsure / guessing</option><option value="partial">Partly sure</option><option value="confident">Confident</option></select></label>`:''}
 
             <div class="options">${hideOptions?'<div class="recall-panel"><p>Try answering from memory before looking at the choices.</p><button class="btn" id="revealOptions">Reveal A–E options</button><p class="fine-print">Only your first selected option counts towards your score.</p></div>':optsHtml}</div>
+
+            <p class="question-feedback" role="status">${record.is_locked?(record.first_try_correct?'Correct on your first answer.':'Correct after a retry. Your first-answer score is unchanged.'):record.selection_history.length?'Not quite. Try another option. Your first answer has been saved.':''}</p>
 
             ${record.is_locked && q.explanation ? `<details class="explanation"><summary>Explanation and sources</summary><p>${escapeHtml(q.explanation)}</p>${q.optionRationales?`<ul>${Object.entries(q.optionRationales).sort().map(([k,v])=>`<li><strong>${escapeHtml(k)}.</strong> ${escapeHtml(v)}</li>`).join('')}</ul>`:''}${(q.sources || []).map(source => `<p>${escapeHtml(source.title)}<br>${escapeHtml(source.reference)}<br><small>Retrieved ${escapeHtml(source.retrievedAt)}</small></p>`).join('')}</details>` : ''}
 
@@ -556,7 +570,7 @@ Answer: B</pre>
 
     const homeBtn = document.getElementById('homeBtn');
     if (homeBtn) homeBtn.addEventListener('click', () => {
-      goHome();
+      if(connected.localOnly)goHome();else connected.show('home');
     });
 
     // Footer
@@ -573,7 +587,7 @@ Answer: B</pre>
       state.pendingFocus = null;
       if (pf.type === 'next') {
         const nb = document.getElementById('nextBtn');
-        if (nb && !nb.disabled) nb.focus();
+        if (nb && !nb.disabled) nb.focus({preventScroll:true});
       } else if (pf.type === 'option') {
         app.querySelector(`button.opt[data-key="${pf.key}"]`)?.focus();
       }
@@ -680,7 +694,7 @@ Answer: B</pre>
 
       const key = (e.key || '').toLowerCase();
 
-      if (state.screen === 'quiz' && connected.tab === 'quiz' && !modal.open) {
+      if (state.screen === 'quiz' && connected.tab === 'quiz' && !document.querySelector('dialog[open]')) {
         if (key === 'b') prevQuestion();
         if (key === ' ') {
           e.preventDefault();

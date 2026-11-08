@@ -1,3 +1,4 @@
+import {navigate,resume,display} from './navigation.js';
 import {test,expect} from '@playwright/test';
 import http from 'node:http';
 import {readFile} from 'node:fs/promises';
@@ -39,11 +40,11 @@ test('an existing offline cache reproduces blank tabs, then upgrades without los
     await page.locator('[data-view=quiz]').click();await page.locator('#paste').fill('Keep my pasted questions across the update');
     await page.getByRole('button',{name:'Update Synapse',exact:true}).click();await expect(page.locator('#appUpdate')).toHaveCount(0);await expect(page.locator('#paste')).toHaveValue('Keep my pasted questions across the update');
     const restored=await page.evaluate(async id=>(await import('/shared/offline.js')).storage('get','session:'+id),original.id);expect(restored.events).toEqual(original.events);expect(restored.pending).toEqual(original.pending);
-    await page.locator('#resumeBtn').click();await expect(page.locator('[data-key=A]')).toHaveClass(/wrong/);await expect(page.locator('#score')).toHaveText('Score 0');
-    await page.locator('[data-view=study]').click();await expect(page.getByRole('heading',{name:'Your AKT study plan'})).toBeVisible();await page.locator('#addExam').click();await page.locator('[name=examName]').fill('AKT fixture');await page.locator('[name=examDate]').fill('2027-02-04');await page.locator('#saveStudyPlan').click();await expect(page.locator('#studyPlanStatus')).toContainText('Study plan synced');
-    await page.locator('[data-view=performance]').click();await expect(page.getByRole('heading',{name:'Your weak points'})).toBeVisible();
-    await page.reload();await page.locator('[data-view=study]').click();await expect(page.locator('[name=examName]')).toHaveValue('AKT fixture');
-    await context.setOffline(true);await page.reload();await expect(page.locator('[data-view=study]')).toBeVisible();
+    await resume(page);await expect(page.locator('[data-key=A]')).toHaveClass(/wrong/);await expect(page.locator('#score')).toHaveText('Score 0');
+    await navigate(page,'study');await expect(page.getByRole('heading',{name:'Your AKT study plan'})).toBeVisible();await page.locator('#addExam').click();await page.locator('[name=examName]').fill('AKT fixture');await page.locator('[name=examDate]').fill('2027-02-04');await page.locator('#saveStudyPlan').click();await expect(page.locator('#studyPlanStatus')).toContainText('Study plan synced');
+    await navigate(page,'performance');await expect(page.getByRole('heading',{name:'Your weak points'})).toBeVisible();
+    await page.reload();await navigate(page,'study');await expect(page.locator('[name=examName]')).toHaveValue('AKT fixture');
+    await context.setOffline(true);await page.reload();await navigate(page,'study');await expect(page.locator('[data-view=study]')).toHaveAttribute('aria-pressed','true');
     expect(await page.evaluate(()=>caches.keys())).toHaveLength(1);
     expect(errors).toEqual([]);
   }finally{await context.setOffline(false);await new Promise(r=>server.close(r));}
