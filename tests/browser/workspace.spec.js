@@ -27,23 +27,23 @@ test('home uses account evidence, filters every body system, and sources stay se
   expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);
   await page.screenshot({path:`test-results/home-${info.project.name}.png`,fullPage:true});
   await page.locator('#studyPromptBtn').click();await expect(page.locator('#studyPrompt')).toHaveValue(/Asthma \(topic ID C1\)/);await page.locator('#closePrompt').click();
-  await page.locator('[data-view=progress]').click();await page.locator('.filter-details>summary').click();await page.getByLabel('Filter body system').selectOption('Respiratory');await expect(page.locator('#topicCount')).toHaveText('1 topic');await expect(page.locator('#progressRows')).toContainText('Asthma');
+  await navigate(page,'progress');await page.locator('.filter-details>summary').click();await page.getByLabel('Filter body system').selectOption('Respiratory');await expect(page.locator('#topicCount')).toHaveText('1 topic');await expect(page.locator('#progressRows')).toContainText('Asthma');
   await page.getByLabel('Filter body system').selectOption('');await page.getByLabel('Filter topic type').selectOption('Presentation');await expect(page.locator('#progressRows')).toContainText('Chest pain');await expect(page.locator('#progressRows')).not.toContainText('Asthma');
   await navigate(page,'sources');await expect(page.locator('#sourceCount')).toHaveText('25 references');await page.locator('#sourceSearch').fill('BNF');await expect(page.locator('.source-card')).toHaveCount(3);
   await page.locator('#sourceSearch').fill('unlikely-no-match');await expect(page.locator('#sourceGroups')).toContainText('No matching reference');
-  await display(page,()=>page.locator('#themeSelect').selectOption('UCAT Light'));await page.locator('[data-view=home]').click();await expect(page.locator('#workspace h1')).toHaveText('Pick up where you left off.');
+  await display(page,()=>page.locator('#themeSelect').selectOption('UCAT Light'));await navigate(page,'home');await expect(page.locator('#workspace h1')).toHaveText('Pick up where you left off.');
   await page.screenshot({path:`test-results/home-light-${info.project.name}.png`,fullPage:true});expect(errors).toEqual([]);
 });
 test('slow responses cannot replace a newly selected view; cached home is labelled when offline',async({page,context})=>{
   await mockAccount(page);await page.goto('/');await expect(page.locator('.metric')).toHaveCount(4);
   let release;const gate=new Promise(r=>release=r);
   await page.route('**/api/progress',async route=>{await gate;await route.fulfill({contentType:'application/json',body:JSON.stringify(makeTopics())});});
-  await page.locator('[data-view=progress]').click();await navigate(page,'sources');await expect(page.locator('#workspace h1')).toHaveText('Trusted sources');const finished=page.waitForResponse('**/api/progress');release();await finished;await page.waitForTimeout(100);await expect(page.locator('#workspace h1')).toHaveText('Trusted sources');
-  await page.unroute('**/api/**');await page.unroute('**/api/progress');await context.setOffline(true);await page.locator('[data-view=home]').click();await expect(page.locator('.notice')).toContainText('Showing saved data');await expect(page.locator('.metric strong')).toHaveText(['2','1','1','0']);
+  await navigate(page,'progress');await navigate(page,'sources');await expect(page.locator('#workspace h1')).toHaveText('Trusted sources');const finished=page.waitForResponse('**/api/progress');release();await finished;await page.waitForTimeout(100);await expect(page.locator('#workspace h1')).toHaveText('Trusted sources');
+  await page.unroute('**/api/**');await page.unroute('**/api/progress');await context.setOffline(true);await navigate(page,'home');await expect(page.locator('.notice')).toContainText('Showing saved data');await expect(page.locator('.metric strong')).toHaveText(['2','1','1','0']);
 });
 test('guest empty state and failed cloud state never invent progress',async({page})=>{
   await page.goto('/');await expect(page.locator('#workspace h1')).toHaveText('Make your next study session count.');await expect(page.locator('.metric')).toHaveCount(0);await expect(page.locator('#workspace')).toContainText('No sessions yet');
-  await page.locator('[data-view=quiz]').click();await page.locator('#paste').fill('Draft in progress');await page.locator('[data-view=home]').click();await page.locator('[data-view=quiz]').click();await expect(page.locator('#paste')).toHaveValue('Draft in progress');
+  await navigate(page,'quiz');await page.locator('#paste').fill('Draft in progress');await navigate(page,'home');await navigate(page,'quiz');await expect(page.locator('#paste')).toHaveValue('Draft in progress');
   await page.route('**/api/status',route=>route.fulfill({contentType:'application/json',body:JSON.stringify({connected:true,actor})}));await page.reload();await expect(page.locator('.notice')).toContainText('Cloud data is unavailable');await expect(page.locator('.metric strong')).toHaveText(['—','—','—','0']);
 });
 
@@ -51,7 +51,7 @@ test('narrow screen and large text keep controls accessible; source links can op
   await page.setViewportSize({width:320,height:780});await page.goto('/?view=sources');await expect(page.locator('#workspace h1')).toHaveText('Trusted sources');
   await display(page,()=>page.locator('#fontSize').fill('30'));await page.locator('#sourceSearch').fill('prescribing');
   expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);
-  await page.locator('[data-view=quiz]').click();await expect(page.locator('#paste')).toBeVisible();
+  await navigate(page,'quiz');await expect(page.locator('#paste')).toBeVisible();
 });
 
 test('background cloud continuation cannot navigate away from sources',async({page})=>{

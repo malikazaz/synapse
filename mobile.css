@@ -163,9 +163,12 @@ button,a,input,select,summary{-webkit-tap-highlight-color:transparent;touch-acti
   .quizmain label:has(#answerConfidence){display:flex;align-items:center;justify-content:space-between;gap:8px;font-size:12px}
   #answerConfidence{font-size:16px;min-height:44px;max-width:60%}
   .recall-panel{background:var(--bg);padding:16px;border-radius:16px;font-size:.9em}.recall-panel .btn{width:100%;min-height:50px}
-  .footerBar{position:sticky;bottom:calc(var(--dock-height) + env(safe-area-inset-bottom) + 6px);z-index:5;background:var(--frame);padding:10px 0 4px;gap:8px;border-top:1px solid var(--line)}
-  body:not(.connected-shell) .footerBar{bottom:env(safe-area-inset-bottom)}
-  .keyboard-open .footerBar{position:static}
+  .footerBar{position:static;padding:14px 0 4px;gap:8px;border-top:1px solid var(--line)}
+  /* Answering gets the full viewport; controls follow the options, never cover them. */
+  .connected-shell[data-current-view=quiz][data-quiz-screen=quiz]{--dock-height:0px;padding-bottom:env(safe-area-inset-bottom)}
+  .connected-shell[data-current-view=quiz][data-quiz-screen=quiz] .workspace-nav{display:none}
+  .connected-shell[data-current-view=quiz][data-quiz-screen=quiz] #resumeBtn{display:none}
+  .connected-shell[data-current-view=quiz][data-quiz-screen=quiz] #connectionNotice:not(.error){display:none}
   .footerBar>.row{display:grid;grid-template-columns:1fr 1.5fr;width:100%;gap:10px}.footerBar .btn{min-height:48px}
   .footerBar .warn{width:100%;font-size:11px}.kbdhint{display:none}
   .navigator{max-height:24dvh;scroll-margin-top:12px}.navbtn{min-height:44px}

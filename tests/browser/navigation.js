@@ -1,5 +1,6 @@
 export async function navigate(page,view){
   const button=page.locator(`[data-view="${view}"]`);
+  if(!await button.isVisible()&&await page.locator('#homeBtn').isVisible()&&await page.locator('.quizmain').isVisible())await page.locator('#homeBtn').click();
   if(!await button.isVisible()&&await page.locator('#moreBtn').isVisible())await page.locator('#moreBtn').click();
   await button.click();
 }

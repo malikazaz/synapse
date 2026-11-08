@@ -1,6 +1,25 @@
 import {test,expect} from '@playwright/test';
 import {navigate,display,resume} from './navigation.js';
 
+test('lower answer options remain tappable on a short phone viewport',async({page})=>{
+  await page.setViewportSize({width:390,height:600});await page.goto('/?view=quiz');
+  await page.locator('#paste').fill('Question 1: A longer question with several relevant observations. Which of the following options is the best answer?\nA) A longer first option with enough text to wrap over several lines on a phone\nB) A longer second option with supporting detail to consider\nC) A third option with more detail to read before answering\nD) A fourth option near the bottom of the question\nE) The final option, which must stay fully reachable\nAnswer: E');
+  await page.locator('#loadBtn').click();await expect(page.locator('.workspace-nav')).toBeHidden();
+  for(const width of [320,390]){
+    await page.setViewportSize({width,height:600});
+    for(const key of ['D','E']){
+      const option=page.locator(`[data-key=${key}]`);await option.scrollIntoViewIfNeeded();
+      expect(await option.evaluate(el=>{const r=el.getBoundingClientRect();return r.top>=0&&r.bottom<=innerHeight&&el.contains(document.elementFromPoint(r.x+r.width/2,r.y+r.height/2));})).toBe(true);
+    }
+    const end=await page.locator('[data-key=E]').boundingBox(),footer=await page.locator('.footerBar').boundingBox();expect(footer.y).toBeGreaterThanOrEqual(end.y+end.height);
+  }
+  await page.locator('[data-key=D]').click();await expect(page.locator('[data-key=D]')).toHaveClass(/wrong/);
+  await page.locator('[data-key=E]').click();await expect(page.locator('[data-key=E]')).toHaveClass(/correct/);await expect(page.locator('#score')).toHaveText('Score 0');
+  await page.locator('#homeBtn').click();await expect(page.locator('.workspace-nav')).toBeVisible();
+  await page.locator('.continue-card [data-resume]').click();await expect(page.locator('[data-key=E]')).toHaveClass(/correct/);await expect(page.locator('.workspace-nav')).toBeHidden();
+  await page.locator('#nextBtn').click();await expect(page.locator('.results-card')).toBeVisible();await expect(page.locator('.workspace-nav')).toBeVisible();
+});
+
 test('mobile navigation, sheets and large text remain usable across phone sizes',async({page})=>{
   const errors=[];page.on('pageerror',e=>errors.push(e.message));
   await page.setViewportSize({width:390,height:844});await page.goto('/');

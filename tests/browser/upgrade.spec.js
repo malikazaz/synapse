@@ -32,12 +32,12 @@ test('an existing offline cache reproduces blank tabs, then upgrades without los
   await new Promise(r=>server.listen(0,'127.0.0.1',r));const origin='http://127.0.0.1:'+server.address().port;
   try{
     await page.goto(origin);await page.evaluate(()=>navigator.serviceWorker.ready);await expect.poll(()=>page.evaluate(()=>!!navigator.serviceWorker.controller)).toBe(true);
-    await page.locator('[data-view=quiz]').click();await page.locator('#paste').fill('Question 1: Upgrade test?\nA) Alpha\nB) Beta\nC) Gamma\nD) Delta\nE) Epsilon\nAnswer: B');await page.locator('#loadBtn').click();await page.locator('[data-key=A]').click();await expect(page.locator('[data-key=A]')).toHaveClass(/wrong/);
+    await navigate(page,'quiz');await page.locator('#paste').fill('Question 1: Upgrade test?\nA) Alpha\nB) Beta\nC) Gamma\nD) Delta\nE) Epsilon\nAnswer: B');await page.locator('#loadBtn').click();await page.locator('[data-key=A]').click();await expect(page.locator('[data-key=A]')).toHaveClass(/wrong/);
     const original=await page.evaluate(async()=>(await(await import('/shared/offline.js')).storage('all')).find(r=>r.kind==='session'));
     phase='broken';await page.reload();
     for(const view of ['study','performance']){await page.locator(`[data-view=${view}]`).click();await expect(page.locator('#workspace')).toBeEmpty();}
     phase='fixed';await page.reload();await expect(page.getByRole('button',{name:'Update Synapse',exact:true})).toBeVisible();
-    await page.locator('[data-view=quiz]').click();await page.locator('#paste').fill('Keep my pasted questions across the update');
+    await navigate(page,'quiz');await page.locator('#paste').fill('Keep my pasted questions across the update');
     await page.getByRole('button',{name:'Update Synapse',exact:true}).click();await expect(page.locator('#appUpdate')).toHaveCount(0);await expect(page.locator('#paste')).toHaveValue('Keep my pasted questions across the update');
     const restored=await page.evaluate(async id=>(await import('/shared/offline.js')).storage('get','session:'+id),original.id);expect(restored.events).toEqual(original.events);expect(restored.pending).toEqual(original.pending);
     await resume(page);await expect(page.locator('[data-key=A]')).toHaveClass(/wrong/);await expect(page.locator('#score')).toHaveText('Score 0');

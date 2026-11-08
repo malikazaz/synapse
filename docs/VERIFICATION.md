@@ -73,3 +73,9 @@ Pack library release — 2026-11-08:
 - Recent homepage packs omit archived items. Session history is separately expandable; conflicts remain visible. The cached library is labelled offline and organisation writes require reconnection. Downloaded packs continue to work offline.
 - A real-database test covers owner isolation, stale-edit rejection, unaltered questions/evidence, statistics, archive/restore and v3 backup round trips; v1/v2 backups retain compatibility. Phone and desktop library tests cover search, pagination, pin, collection, archive/restore, filtering and offline snapshots. Existing public quiz and session lifecycle checks remain required.
 - Production database was exported privately before applying the additive `0004_pack_library.sql` migration. Private release `059b38fc-26e3-4a41-9e80-5ae344465c1d` was deployed after 25 database/unit checks, library browser checks and isolated Worker checks. The live signed-out library and privacy checks passed.
+
+
+Mobile answer visibility correction:
+
+- Back/Next now stay in normal page flow after the answer options. The fixed app navigation is hidden only while answering on phone-width screens; Exit quiz and completion restore it. Redundant Resume and routine connection text are hidden during answering, while save status, errors and Save to my account remain available.
+- A short-viewport regression checks D and E at both 320px and 390px widths with 600px height: each option can be fully scrolled into view, its centre receives taps, and the footer begins below the final option. Wrong/correct selections, exit/resume and completion retain scoring and restore navigation. Public paste/upload and real account offline/sync/session checks pass with the revised navigation.
