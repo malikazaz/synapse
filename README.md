@@ -43,6 +43,8 @@ Immediate feedback, retries, first-answer scoring, navigation, random ordering, 
 
 ## Connected learning
 
+**Organise your packs:** My packs offers title/topic search, collection and teaching-block filters, learning stage, study status and sorting. Pin favourites to keep them first, or use Organise & details to assign a collection (type a new name to create one). Archive hides a pack from the main library and recent-pack cards; restore it from Archive at any time. Questions, mappings, attempts and competency evidence are preserved. Sessions & results is a separate expandable history section. Organisation syncs between devices; changes require a connection, while the last library snapshot and downloaded quizzes remain available offline. New installations and upgrades must apply `0004_pack_library.sql` before deploying the new backend.
+
 Connect `https://YOUR-WORKER.YOUR-SUBDOMAIN.workers.dev/mcp` in ChatGPT with OAuth and the same Google account. Add [the clinical CCS instructions](docs/CHATGPT-CCS.md) to your study project. Ask ChatGPT to retrieve context, teach or test, and save a question pack. Open its link on your phone or computer. Completion saves results and queues a Sheet update; ask ChatGPT for review when ready. Website completion never automatically starts a ChatGPT response.
 
 Downloaded packs and pending answers remain on the device. Sync retries on opening, reconnection and focus, with 15-second polling while visible. Concurrent edits preserve both continuations for explicit resolution. Sign-out offers export before clearing account data. After deployment, close/reopen old app tabs to activate the updated offline shell.

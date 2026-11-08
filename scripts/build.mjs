@@ -25,7 +25,7 @@ if(publicOnly){
   await copyFile('public/local.js',resolve(output,'connected.js'));
   await copyFile('public/sw.js',resolve(output,'sw.js'));
 }else{
-  for(const file of ['connected.js','workspace.js','study-ui.js','curriculum-ui.js','session-ui.js','updates.js','sw.js'])await copyFile(file,resolve(output,file));
+  for(const file of ['connected.js','workspace.js','study-ui.js','curriculum-ui.js','session-ui.js','library-ui.js','updates.js','sw.js'])await copyFile(file,resolve(output,file));
   for(const file of ['sources.js','learning.js'])await copyFile('shared/'+file,resolve(output,'shared',file));
 }
 await writeFile(resolve(output,'index.html'),html);

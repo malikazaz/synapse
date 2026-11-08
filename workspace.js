@@ -25,7 +25,7 @@ export async function renderHome(panel,app){
     }catch{snapshot=await storage('get','dashboard:'+app.actor.id);stale=true;unavailable=!snapshot;}
   }
   const curriculum=await loadCurriculum(app);
-  const topics=snapshot?.topics??[],packs=snapshot?.packs??[];
+  const topics=snapshot?.topics??[],packs=(snapshot?.packs??[]).filter(p=>!p.archived);
   // Pending device work must never be presented as a completed cloud assessment.
   const recent=sessionSummaries(snapshot?.sessions??[],locals).filter(s=>s.status!=='discarded'||s.conflict);
   const continuing=recent.filter(s=>['active','finishing'].includes(s.status)&&!s.conflict),conflicts=recent.filter(s=>s.conflict);

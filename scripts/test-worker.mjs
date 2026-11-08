@@ -24,6 +24,12 @@ try{
   assert.equal((await call('/api/progress',{headers})).status,200);
   const options={A:'One',B:'Two',C:'Three',D:'Four',E:'Five'};
   const packResponse=await call('/api/packs',{method:'POST',headers,body:JSON.stringify({requestId:randomUUID(),title:'Proof',mode:'imported',questions:[{question:'Proof?',options,answer:'A'}]})});assert.equal(packResponse.status,201);const p=await packResponse.json();
+  const organise={expectedRevision:0,preferences:{collection:'Revision',pinned:true,archived:false}},organisationPath='/api/packs/'+p.id+'/organisation';
+  assert.equal((await call(organisationPath,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(organise)})).status,401);
+  assert.equal((await call(organisationPath,{method:'POST',headers:{...headers,Origin:'https://evil.test'},body:JSON.stringify(organise)})).status,403);
+  assert.equal((await call(organisationPath,{method:'POST',headers,body:JSON.stringify(organise)})).status,200);
+  assert.equal((await call(organisationPath,{method:'POST',headers,body:JSON.stringify(organise)})).status,409);
+  const library=await(await call('/api/packs',{headers})).json();assert.equal(library[0].collection,'Revision');assert.equal(library[0].pinned,true);
   const sessionId=randomUUID();assert.equal((await call('/api/sessions',{method:'POST',headers,body:JSON.stringify({id:sessionId,packId:p.id,order:[p.questions[0].id]})})).status,201);
   const update={mutationId:randomUUID(),expectedRevision:0,currentIndex:0,complete:true,events:[{id:randomUUID(),questionId:p.questions[0].id,selection:'A',at:new Date().toISOString()}]};
   const done=await call('/api/sessions/'+sessionId,{method:'POST',headers,body:JSON.stringify(update)});assert.equal(done.status,200);assert.equal((await done.json()).score,1);
@@ -102,9 +108,9 @@ try{
       const endedId=randomUUID(),discardedId=randomUUID();
       for(const id of [endedId,discardedId])assert.equal((await call('/api/sessions',{method:'POST',headers,body:JSON.stringify({id,packId:p.id,order:p.questions.map(q=>q.id)})})).status,201);
       assert.equal((await call('/api/sessions/'+endedId+'/close',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({mutationId:randomUUID(),expectedRevision:0,action:'end'})})).status,401);
-      await phone.goto(origin+'/?session='+endedId);await phone.locator('[data-key="A"]').waitFor();await phone.locator('[data-view="packs"]').click();phone.once('dialog',d=>d.accept());await phone.locator(`[data-close-session="end"][data-session-id="${endedId}"]`).click();await phone.locator(`#endedSessions [data-resume="${endedId}"]`).waitFor();
+      await phone.goto(origin+'/?session='+endedId);await phone.locator('[data-key="A"]').waitFor();await phone.locator('[data-view="packs"]').click();await phone.locator('.library-sessions>summary').click();phone.once('dialog',d=>d.accept());await phone.locator(`[data-close-session="end"][data-session-id="${endedId}"]`).click();await phone.locator(`#endedSessions [data-resume="${endedId}"]`).waitFor();
       assert.equal((await db.prepare('SELECT status FROM sessions WHERE id=?').bind(endedId).first()).status,'ended');
-      await computer.goto(origin+'/?view=packs');await computer.locator(`#endedSessions [data-resume="${endedId}"]`).waitFor();computer.once('dialog',d=>d.accept());await computer.locator(`[data-close-session="discard"][data-session-id="${discardedId}"]`).click();await computer.locator('#discardedSessions').waitFor();
+      await computer.goto(origin+'/?view=packs');await computer.locator('.library-sessions>summary').click();await computer.locator(`#endedSessions [data-resume="${endedId}"]`).waitFor();computer.once('dialog',d=>d.accept());await computer.locator(`[data-close-session="discard"][data-session-id="${discardedId}"]`).click();await computer.locator('#discardedSessions').waitFor();
       assert.equal((await db.prepare('SELECT status FROM sessions WHERE id=?').bind(discardedId).first()).status,'discarded');
       assert.equal((await call('/api/sessions/'+first.id+'/close',{method:'POST',headers,body:JSON.stringify({mutationId:randomUUID(),expectedRevision:2,action:'discard'})})).status,409);
       assert.deepEqual(errors,[]);console.log('Account session controls passed: phone end, computer discard, cross-device history, anonymous denial and completed-result protection.');

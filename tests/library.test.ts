@@ -1,0 +1,24 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {setup} from './database';
+import {savePack,createSession,updateSession,getPack,progress,proposeMappings,confirmMappings} from '../server/store';
+import {listPacks,saveLibraryPreferences} from '../server/library';
+import {exportBackup,restoreBackup} from '../server/backup';
+const actor={id:'owner',email:'owner@example.com'};
+const q={question:'Library fixture?',options:{A:'One',B:'Two',C:'Three',D:'Four',E:'Five'},answer:'A',learningStage:'foundation'};
+test('pack organisation syncs without altering questions, attempts, mappings or evidence and restores with backups',async()=>{
+ const {env,db}=setup(),pack=await savePack(env,actor,{requestId:crypto.randomUUID(),title:'Foundations',mode:'imported',questions:[q]},'imported');
+ const proposal=await proposeMappings(env,actor,{requestId:crypto.randomUUID(),packId:pack.id,mappings:[{questionId:pack.questions[0].id,topicId:'C1',domain:'foundations'}]});await confirmMappings(env,actor,proposal.id);
+ const sessionId=crypto.randomUUID();await createSession(env,actor,{id:sessionId,packId:pack.id,order:[pack.questions[0].id]});
+ await updateSession(env,actor,sessionId,{mutationId:crypto.randomUUID(),expectedRevision:0,currentIndex:0,complete:true,events:[{id:crypto.randomUUID(),questionId:pack.questions[0].id,selection:'A',at:new Date().toISOString()}]});
+ const original=await getPack(env,actor,pack.id),before=await progress(env,actor);
+ const prefs={collection:' MSK / Fractures ',pinned:true,archived:true};const saved=await saveLibraryPreferences(env,actor,pack.id,{expectedRevision:0,preferences:prefs});assert.equal(saved.library_revision,1);assert.equal(saved.collection,'MSK / Fractures');
+ const rows=await listPacks(env,actor);assert.equal(rows.length,1);assert.equal(rows[0].archived,true);assert.equal(rows[0].completed_count,1);assert.equal(rows[0].attempt_count,1);assert.deepEqual(rows[0].topics,[{id:'C1',label:'Example'}]);assert.deepEqual(rows[0].stages,['foundation']);assert.equal(rows[0].questions,undefined);
+ assert.deepEqual(await getPack(env,actor,pack.id),original);assert.deepEqual(await progress(env,actor),before);
+ await assert.rejects(()=>saveLibraryPreferences(env,actor,pack.id,{expectedRevision:0,preferences:{...prefs,pinned:false}}),/another device/);
+ assert.equal((await listPacks(env,{...actor,id:'other'})).length,0);await assert.rejects(()=>saveLibraryPreferences(env,{...actor,id:'other'},pack.id,{expectedRevision:1,preferences:prefs}),/not found/);
+ const backup=await exportBackup(env,actor),other=setup();await restoreBackup(other.env,actor,backup);assert.deepEqual((await exportBackup(other.env,actor)).data,backup.data);
+ await saveLibraryPreferences(other.env,actor,pack.id,{expectedRevision:1,preferences:{collection:'',pinned:false,archived:false}});assert.equal((await listPacks(other.env,actor))[0].archived,false);assert.equal((await listPacks(other.env,actor))[0].completed_count,1);
+ const legacy={...backup,format:'synapse-backup-v2',data:{...backup.data}};delete legacy.data.pack_library;const old=setup();await restoreBackup(old.env,actor,legacy);assert.equal((await listPacks(old.env,actor))[0].library_revision,0);
+ db.close();other.db.close();old.db.close();
+});

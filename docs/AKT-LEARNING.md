@@ -31,7 +31,7 @@ Raw events are authoritative; summaries are recomputed. Measurements live in imm
 
 `get_performance_profile` defaults to current blocks, supports topic/block filters and `allBlocks`, returns up to 100 ranked topics per call and ten recent errors. Raw session history remains available through `get_session_results` and full account backup. Homepage recent activity is still a bounded list, not a lifetime total. Aggregate profiles read the stored history and should be monitored for free-tier resource use as it grows.
 
-Account backups are `synapse-backup-v2`, including study settings, curriculum blocks/items and measurement-bearing session history. Legacy v1 imports remain supported. Restoring settings requires an empty plan as well as the existing empty-account history rule. No API keys or private credentials are in backups published to Git.
+Account backups are `synapse-backup-v3`, including pack collections/pins/archive, study settings, curriculum blocks/items and measurement-bearing session history. Legacy v1 and v2 imports remain supported. Restoring settings requires an empty plan as well as the existing empty-account history rule. No API keys or private credentials are in backups published to Git.
 
 The Sheet’s existing CCS Progress A:M and MSK J:N remain structurally stable. Managed CCS Progress N:U adds suggested stage, three stage counts/accuracies and unclassified history. The upgrade refuses to overwrite existing extension content. Complete answer paths and measurements remain in D1/MCP/account exports, avoiding a spreadsheet row for every mouse or key event.
 

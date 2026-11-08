@@ -3,8 +3,10 @@ import { type Env,type Actor,assert } from './types';
 import { question,uuid,eventInput,domain } from './schema';
 import { fingerprint,replay } from '../shared/quiz.js';
 import {studyPreferences} from './study';
-const tables=['topics','curriculum_blocks','curriculum_items','packs','questions','mappings','mapping_proposals','sessions','mutations','answer_events','exclusions','reviews','audit','study_settings'] as const;
+import {libraryPreferences} from './library';
+const tables=['topics','curriculum_blocks','curriculum_items','packs','pack_library','questions','mappings','mapping_proposals','sessions','mutations','answer_events','exclusions','reviews','audit','study_settings'] as const;
 const columns:Record<string,string[]>={
+  pack_library:['pack_id','owner','collection','pinned','archived','revision','updated_at'],
   curriculum_blocks:['id','year','label','topic_block','status','source_name','source_hash','imported_at'],
   curriculum_items:['id','block_id','source_label','source_type','topic_id','section','priority','source_locator','match_method','notes'],
   study_settings:['owner','revision','payload','updated_at'],
@@ -17,12 +19,14 @@ export async function exportBackup(env:Env,actor:Actor){
   // The deployment is single-owner. Assert ownership before exporting related tables.
   const foreign=await env.DB.prepare('SELECT count(*) n FROM packs WHERE owner<>?').bind(actor.id).first<any>();assert(!foreign.n,'Backup requires a single-owner database.',409);
   const data:Record<string,any[]>={};for(const t of tables)data[t]=t==='study_settings'?(await env.DB.prepare('SELECT * FROM study_settings WHERE owner=?').bind(actor.id).all<any>()).results:(await env.DB.prepare(`SELECT * FROM ${t}`).all<any>()).results;
-  return {format:'synapse-backup-v2',exportedAt:new Date().toISOString(),data};
+  return {format:'synapse-backup-v3',exportedAt:new Date().toISOString(),data};
 }
 export async function restoreBackup(env:Env,actor:Actor,input:unknown){
-  const b=z.object({format:z.enum(['synapse-backup-v1','synapse-backup-v2']),exportedAt:z.string().datetime(),data:z.record(z.string(),z.array(z.record(z.string(),z.unknown())).max(30000))}).strict().parse(input);
+  const b=z.object({format:z.enum(['synapse-backup-v1','synapse-backup-v2','synapse-backup-v3']),exportedAt:z.string().datetime(),data:z.record(z.string(),z.array(z.record(z.string(),z.unknown())).max(30000))}).strict().parse(input);
   if(b.format==='synapse-backup-v1'){assert(!Object.hasOwn(b.data,'study_settings'),'Invalid legacy backup.');b.data.study_settings=[];b.data.curriculum_blocks=[];b.data.curriculum_items=[];}
+  if(b.format!=='synapse-backup-v3'){assert(!Object.hasOwn(b.data,'pack_library'),'Invalid legacy library.');b.data.pack_library=[];}
   assert(Object.keys(b.data).sort().join() === [...tables].sort().join(),'Backup table set is invalid.');
+  for(const row of b.data.pack_library){uuid.parse(row.pack_id);assert(b.data.packs.some(p=>p.id===row.pack_id),'Unknown library pack.');assert([0,1].includes(Number(row.pinned))&&[0,1].includes(Number(row.archived)),'Invalid library state.');libraryPreferences.parse({collection:row.collection,pinned:!!row.pinned,archived:!!row.archived});z.number().int().positive().parse(row.revision);z.iso.datetime().parse(row.updated_at);}
   assert(b.data.study_settings.length<=1,'Backup contains multiple study plans.');
   for(const row of b.data.study_settings){studyPreferences.parse(JSON.parse(String(row.payload)));z.number().int().positive().parse(row.revision);z.iso.datetime().parse(row.updated_at);}
   if(b.data.study_settings.length){const saved=await env.DB.prepare('SELECT owner FROM study_settings WHERE owner=?').bind(actor.id).first();assert(!saved,'Restore requires an account without saved study settings; export your current plan first.',409);}

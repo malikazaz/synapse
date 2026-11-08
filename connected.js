@@ -1,3 +1,4 @@
+import {loadPackLibrary,renderLibrary} from './library-ui.js';
 import {isClosed,hasPending,sessionSummaries,sessionListHtml,closeFromList} from './session-ui.js';
 import {renderCurriculumProgress} from './curriculum-ui.js';
 import {storage,prepareMutation,acknowledge,restoreDevice} from './shared/offline.js';
@@ -82,6 +83,7 @@ class Connected {
     }
     if(this.actor&&navigator.onLine)await refreshStudySettings(this);
     if(this.actor&&navigator.onLine){try{const sync=await this.api('sync');const pending=sync.jobs.some(j=>j.status!=='synced');document.getElementById('sheetStatus').textContent=!sync.enabled?'Sheet connection not configured':pending?'Sheet update pending':'Sheet up to date';}catch{}}
+    if(this.tab==='packs'&&Date.now()-(this.libraryUpdated??0)>15000&&!document.getElementById('workspace').contains(document.activeElement)&&!document.querySelector('.pack-actions[open],dialog[open]'))await this.show('packs',true);
     if(this.tab==='home'&&Date.now()-(this.homeUpdated??0)>15000&&!document.getElementById('workspace').contains(document.activeElement))await this.show('home',true);
   }
   emit(navigate=true){document.dispatchEvent(new CustomEvent('synapse:session',{detail:{pack:this.active.pack,session:this.active}}));if(navigate)this.show('quiz');this.status();}
@@ -141,16 +143,18 @@ class Connected {
       if(view==='study')await renderStudyPlan(content,this);
       if(view==='performance')await renderPerformance(content,this);
       if(!content.hasChildNodes())throw new Error('This view could not be loaded. Update Synapse and try again.');
-      if(this.renderToken===token){panel.replaceChildren(content);if(view==='home')this.homeUpdated=Date.now();}
+      if(this.renderToken===token){panel.replaceChildren(content);if(view==='home')this.homeUpdated=Date.now();if(view==='packs')this.libraryUpdated=Date.now();}
     }catch(e){if(this.renderToken===token){panel.textContent=e.message;const retry=document.createElement('button');retry.className='btn secondary';retry.textContent='Try again';retry.onclick=()=>this.show(view);panel.append(retry);}}
   }
   async renderPacks(panel){
-    let packs=(await storage('all')).filter(r=>r.kind==='pack'&&r.owner===this.actor?.id).map(r=>r.pack),sessions=[];
-    if(this.actor&&navigator.onLine){packs=await this.api('packs');sessions=await this.api('sessions');}
+    const {packs,stale}=await loadPackLibrary(this);let sessions=[];
+    if(this.actor){try{sessions=await this.api('sessions');await storage('put','library-sessions:'+this.actor.id,{kind:'library-sessions',owner:this.actor.id,sessions});}catch{sessions=(await storage('get','library-sessions:'+this.actor.id))?.sessions??[];}}
     const locals=(await storage('all')).filter(r=>r.kind==='session'&&!r.archived&&(!r.owner||r.owner===this.actor?.id));
     const rows=sessionSummaries(sessions,locals),conflicts=rows.filter(s=>s.conflict);
-    panel.innerHTML=`<h1>My question packs</h1><p>Open a saved pack to start a new attempt. Downloaded packs work offline.</p>${conflicts.map(s=>`<article class="card padded"><h2>Conflicting session</h2><p>${esc(s.title)}. Both continuations are preserved. Keeping local work creates a separate practice attempt.</p><button class="btn" data-conflict="remote" data-id="${s.id}">Use cloud continuation</button> <button class="btn secondary" data-conflict="local" data-id="${s.id}">Keep local as separate attempt</button><button class="btn ghost" data-export="${s.id}">Export both</button></article>`).join('')}<div class="pack-grid">${packs.map(p=>`<article class="card padded"><h2>${esc(p.title)}</h2><p>${esc(p.mode)}</p><button class="btn" data-pack="${p.id}">Start quiz</button> <button class="btn secondary" data-map="${p.id}">Topic mappings</button></article>`).join('')||'<p>No saved packs yet. Paste or upload a quiz, then save it to your account.</p>'}</div>${sessionListHtml(rows)}`;
-    panel.querySelectorAll('[data-close-session]').forEach(b=>b.onclick=async()=>{b.disabled=true;try{await closeFromList(this,b.dataset.sessionId,b.dataset.closeSession);}catch(e){this.notify(e.message,true);}finally{b.disabled=false;}});
+    panel.innerHTML=`<div class="page-heading"><div><p class="eyebrow">YOUR QUESTION LIBRARY</p><h1>My question packs</h1><p class="muted">Find your next set. Keep favourites close and completed work organised.</p></div></div>${conflicts.map(s=>`<article class="card padded"><h2>Conflicting session</h2><p>${esc(s.title)}. Both continuations are preserved. Keeping local work creates a separate practice attempt.</p><button class="btn" data-conflict="remote" data-id="${s.id}">Use cloud continuation</button> <button class="btn secondary" data-conflict="local" data-id="${s.id}">Keep local as separate attempt</button><button class="btn ghost" data-export="${s.id}">Export both</button></article>`).join('')}<div id="packLibrary"></div><details class="library-sessions" ${this.packsHistoryOpen||!packs.length?'open':''}><summary>Sessions & results (${rows.length})</summary><p class="fine-print">Attempts remain here when their pack is archived. Recent account sessions and saved device work.</p>${sessionListHtml(rows)}</details>`;
+    renderLibrary(panel.querySelector('#packLibrary'),this,packs,rows,{stale});
+    panel.querySelector('.library-sessions').ontoggle=e=>{this.packsHistoryOpen=e.target.open;};
+    panel.querySelectorAll('[data-close-session]').forEach(b=>b.onclick=async()=>{b.disabled=true;this.packsHistoryOpen=true;try{await closeFromList(this,b.dataset.sessionId,b.dataset.closeSession);}catch(e){this.notify(e.message,true);}finally{b.disabled=false;}});
     panel.querySelectorAll('[data-pack]').forEach(b=>b.onclick=()=>this.openPack(b.dataset.pack).catch(e=>this.notify(e.message,true)));
     panel.querySelectorAll('[data-resume]').forEach(b=>b.onclick=()=>this.resume(b.dataset.resume).catch(e=>this.notify(e.message,true)));
     panel.querySelectorAll('[data-map]').forEach(b=>b.onclick=()=>this.renderMappings(panel,b.dataset.map).catch(e=>this.notify(e.message,true)));

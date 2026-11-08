@@ -33,6 +33,24 @@ button,a,input,select,summary{-webkit-tap-highlight-color:transparent;touch-acti
 .session-entry [data-resume]{background:var(--btn)!important;color:var(--btnText)!important}
 .session-entry [data-close-session=discard]{margin-left:auto}
 .workspace .metric{box-shadow:none}
+.library-shelves{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 18px}
+.library-shelves .btn[aria-pressed=true]{background:var(--btn);color:var(--btnText);border-color:transparent}
+.library-shelves span{font-size:.85em;opacity:.8;margin-left:5px}
+.library-search input{width:100%;display:block;margin-top:8px}
+.library-filters{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,200px),1fr));gap:12px}
+.library-filters label{min-width:0;font-size:.8em}.library-filters select{display:block;width:100%;margin-top:8px}
+.library-pack{display:flex;flex-direction:column;min-width:0}
+.library-pack .pack-folder{font-size:.7em;opacity:.8;overflow-wrap:anywhere}
+.library-pack .section-heading{margin-bottom:12px;align-items:center}
+.library-pack h2{overflow-wrap:anywhere}.pack-topics{font-size:.8em;overflow-wrap:anywhere}
+.library-pack .pack-start{margin-top:auto}.library-pack .pack-start .btn{flex:1;font-size:.8em}
+.library-pack .pack-actions{margin-top:16px;border-top:1px solid var(--line);font-size:1em}
+.pack-actions>summary{font-size:.75em}.collection-form{margin:8px 0 14px}
+.collection-form input{width:100%;display:block;margin-top:8px}.collection-form label{font-size:.8em}
+.library-sessions{margin-top:28px;font-size:1em;border-top:1px solid var(--line);padding-top:10px}
+.library-sessions>summary{font-weight:650;margin-bottom:16px}
+#libraryMessage:empty{display:none}#libraryMessage{font-size:.85em;padding:14px;border:1px solid var(--line);border-radius:12px}
+@media(max-width:720px){.library-shelves{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}.library-shelves .btn{font-size:12px;padding:10px 6px}.library-filters{grid-template-columns:1fr 1fr;gap:10px}.library-filters select{font-size:16px}.pack-library>.filter-details .library-filters{grid-template-columns:1fr}.library-pack .pack-start{display:grid;grid-template-columns:1fr;width:100%}.library-pack .pack-start .btn{min-height:48px}.library-pack .pack-actions .row{display:grid;grid-template-columns:1fr 1fr}.library-pack .pack-actions .btn{font-size:12px;width:100%}}
 .workspace{overflow-wrap:anywhere}
 .workspace :is(.card,.page-heading>div,.home-layout>section,.pack-grid>article){min-width:0}
 .workspace summary{padding:10px 0;min-height:44px;line-height:1.5}
@@ -75,6 +93,7 @@ button,a,input,select,summary{-webkit-tap-highlight-color:transparent;touch-acti
   .connected-shell:not([data-current-view=quiz]) #connectionNotice:not(.error){display:none}
   .connection-strip:has(.error){padding:12px;border:1px solid var(--line);border-radius:12px;margin-bottom:8px;background:var(--frame)}
   .workspace{padding:12px 18px 32px;line-height:1.55}
+  .connected-shell :is(.workspace,.app){padding-bottom:calc(var(--dock-height) + env(safe-area-inset-bottom) + 32px)}
   .workspace h1{font-size:clamp(27px,7vw,36px);line-height:1.15;letter-spacing:-.045em;margin:4px 0 12px}
   .workspace h2{font-size:1.05em;letter-spacing:-.025em}.workspace .padded{padding:20px}
   .workspace .card{border-radius:20px;margin-bottom:16px}

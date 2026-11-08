@@ -9,7 +9,7 @@ export function sessionSummaries(cloud,locals){
     const remote=rows.get(s.id),pending=hasPending(s);
     if(remote&&!pending&&!s.conflict&&(remote.revision==null||remote.revision>=s.revision))continue;
     const result=replay(s.pack.questions,s.events);
-    rows.set(s.id,{id:s.id,title:s.pack.title,status:s.status,revision:s.revision,score:result.score,question_count:s.order.length,answered:result.answered,started_at:s.updatedAt,completed_at:s.status==='completed'?s.updatedAt:null,local:!s.owner,pending:!!pending,conflict:!!s.conflict||!!(remote&&remote.status!=='active'&&pending)});
+    rows.set(s.id,{id:s.id,pack_id:s.packId,title:s.pack.title,status:s.status,revision:s.revision,score:result.score,question_count:s.order.length,answered:result.answered,started_at:s.updatedAt,completed_at:s.status==='completed'?s.updatedAt:null,local:!s.owner,pending:!!pending,conflict:!!s.conflict||!!(remote&&remote.status!=='active'&&pending)});
   }
   return [...rows.values()].sort((a,b)=>(b.completed_at??b.started_at).localeCompare(a.completed_at??a.started_at));
 }

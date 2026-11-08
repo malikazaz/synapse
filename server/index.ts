@@ -11,6 +11,7 @@ import { exportBackup,restoreBackup } from './backup';
 import { uuid } from './schema';
 import {previewCatalog,confirmCatalog} from './catalog';
 import {getStudySettings,saveStudySettings} from './study';
+import {listPacks,saveLibraryPreferences} from './library';
 
 async function body(req:Request){
   assert(Number(req.headers.get('content-length')??0)<=2*1024*1024,'Request too large.',413);
@@ -40,8 +41,9 @@ async function routes(req:Request,env:Env,ctx:ExecutionContext):Promise<Response
   if(path==='/api/progress'&&req.method==='GET')return json(await store.progress(env,actor));
   if(path==='/api/packs'){
     if(req.method==='POST')return json(await store.savePack(env,actor,await body(req),'imported'),201);
-    if(req.method==='GET')return json((await env.DB.prepare('SELECT p.id,p.title,p.mode,p.origin,p.created_at,(SELECT COUNT(*) FROM questions q WHERE q.pack_id=p.id) AS question_count FROM packs p WHERE p.owner=? ORDER BY p.created_at DESC LIMIT 500').bind(actor.id).all()).results);
+    if(req.method==='GET')return json(await listPacks(env,actor,z.coerce.number().int().min(0).parse(url.searchParams.get('offset')??0)));
   }
+  if(parts[1]==='packs'&&parts.length===4&&parts[3]==='organisation'&&req.method==='POST')return json(await saveLibraryPreferences(env,actor,uuid.parse(parts[2]),await body(req)));
   if(parts[1]==='packs'&&parts.length===3&&req.method==='GET')return json(await store.getPack(env,actor,uuid.parse(parts[2])));
   if(path==='/api/sessions'){
     if(req.method==='POST')return json(await store.createSession(env,actor,await body(req)),201);

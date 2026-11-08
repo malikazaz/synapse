@@ -31,6 +31,10 @@ try {
     await page.goto(origin+'/?view='+view,{waitUntil:'networkidle'});
     assert.match(await page.locator('#workspace').innerText(),/Sign in/);
   }
+  await page.goto(origin+'/?view=packs',{waitUntil:'networkidle'});
+  assert.equal(await page.locator('#packSearch').isVisible(),true);
+  assert.equal(await page.locator('[data-shelf=archive]').isVisible(),true);
+  assert.equal(await page.locator('#packCount').innerText(),'0 packs');
   await page.locator('[data-view=quiz]').click();assert.equal(await page.locator('#paste').isVisible(),true);
   console.log('Live home, Sources, Study plan/My weak points sign-in states and paste/upload passed.');
   const responses=await page.evaluate(async()=>Promise.all(['/api/progress','/.well-known/oauth-protected-resource/mcp'].map(async path=>{const r=await fetch(path,{signal:AbortSignal.timeout(15000)});return {path,status:r.status};})));
